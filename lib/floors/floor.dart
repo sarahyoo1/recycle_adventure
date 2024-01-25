@@ -6,7 +6,8 @@ import 'package:pixel_adventure/characters/player.dart';
 
 class Floor extends World {
   final String floorName;
-  Floor({required this.floorName});
+  final Player player;
+  Floor({required this.floorName, required this.player});
   late TiledComponent floor;
 
   @override
@@ -19,9 +20,7 @@ class Floor extends World {
     for (final spawnPoint in spawnPointsLayer!.objects) {
       switch (spawnPoint.class_) {
         case 'Player':
-          final player = Player(
-              character: 'Mask Dude',
-              position: Vector2(spawnPoint.x, spawnPoint.y));
+          player.position = Vector2(spawnPoint.x, spawnPoint.y);
           add(player);
           break;
         default:
