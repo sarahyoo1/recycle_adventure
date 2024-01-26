@@ -38,7 +38,7 @@ class Floor extends World with HasGameRef<PixelAdventure> {
       final backgroundColor =
           backgroundLayer.properties.getValue('BackgroundColor');
 
-      for (double y = 0; y < numOfTilesY; y++) {
+      for (double y = 0; y < numOfTilesY + 1; y++) {
         for (double x = 0; x < numOfTilesX; x++) {
           final backgroundTile = BackgroundTile(
             color: backgroundColor ?? 'Gray',
