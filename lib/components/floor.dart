@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import 'package:pixel_adventure/components/background_tile.dart';
 import 'package:pixel_adventure/components/collision_block.dart';
 import 'package:pixel_adventure/components/player.dart';
+import 'package:pixel_adventure/pixel_adventure.dart';
 
-class Floor extends World {
+class Floor extends World with HasGameRef<PixelAdventure> {
   final String floorName;
   final Player player;
   Floor({required this.floorName, required this.player});
@@ -15,9 +17,41 @@ class Floor extends World {
   @override
   FutureOr<void> onLoad() async {
     floor = await TiledComponent.load('$floorName.tmx', Vector2.all(16));
+
     add(floor);
 
-    //adding spawn point
+    _scrollingBackground();
+    _spawningObjects();
+    _addCollisions();
+
+    return super.onLoad();
+  }
+
+  void _scrollingBackground() {
+    final backgroundLayer = floor.tileMap.getLayer('Background');
+
+    const tileSize = 64;
+    final numOfTilesY = (game.size.y / tileSize).floor();
+    final numOfTilesX = (game.size.x / tileSize).floor();
+
+    if (backgroundLayer != null) {
+      final backgroundColor =
+          backgroundLayer.properties.getValue('BackgroundColor');
+
+      for (double y = 0; y < numOfTilesY; y++) {
+        for (double x = 0; x < numOfTilesX; x++) {
+          final backgroundTile = BackgroundTile(
+            color: backgroundColor ?? 'Gray',
+            position: Vector2(x * tileSize - tileSize, y * tileSize - tileSize),
+          );
+          add(backgroundTile);
+        }
+      }
+    }
+  }
+
+  void _spawningObjects() {
+    //adding spawn points
     final spawnPointsLayer = floor.tileMap.getLayer<ObjectGroup>('Spawnpoints');
 
     if (spawnPointsLayer != null) {
@@ -31,7 +65,9 @@ class Floor extends World {
         }
       }
     }
+  }
 
+  void _addCollisions() {
     //adding collisions
     final collisionsLayer = floor.tileMap.getLayer<ObjectGroup>('Collisions');
 
@@ -57,6 +93,5 @@ class Floor extends World {
       }
     }
     player.collisionBlocks = collisionBlocks;
-    return super.onLoad();
   }
 }
