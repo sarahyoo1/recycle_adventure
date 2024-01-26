@@ -6,16 +6,18 @@ import 'package:pixel_adventure/components/collision_block.dart';
 import 'package:pixel_adventure/components/utils.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
-enum PlayerState { idle, running }
+enum PlayerState { idle, running, jumping, falling }
 
 class Player extends SpriteAnimationGroupComponent
     with HasGameRef<PixelAdventure>, KeyboardHandler {
   String character;
   Player({position, this.character = 'Ninja Frog'}) : super(position: position);
 
+  final double stepTime = 0.05;
   late final SpriteAnimation idleAnimation;
   late final SpriteAnimation runningAnimation;
-  final double stepTime = 0.05;
+  late final SpriteAnimation jumpingAnimation;
+  late final SpriteAnimation fallingAnimation;
 
   final double _gravity = 9.8;
   final double _jumpForce = 250;
@@ -68,11 +70,15 @@ class Player extends SpriteAnimationGroupComponent
   void _loadAllAnimations() {
     idleAnimation = _spriteAnimation('Idle', 11);
     runningAnimation = _spriteAnimation('Run', 12);
+    jumpingAnimation = _spriteAnimation('Jump', 1);
+    fallingAnimation = _spriteAnimation('Fall', 1);
 
     //List of all animations
     animations = {
       PlayerState.idle: idleAnimation,
-      PlayerState.running: runningAnimation
+      PlayerState.running: runningAnimation,
+      PlayerState.jumping: jumpingAnimation,
+      PlayerState.falling: fallingAnimation,
     };
 
     //Sets current animation.
@@ -90,6 +96,12 @@ class Player extends SpriteAnimationGroupComponent
     if (hasJumped && isOnGround) {
       _playerJump(dt);
     }
+
+    //prevents jumping in air (optional).
+    if (velocity.y > _gravity) {
+      isOnGround = false;
+    }
+
     velocity.x = horizontalMovement * moveSpeed;
     position.x += velocity.x * dt;
   }
@@ -104,10 +116,14 @@ class Player extends SpriteAnimationGroupComponent
       flipHorizontallyAroundCenter();
     }
 
-    //checks if moving, set state to be running.
-    if (velocity.x > 0 || velocity.x < 0) {
-      playerState = PlayerState.running;
-    }
+    //checks if moving, set player's state to be running.
+    if (velocity.x > 0 || velocity.x < 0) playerState = PlayerState.running;
+
+    //if jumping, set state to be jumping.
+    if (velocity.y < 0) playerState = PlayerState.jumping;
+
+    //If falling, set state to be falling.
+    if (velocity.y > _gravity) playerState = PlayerState.falling;
 
     //sets current animation.
     current = playerState;
@@ -135,25 +151,30 @@ class Player extends SpriteAnimationGroupComponent
     }
   }
 
-  void _applyGravity(double dt) {
-    velocity.y += _gravity;
-    velocity.y = velocity.y.clamp(-_jumpForce, _terminalVelocity);
-    position.y += velocity.y * dt;
-  }
-
   void _checkVerticalCollisions() {
     for (final block in collisionBlocks) {
       if (block.isPlatform) {
         //handle collisions with platform.
-      } else {
-        //handle collisions with any other blocks.
         if (checkCollision(this, block)) {
+          //if falling
           if (velocity.y > 0) {
             velocity.y = 0;
             position.y = block.y - width;
             isOnGround = true;
             break;
           }
+        }
+      } else {
+        //handle collisions with any other blocks.
+        if (checkCollision(this, block)) {
+          //if falling
+          if (velocity.y > 0) {
+            velocity.y = 0;
+            position.y = block.y - width;
+            isOnGround = true;
+            break;
+          }
+          //if jumping
           if (velocity.y < 0) {
             velocity.y = 0;
             position.y = block.y + block.height;
@@ -162,6 +183,12 @@ class Player extends SpriteAnimationGroupComponent
         }
       }
     }
+  }
+
+  void _applyGravity(double dt) {
+    velocity.y += _gravity;
+    velocity.y = velocity.y.clamp(-_jumpForce, _terminalVelocity);
+    position.y += velocity.y * dt;
   }
 
   void _playerJump(double dt) {
