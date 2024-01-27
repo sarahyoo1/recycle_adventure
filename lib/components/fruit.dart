@@ -5,7 +5,8 @@ import 'package:flame/components.dart';
 import 'package:pixel_adventure/components/custom_hitbox.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
-class Fruit extends SpriteAnimationComponent with HasGameRef<PixelAdventure> {
+class Fruit extends SpriteAnimationComponent
+    with HasGameRef<PixelAdventure>, CollisionCallbacks {
   final String fruit;
   Fruit({
     this.fruit = 'Apple', //default fruit: Apple
@@ -14,6 +15,7 @@ class Fruit extends SpriteAnimationComponent with HasGameRef<PixelAdventure> {
   }) : super(
           position: position,
           size: size,
+          removeOnFinish: true, //removes fruit after its animation finished.
         );
 
   final double stepTime = 0.05;
@@ -23,24 +25,41 @@ class Fruit extends SpriteAnimationComponent with HasGameRef<PixelAdventure> {
     width: 12,
     height: 12,
   );
+  bool isCollected = false;
 
   @override
   FutureOr<void> onLoad() {
-    debugMode = true;
+    debugMode = false;
     priority = -1; //makes fruits go behind the player.
 
     //adds fruit items hitbox.
     add(RectangleHitbox(
       position: Vector2(hitbox.offsetX, hitbox.offsetY),
       size: Vector2(hitbox.width, hitbox.height),
+      collisionType: CollisionType.passive,
     ));
 
     //animates fruit itmes.
-    animation = SpriteAnimation.fromFrameData(
-      game.images.fromCache('Items/Fruits/$fruit.png'),
-      SpriteAnimationData.sequenced(
-          amount: 17, stepTime: stepTime, textureSize: Vector2.all(32)),
-    );
+    animation = _spriteAnimation(fruit, 17, true);
     return super.onLoad();
+  }
+
+  void collidedWithPlayer() {
+    if (!isCollected) {
+      animation = _spriteAnimation('Collected', 6, false);
+      isCollected = true;
+    }
+  }
+
+  SpriteAnimation _spriteAnimation(String name, int amount, bool isLooped) {
+    return SpriteAnimation.fromFrameData(
+      game.images.fromCache('Items/Fruits/$name.png'),
+      SpriteAnimationData.sequenced(
+        amount: amount,
+        stepTime: stepTime,
+        textureSize: Vector2.all(32),
+        loop: isLooped,
+      ),
+    );
   }
 }
