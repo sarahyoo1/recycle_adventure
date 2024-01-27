@@ -11,28 +11,23 @@ import 'package:pixel_adventure/components/floor.dart';
 class PixelAdventure extends FlameGame
     with HasKeyboardHandlerComponents, DragCallbacks, HasCollisionDetection {
   @override
-  Color backgroundColor() {
-    return const Color(0xFF211F30);
-  }
+  Color backgroundColor() => const Color(0xFF211F30);
 
-  late final CameraComponent cam;
+  late CameraComponent cam;
   Player player = Player(character: 'Ninja Frog');
 
   late JoystickComponent joystick;
   bool showJoystick = false;
+
+  List<String> floorNames = ['Floor-01', 'Floor-02'];
+  int currentFloorIndex = 1; //Should initially set to be 0.
 
   @override
   FutureOr<void> onLoad() async {
     //loas all images into cache.
     await images.loadAllImages();
 
-    final world = Floor(player: player, floorName: 'Floor-02');
-
-    cam = CameraComponent.withFixedResolution(
-        world: world, width: 640, height: 340);
-    cam.viewfinder.anchor = Anchor.topLeft;
-
-    addAll([cam, world]);
+    _loadFloor();
 
     if (showJoystick) {
       addJoystick();
@@ -84,5 +79,37 @@ class PixelAdventure extends FlameGame
         player.horizontalMovement = 0;
         break;
     }
+  }
+
+  void loadNextFloor() {
+    removeWhere((component) => component is Floor);
+
+    if (currentFloorIndex < floorNames.length - 1) {
+      currentFloorIndex++;
+      _loadFloor();
+    } else {
+      //if there is no more levels
+    }
+  }
+
+  void _loadFloor() {
+    Future.delayed(
+      const Duration(milliseconds: 1000),
+      () {
+        Floor world = Floor(
+          player: player,
+          floorName: floorNames[currentFloorIndex],
+        );
+
+        cam = CameraComponent.withFixedResolution(
+          world: world,
+          width: 640,
+          height: 340,
+        );
+        cam.viewfinder.anchor = Anchor.topLeft;
+
+        addAll([cam, world]);
+      },
+    );
   }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="57">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="59">
  <tileset firstgid="1" source="Pixel Adventure.tsx"/>
  <layer id="1" name="Background" width="40" height="23">
   <properties>
@@ -65,6 +65,7 @@
     <property name="offsetPositive" type="float" value="4"/>
    </properties>
   </object>
+  <object id="58" type="Checkpoint" x="432" y="160" width="64" height="64"/>
  </objectgroup>
  <objectgroup id="3" name="Collisions">
   <object id="4" x="32" y="16" width="16" height="320"/>
