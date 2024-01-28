@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:pixel_adventure/components/custom_hitbox.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
@@ -44,10 +45,16 @@ class Fruit extends SpriteAnimationComponent
     return super.onLoad();
   }
 
-  void collidedWithPlayer() {
+  void collidedWithPlayer() async {
     if (!isCollected) {
-      animation = _spriteAnimation('Collected', 6, false);
       isCollected = true;
+      if (game.playSounds) {
+        FlameAudio.play('pickupItem.wav', volume: game.soundVolume);
+      }
+      animation = _spriteAnimation('Collected', 6, false);
+
+      await animationTicker?.completed;
+      removeFromParent();
     }
   }
 
