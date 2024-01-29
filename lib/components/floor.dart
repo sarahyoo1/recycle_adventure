@@ -4,6 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:pixel_adventure/components/background_tile.dart';
 import 'package:pixel_adventure/components/checkpoint.dart';
+import 'package:pixel_adventure/components/chicken.dart';
 import 'package:pixel_adventure/components/collision_block.dart';
 import 'package:pixel_adventure/components/fruit.dart';
 import 'package:pixel_adventure/components/player.dart';
@@ -67,19 +68,19 @@ class Floor extends World with HasGameRef<PixelAdventure> {
             break;
           case 'Fruit':
             final fruit = Fruit(
-              fruit: spawnPoint.name,
               position: Vector2(spawnPoint.x, spawnPoint.y),
               size: Vector2(spawnPoint.width, spawnPoint.height),
+              fruit: spawnPoint.name,
             );
             add(fruit);
             break;
           case 'Saw':
             final saw = Saw(
-              isVertical: spawnPoint.properties.getValue('isVertical'),
-              offsetNegative: spawnPoint.properties.getValue('offsetNegative'),
-              offsetPositive: spawnPoint.properties.getValue('offsetPositive'),
               position: Vector2(spawnPoint.x, spawnPoint.y),
               size: Vector2(spawnPoint.width, spawnPoint.height),
+              offsetPositive: spawnPoint.properties.getValue('offsetPositive'),
+              offsetNegative: spawnPoint.properties.getValue('offsetNegative'),
+              isVertical: spawnPoint.properties.getValue('isVertical'),
             );
             add(saw);
             break;
@@ -89,6 +90,15 @@ class Floor extends World with HasGameRef<PixelAdventure> {
               size: Vector2(spawnPoint.width, spawnPoint.height),
             );
             add(checkpoint);
+            break;
+          case 'Chicken':
+            final chicken = Chicken(
+              position: Vector2(spawnPoint.x, spawnPoint.y),
+              size: Vector2(spawnPoint.width, spawnPoint.height),
+              offsetPositive: spawnPoint.properties.getValue('offsetPositive'),
+              offsetNegative: spawnPoint.properties.getValue('offsetNegative'),
+            );
+            add(chicken);
             break;
           default:
         }
