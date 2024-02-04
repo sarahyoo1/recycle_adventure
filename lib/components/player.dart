@@ -5,9 +5,10 @@ import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/src/services/raw_keyboard.dart';
 import 'package:pixel_adventure/components/checkpoint.dart';
-import 'package:pixel_adventure/components/chicken.dart';
+import 'package:pixel_adventure/components/enemies/chicken.dart';
 import 'package:pixel_adventure/components/collision_block.dart';
 import 'package:pixel_adventure/components/custom_hitbox.dart';
+import 'package:pixel_adventure/components/enemies/slime.dart';
 import 'package:pixel_adventure/components/fruit.dart';
 import 'package:pixel_adventure/components/saw.dart';
 import 'package:pixel_adventure/components/utils.dart';
@@ -29,6 +30,7 @@ class Player extends SpriteAnimationGroupComponent
   Player({position, this.character = 'Ninja Frog'}) : super(position: position);
 
   final double stepTime = 0.05;
+  late final Player player;
   late final SpriteAnimation idleAnimation;
   late final SpriteAnimation runningAnimation;
   late final SpriteAnimation jumpingAnimation;
@@ -60,6 +62,7 @@ class Player extends SpriteAnimationGroupComponent
   FutureOr<void> onLoad() {
     _loadAllAnimations();
     debugMode = false;
+    player = game.player;
 
     startingPosition = Vector2(position.x, position.y);
 
@@ -112,6 +115,7 @@ class Player extends SpriteAnimationGroupComponent
       if (other is Saw) _respawn();
       if (other is Checkpoint && !reachedCheckpoint) _reachedCheckpoint();
       if (other is Chicken) other.collidedWithPlayer();
+      if (other is Slime) other.collidedWithPlayer();
     }
 
     super.onCollision(intersectionPoints, other);

@@ -18,10 +18,10 @@ class PixelAdventure extends FlameGame
 
   late JoystickComponent joystick;
   bool showJoystick = false;
-  bool playSounds = true; //turns on game audios
+  bool playSounds = false; //turns on game audios
   double soundVolume = 1.0;
   List<String> floorNames = ['Floor-01', 'Floor-02'];
-  int currentFloorIndex = 1; //Should initially set to be 0.
+  int currentFloorIndex = 0; //Should initially set to be 0.
 
   @override
   FutureOr<void> onLoad() async {
