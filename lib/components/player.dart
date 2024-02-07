@@ -9,6 +9,7 @@ import 'package:pixel_adventure/components/enemies/chicken.dart';
 import 'package:pixel_adventure/components/collision_block.dart';
 import 'package:pixel_adventure/components/custom_hitbox.dart';
 import 'package:pixel_adventure/components/enemies/slime.dart';
+import 'package:pixel_adventure/components/enemies/trunk.dart';
 import 'package:pixel_adventure/components/fruit.dart';
 import 'package:pixel_adventure/components/saw.dart';
 import 'package:pixel_adventure/components/utils.dart';
@@ -116,6 +117,7 @@ class Player extends SpriteAnimationGroupComponent
       if (other is Checkpoint && !reachedCheckpoint) _reachedCheckpoint();
       if (other is Chicken) other.collidedWithPlayer();
       if (other is Slime) other.collidedWithPlayer();
+      if (other is Trunk) other.collidedWithPlayer();
     }
 
     super.onCollision(intersectionPoints, other);

@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:pixel_adventure/components/enemy.dart';
 
 enum State {
@@ -22,36 +24,39 @@ class Trunk extends Enemy {
   late final SpriteAnimation _runAnimation;
   late final SpriteAnimation _hitAnimation;
   late final SpriteAnimation _attackAnimation;
-  late Timer _timer;
+
+  bool gotStopmed = false;
+  static const _stompedHeight = 260.0;
 
   @override
   FutureOr<void> onLoad() {
-    debugMode = true;
+    debugMode = false;
+
+    add(
+      RectangleHitbox(
+        position: Vector2(4, 6),
+        size: Vector2(24, 26),
+      ),
+    );
     _loadAnimations();
     calculateRange();
-    _timer = Timer(1, onTick: _shootBullets, repeat: true, autoStart: true);
     return super.onLoad();
   }
 
   @override
   void update(double dt) {
-    _shootBullets();
-    _updateState();
-    movement(dt);
+    if (!gotStopmed) {
+      _updateState();
+      movement(dt);
+    }
 
     super.update(dt);
-  }
-
-  @override
-  void onMount() {
-    _timer.start();
-    super.onMount();
   }
 
   void _loadAnimations() {
     _idleAnimation = _spriteAnimation('Idle', 18);
     _runAnimation = _spriteAnimation('Run', 14);
-    _hitAnimation = _spriteAnimation('Hit', 5);
+    _hitAnimation = _spriteAnimation('Hit', 5)..loop = false;
     _attackAnimation = _spriteAnimation('Attack', 11);
 
     animations = {
@@ -76,8 +81,11 @@ class Trunk extends Enemy {
   }
 
   void _updateState() {
-    current = (velocity.x != 0) ? State.run : State.idle;
+    if (!gotStopmed) {
+      current = (velocity.x != 0) ? State.run : State.idle;
+    }
 
+    //Flips enemy depending on the player's direction.
     if ((moveDirection > 0 && scale.x > 0) ||
         (moveDirection < 0 && scale.x < 0)) {
       flipHorizontallyAroundCenter();
@@ -86,5 +94,22 @@ class Trunk extends Enemy {
 
   void _shootBullets() {
     //creates bullet
+    current = State.attack;
+  }
+
+  void collidedWithPlayer() async {
+    // TODO: fix the error that player sometimes dies when stomped enemy.
+    if (player.velocity.y > 0 && player.y + player.height > position.y) {
+      if (game.playSounds) {
+        FlameAudio.play('enemyKilled.wav', volume: game.soundVolume);
+      }
+      gotStopmed = true;
+      current = State.hit;
+      player.velocity.y = -_stompedHeight;
+      await animationTicker?.completed;
+      removeFromParent();
+    } else {
+      player.collidedWithEnemy();
+    }
   }
 }
