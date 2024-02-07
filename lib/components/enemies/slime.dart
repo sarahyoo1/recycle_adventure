@@ -35,7 +35,6 @@ class Slime extends Enemy {
   @override
   FutureOr<void> onLoad() {
     debugMode = false;
-    player = game.player;
 
     //add rectangle hitbox.
     if (hitboxActive) {
@@ -107,26 +106,6 @@ class Slime extends Enemy {
         (moveDirection < 0 && scale.x < 0)) {
       flipHorizontallyAroundCenter();
     }
-  }
-
-  @override
-  void movement(dt) {
-    velocity.x = 0;
-
-    double playerOffset = (player.scale.x > 0) ? 0 : -player.width;
-    double enemyOffset = (scale.x > 0) ? 0 : -width;
-
-    if (isPlayerInRange()) {
-      //player is in the range of enemy.
-      targetDirection =
-          (player.x + playerOffset < position.x + enemyOffset) ? -1 : 1;
-      velocity.x = targetDirection * _runSpeed;
-    }
-
-    // TODO: fix enemy flickering error when it overlapping with player.
-    moveDirection = lerpDouble(moveDirection, targetDirection, 0.1) ?? 1;
-
-    position.x += velocity.x * dt;
   }
 
   void collidedWithPlayer() async {

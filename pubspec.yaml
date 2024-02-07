@@ -78,6 +78,8 @@ flutter:
     - assets/images/Main Characters/Virtual Guy/
     - assets/images/Enemies/Chicken/
     - assets/images/Enemies/Slime/
+    - assets/images/Enemies/Bat/
+    - assets/images/Enemies/Trunk/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

@@ -25,7 +25,6 @@ class Chicken extends Enemy {
   @override
   FutureOr<void> onLoad() {
     debugMode = false;
-    player = game.player;
 
     add(
       RectangleHitbox(

@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:flame_audio/flame_audio.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
@@ -27,7 +26,7 @@ class Enemy extends SpriteAnimationGroupComponent
   double moveDirection = 1;
   double targetDirection = -1;
 
-  late final Player player;
+  late final Player player = game.player;
   late final SpriteAnimation idleAnimation;
   late final SpriteAnimation runAnimation;
   late final SpriteAnimation hitAnimation;
