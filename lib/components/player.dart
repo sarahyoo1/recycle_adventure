@@ -5,6 +5,7 @@ import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/src/services/raw_keyboard.dart';
 import 'package:pixel_adventure/components/checkpoint.dart';
+import 'package:pixel_adventure/components/enemies/bat.dart';
 import 'package:pixel_adventure/components/enemies/chicken.dart';
 import 'package:pixel_adventure/components/collision_block.dart';
 import 'package:pixel_adventure/components/custom_hitbox.dart';
@@ -118,6 +119,7 @@ class Player extends SpriteAnimationGroupComponent
       if (other is Chicken) other.collidedWithPlayer();
       if (other is Slime) other.collidedWithPlayer();
       if (other is Trunk) other.collidedWithPlayer();
+      if (other is Bat) other.collidedWithPlayer();
     }
 
     super.onCollision(intersectionPoints, other);
