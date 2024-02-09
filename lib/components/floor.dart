@@ -7,6 +7,7 @@ import 'package:pixel_adventure/components/checkpoint.dart';
 import 'package:pixel_adventure/components/enemies/bat.dart';
 import 'package:pixel_adventure/components/enemies/chicken.dart';
 import 'package:pixel_adventure/components/collision_block.dart';
+import 'package:pixel_adventure/components/enemies/cucumber.dart';
 import 'package:pixel_adventure/components/enemies/slime.dart';
 import 'package:pixel_adventure/components/enemies/trunk.dart';
 import 'package:pixel_adventure/components/fruit.dart';
@@ -129,6 +130,16 @@ class Floor extends World with HasGameRef<PixelAdventure> {
               offsetNegative: spawnPoint.properties.getValue('offsetNegative'),
             );
             add(trunk);
+            break;
+          case 'Cucumber':
+            final cucumber = Cucumber(
+              position: Vector2(spawnPoint.x, spawnPoint.y),
+              size: Vector2(spawnPoint.width, spawnPoint.height),
+              offsetPositive: spawnPoint.properties.getValue('offsetPositive'),
+              offsetNegative: spawnPoint.properties.getValue('offsetNegative'),
+            );
+            add(cucumber);
+            break;
           default:
         }
       }

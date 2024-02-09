@@ -58,10 +58,11 @@ class Enemy extends SpriteAnimationGroupComponent
 
   //Checks if player is within the range of enemy's detection.
   bool isPlayerInRange() {
-    double playerOffset = (player.scale.x > 0) ? 0 : -player.width;
+    double playerOffsetX = (player.scale.x > 0) ? 0 : -player.width;
 
-    return (player.x + playerOffset >= rangeNegative &&
-        player.x + playerOffset <= rangePositive &&
-        player.y + player.height > position.y);
+    return (player.x + playerOffsetX >= rangeNegative &&
+        player.x + playerOffsetX <= rangePositive);
+
+    //player.y + player.height > position.y  --> this makes enemies stop when player is not on the ground.
   }
 }
