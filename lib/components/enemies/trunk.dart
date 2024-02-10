@@ -97,6 +97,7 @@ class Trunk extends Enemy {
     current = State.attack;
   }
 
+  @override
   void collidedWithPlayer() async {
     // TODO: fix the error that player sometimes dies when stomped enemy.
     if (player.velocity.y > 0 && player.y + player.height > position.y) {

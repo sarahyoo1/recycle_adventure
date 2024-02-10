@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:pixel_adventure/components/enemy.dart';
 
 enum State {
@@ -35,19 +37,33 @@ class Cucumber extends Enemy {
   late final SpriteAnimation _deadGroundAnimatiom;
   late final SpriteAnimation _deadHitAnimatiom;
 
+  bool hitboxActive = true;
+  RectangleHitbox? hitbox;
+  bool dead = false;
+
   @override
   FutureOr<void> onLoad() {
-    debugMode = true;
+    debugMode = false;
     _loadAnimations();
     calculateRange();
+    if (hitboxActive) {
+      hitbox = RectangleHitbox(
+        position: Vector2(15, 6),
+        size: Vector2(18, 42),
+      );
+    }
+    add(hitbox!);
 
     return super.onLoad();
   }
 
   @override
   void update(double dt) {
-    _updateState();
-    movement(dt);
+    if (!dead) {
+      _updateState();
+      movement(dt);
+    }
+
     super.update(dt);
   }
 
@@ -97,5 +113,17 @@ class Cucumber extends Enemy {
         (moveDirection < 0 && scale.x < 0)) {
       flipHorizontallyAroundCenter();
     }
+  }
+
+  @override
+  void collidedWithPlayer() {
+    if (game.playSounds) {
+      FlameAudio.play('enemyKilled.wav', volume: game.soundVolume);
+    }
+    //TODO
+    remove(hitbox!); //removes hitbox.
+    dead = true;
+    current = State.deadGround;
+    player.collidedWithEnemy();
   }
 }

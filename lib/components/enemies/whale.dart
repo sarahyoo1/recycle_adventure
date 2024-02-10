@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:pixel_adventure/components/enemy.dart';
 
 enum State {
@@ -35,18 +37,33 @@ class Whale extends Enemy {
   late final SpriteAnimation _deadHitAnimation;
   late final SpriteAnimation _swallowAnimation;
 
+  bool hitboxActive = true;
+  RectangleHitbox? hitbox;
+  bool dead = false;
+
   @override
   FutureOr<void> onLoad() {
-    debugMode = true;
+    debugMode = false;
     _loadAnimations();
     calculateRange();
+
+    if (hitboxActive) {
+      hitbox = RectangleHitbox(
+        position: Vector2(4, 5),
+        size: Vector2(35, 28),
+      );
+    }
+    add(hitbox!);
     return super.onLoad();
   }
 
   @override
   void update(double dt) {
-    _updateState();
-    movement(dt);
+    if (!dead) {
+      _updateState();
+      movement(dt);
+    }
+
     super.update(dt);
   }
 
@@ -96,5 +113,17 @@ class Whale extends Enemy {
         (moveDirection < 0 && scale.x < 0)) {
       flipHorizontallyAroundCenter();
     }
+  }
+
+  @override
+  void collidedWithPlayer() {
+    if (game.playSounds) {
+      FlameAudio.play('enemyKilled.wav', volume: game.soundVolume);
+    }
+    //TODO
+    dead = true;
+    remove(hitbox!); //removes hitbox.
+    current = State.deadGround;
+    player.collidedWithEnemy();
   }
 }

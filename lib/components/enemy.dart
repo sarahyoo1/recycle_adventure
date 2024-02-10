@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
@@ -64,5 +65,12 @@ class Enemy extends SpriteAnimationGroupComponent
         player.x + playerOffsetX <= rangePositive);
 
     //player.y + player.height > position.y  --> this makes enemies stop when player is not on the ground.
+  }
+
+  void collidedWithPlayer() {
+    if (game.playSounds) {
+      FlameAudio.play('enemyKilled.wav', volume: game.soundVolume);
+    }
+    player.collidedWithEnemy();
   }
 }

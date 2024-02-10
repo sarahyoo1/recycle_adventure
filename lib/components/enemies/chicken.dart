@@ -82,6 +82,7 @@ class Chicken extends Enemy {
     }
   }
 
+  @override
   void collidedWithPlayer() async {
     //when the bottom of the player hit chicken's top.
     // TODO: fix the error that player sometimes dies when stomped enemy.

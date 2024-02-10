@@ -123,6 +123,7 @@ class Bat extends Enemy {
     position += velocity * dt;
   }
 
+  @override
   void collidedWithPlayer() async {
     if (player.velocity.y > 0 && player.y + player.height > position.y) {
       if (game.playSounds) {
