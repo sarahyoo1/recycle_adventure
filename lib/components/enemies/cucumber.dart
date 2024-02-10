@@ -44,6 +44,8 @@ class Cucumber extends Enemy {
   @override
   FutureOr<void> onLoad() {
     debugMode = false;
+    priority = -1;
+
     _loadAnimations();
     calculateRange();
     if (hitboxActive) {

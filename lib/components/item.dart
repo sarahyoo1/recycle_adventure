@@ -6,14 +6,16 @@ import 'package:flame_audio/flame_audio.dart';
 import 'package:pixel_adventure/components/custom_hitbox.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
-class Fruit extends SpriteAnimationComponent
+class Item extends SpriteAnimationComponent
     with HasGameRef<PixelAdventure>, CollisionCallbacks {
-  final String fruit;
-  Fruit({
-    this.fruit = 'Apple', //default fruit: Apple
+  final String item;
+  final int amount;
+  Item({
     super.position,
     super.size,
     super.removeOnFinish = true,
+    this.item = "Heart", //default item to be heart.
+    this.amount = 22,
   });
 
   final double stepTime = 0.05;
@@ -28,18 +30,16 @@ class Fruit extends SpriteAnimationComponent
 
   @override
   FutureOr<void> onLoad() {
-    debugMode = false;
-    priority = -1; //makes fruits go behind the player.
+    debugMode = true;
+    priority = -1;
 
-    //adds fruit items hitbox.
     add(RectangleHitbox(
       position: Vector2(hitbox.offsetX, hitbox.offsetY),
       size: Vector2(hitbox.width, hitbox.height),
       collisionType: CollisionType.passive,
     ));
 
-    //animates fruit itmes.
-    animation = _spriteAnimation(fruit, 17, true);
+    animation = _spriteAnimation(item, amount);
     return super.onLoad();
   }
 
@@ -49,21 +49,19 @@ class Fruit extends SpriteAnimationComponent
       if (game.playSounds) {
         FlameAudio.play('pickupItem.wav', volume: game.soundVolume);
       }
-      animation = _spriteAnimation('Collected', 6, false);
-
+      animation = _spriteAnimation('Collected', 6)..loop = false;
       await animationTicker?.completed;
       removeFromParent();
     }
   }
 
-  SpriteAnimation _spriteAnimation(String name, int amount, bool isLooped) {
+  SpriteAnimation _spriteAnimation(String path, int amount) {
     return SpriteAnimation.fromFrameData(
-      game.images.fromCache('Items/Fruits/$name.png'),
+      game.images.fromCache('Items/Else/$path.png'),
       SpriteAnimationData.sequenced(
         amount: amount,
         stepTime: stepTime,
         textureSize: Vector2.all(32),
-        loop: isLooped,
       ),
     );
   }

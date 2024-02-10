@@ -12,6 +12,7 @@ import 'package:pixel_adventure/components/enemies/slime.dart';
 import 'package:pixel_adventure/components/enemies/trunk.dart';
 import 'package:pixel_adventure/components/enemies/whale.dart';
 import 'package:pixel_adventure/components/fruit.dart';
+import 'package:pixel_adventure/components/item.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/components/saw.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
@@ -79,6 +80,14 @@ class Floor extends World with HasGameRef<PixelAdventure> {
             );
             add(fruit);
             break;
+          case 'Item':
+            final item = Item(
+              position: Vector2(spawnPoint.x, spawnPoint.y),
+              size: Vector2(spawnPoint.width, spawnPoint.height),
+              item: spawnPoint.name,
+              amount: spawnPoint.properties.getValue('amount'),
+            );
+            add(item);
           case 'Saw':
             final saw = Saw(
               position: Vector2(spawnPoint.x, spawnPoint.y),
@@ -156,8 +165,8 @@ class Floor extends World with HasGameRef<PixelAdventure> {
     }
   }
 
+  //adds collisions to blocks
   void _addCollisions() {
-    //adding collisions
     final collisionsLayer = floor.tileMap.getLayer<ObjectGroup>('Collisions');
 
     if (collisionsLayer != null) {

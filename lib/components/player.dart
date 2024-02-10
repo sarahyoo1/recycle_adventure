@@ -14,6 +14,7 @@ import 'package:pixel_adventure/components/enemies/slime.dart';
 import 'package:pixel_adventure/components/enemies/trunk.dart';
 import 'package:pixel_adventure/components/enemies/whale.dart';
 import 'package:pixel_adventure/components/fruit.dart';
+import 'package:pixel_adventure/components/item.dart';
 import 'package:pixel_adventure/components/saw.dart';
 import 'package:pixel_adventure/components/utils.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
@@ -31,7 +32,12 @@ enum PlayerState {
 class Player extends SpriteAnimationGroupComponent
     with HasGameRef<PixelAdventure>, KeyboardHandler, CollisionCallbacks {
   String character;
-  Player({position, this.character = 'Ninja Frog'}) : super(position: position);
+  int lives;
+  Player({
+    super.position,
+    this.character = 'Ninja Frog',
+    this.lives = 5,
+  });
 
   final double stepTime = 0.05;
   late final Player player;
@@ -115,7 +121,15 @@ class Player extends SpriteAnimationGroupComponent
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     if (!reachedCheckpoint) {
+      if (lives > 0) {
+        lives--;
+      } else {
+        //TODO: Game Over
+        print('Game Over');
+      }
+
       if (other is Fruit) other.collidedWithPlayer();
+      if (other is Item) other.collidedWithPlayer();
       if (other is Saw) _respawn();
       if (other is Checkpoint && !reachedCheckpoint) _reachedCheckpoint();
       if (other is Chicken) other.collidedWithPlayer();
