@@ -10,6 +10,7 @@ import 'package:pixel_adventure/components/collision_block.dart';
 import 'package:pixel_adventure/components/enemies/cucumber.dart';
 import 'package:pixel_adventure/components/enemies/slime.dart';
 import 'package:pixel_adventure/components/enemies/trunk.dart';
+import 'package:pixel_adventure/components/enemies/whale.dart';
 import 'package:pixel_adventure/components/fruit.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/components/saw.dart';
@@ -139,6 +140,15 @@ class Floor extends World with HasGameRef<PixelAdventure> {
               offsetNegative: spawnPoint.properties.getValue('offsetNegative'),
             );
             add(cucumber);
+            break;
+          case 'Whale':
+            final whale = Whale(
+              position: Vector2(spawnPoint.x, spawnPoint.y + 17),
+              size: Vector2(spawnPoint.width, spawnPoint.height),
+              offsetPositive: spawnPoint.properties.getValue('offsetPositive'),
+              offsetNegative: spawnPoint.properties.getValue('offsetNegative'),
+            );
+            add(whale);
             break;
           default:
         }

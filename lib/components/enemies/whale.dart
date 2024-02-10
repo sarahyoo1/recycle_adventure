@@ -5,19 +5,19 @@ import 'package:pixel_adventure/components/enemy.dart';
 
 enum State {
   idle,
-  hit,
   run,
+  hit,
   jump,
-  attack,
-  blowWick,
   fall,
   ground,
+  attack,
   deadGround,
   deadHit,
+  swallow,
 }
 
-class Cucumber extends Enemy {
-  Cucumber({
+class Whale extends Enemy {
+  Whale({
     super.position,
     super.size,
     super.offsetPositive,
@@ -28,19 +28,18 @@ class Cucumber extends Enemy {
   late final SpriteAnimation _runAnimation;
   late final SpriteAnimation _hitAnimation;
   late final SpriteAnimation _jumpAnimation;
-  late final SpriteAnimation _attackAnimation;
   late final SpriteAnimation _fallAnimation;
   late final SpriteAnimation _groundAnimation;
-  late final SpriteAnimation _blowWickAnimation;
-  late final SpriteAnimation _deadGroundAnimatiom;
-  late final SpriteAnimation _deadHitAnimatiom;
+  late final SpriteAnimation _attackAnimation;
+  late final SpriteAnimation _deadGroundAnimation;
+  late final SpriteAnimation _deadHitAnimation;
+  late final SpriteAnimation _swallowAnimation;
 
   @override
   FutureOr<void> onLoad() {
     debugMode = true;
     _loadAnimations();
     calculateRange();
-
     return super.onLoad();
   }
 
@@ -52,28 +51,28 @@ class Cucumber extends Enemy {
   }
 
   void _loadAnimations() {
-    _idleAnimation = _spriteAnimation('Idle', 28);
-    _runAnimation = _spriteAnimation('Run', 12);
-    _jumpAnimation = _spriteAnimation('Jump', 4)..loop = false;
+    _idleAnimation = _spriteAnimation('Idle', 44);
+    _runAnimation = _spriteAnimation('Run', 14);
+    _hitAnimation = _spriteAnimation('Hit', 7)..loop = false;
+    _jumpAnimation = _spriteAnimation('Jump', 4);
     _fallAnimation = _spriteAnimation('Fall', 2);
     _groundAnimation = _spriteAnimation('Ground', 3)..loop = false;
-    _hitAnimation = _spriteAnimation('Hit', 8)..loop = false;
     _attackAnimation = _spriteAnimation('Attack', 11);
-    _blowWickAnimation = _spriteAnimation('Blow the Wick', 11);
-    _deadGroundAnimatiom = _spriteAnimation('Dead Ground', 4);
-    _deadHitAnimatiom = _spriteAnimation('Dead Hit', 6)..loop = false;
+    _deadGroundAnimation = _spriteAnimation('Dead Ground', 4);
+    _deadHitAnimation = _spriteAnimation('Dead Hit', 6)..loop = false;
+    _swallowAnimation = _spriteAnimation('Swallow', 10)..loop = false;
 
     animations = {
       State.idle: _idleAnimation,
       State.run: _runAnimation,
+      State.hit: _hitAnimation,
       State.jump: _jumpAnimation,
       State.fall: _fallAnimation,
       State.ground: _groundAnimation,
-      State.hit: _hitAnimation,
       State.attack: _attackAnimation,
-      State.blowWick: _blowWickAnimation,
-      State.deadGround: _deadGroundAnimatiom,
-      State.deadHit: _deadHitAnimatiom,
+      State.deadGround: _deadGroundAnimation,
+      State.deadHit: _deadHitAnimation,
+      State.swallow: _swallowAnimation,
     };
 
     current = State.idle;
@@ -81,18 +80,18 @@ class Cucumber extends Enemy {
 
   SpriteAnimation _spriteAnimation(String state, int amount) {
     return SpriteAnimation.fromFrameData(
-      game.images.fromCache('Enemies/Cucumber/$state.png'),
+      game.images.fromCache('Enemies/Whale/$state.png'),
       SpriteAnimationData.sequenced(
         amount: amount,
         stepTime: stepTime,
-        textureSize: Vector2(64, 64),
+        textureSize: Vector2(68, 68),
       ),
     );
   }
 
   void _updateState() {
     current = (velocity.x != 0) ? State.run : State.idle;
-    //Flips enemy depending on the player's direction.
+
     if ((moveDirection > 0 && scale.x > 0) ||
         (moveDirection < 0 && scale.x < 0)) {
       flipHorizontallyAroundCenter();
