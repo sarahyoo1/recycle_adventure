@@ -76,8 +76,8 @@ class Chicken extends Enemy {
     current = (velocity.x != 0) ? State.run : State.idle;
 
     //Flips chicken depending on the player's direction.
-    if ((moveDirection > 0 && scale.x > 0) ||
-        (moveDirection < 0 && scale.x < 0)) {
+    if ((moveDirection.x > 0 && scale.x > 0) ||
+        (moveDirection.x < 0 && scale.x < 0)) {
       flipHorizontallyAroundCenter();
     }
   }

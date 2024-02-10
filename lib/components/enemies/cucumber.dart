@@ -109,8 +109,8 @@ class Cucumber extends Enemy {
   void _updateState() {
     current = (velocity.x != 0) ? State.run : State.idle;
     //Flips enemy depending on the player's direction.
-    if ((moveDirection > 0 && scale.x > 0) ||
-        (moveDirection < 0 && scale.x < 0)) {
+    if ((moveDirection.x > 0 && scale.x > 0) ||
+        (moveDirection.x < 0 && scale.x < 0)) {
       flipHorizontallyAroundCenter();
     }
   }

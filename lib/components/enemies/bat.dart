@@ -29,8 +29,6 @@ class Bat extends Enemy {
   late final SpriteAnimation _ceilingOutAnimation;
 
   Vector2 startingPoint = Vector2.zero();
-  double targetDirectionX = -1;
-  double targetDirectionY = 1;
   bool gotStomped = false;
   double _stompedHeight = 0;
 
@@ -95,8 +93,8 @@ class Bat extends Enemy {
       current = State.flying;
     }
     //Flips enemy depending on the player's direction.
-    if ((moveDirection > 0 && scale.x > 0) ||
-        (moveDirection < 0 && scale.x < 0)) {
+    if ((moveDirection.x > 0 && scale.x > 0) ||
+        (moveDirection.x < 0 && scale.x < 0)) {
       flipHorizontallyAroundCenter();
     }
   }
@@ -109,16 +107,18 @@ class Bat extends Enemy {
     double enemyOffset = (scale.x > 0) ? 0 : -width;
 
     if (isPlayerInRange()) {
-      targetDirectionX =
+      targetDirection.x =
           (player.x + playerOffset < position.x + enemyOffset) ? -1 : 1;
+      targetDirection.y = (player.y < position.y) ? -1 : 1;
 
-      velocity.x = targetDirectionX * runSpeed;
-      //TODO: Make the bat not go below a certain height.
-      velocity.y = targetDirectionY * runSpeed + 4;
+      velocity.x = targetDirection.x * runSpeed;
+
+      //TODO: Make the bat follow player, regardless their y position.
+      velocity.y = targetDirection.y * runSpeed + 4;
     }
 
     //Changes enemy's direction when player changes direction.
-    moveDirection = lerpDouble(moveDirection, targetDirectionX, 0.1) ?? 1;
+    moveDirection.x = lerpDouble(moveDirection.x, targetDirection.x, 0.1) ?? 1;
 
     position += velocity * dt;
   }

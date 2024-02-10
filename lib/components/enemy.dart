@@ -24,8 +24,8 @@ class Enemy extends SpriteAnimationGroupComponent
   double rangeNegative = 0;
   double rangePositive = 0;
   Vector2 velocity = Vector2.zero();
-  double moveDirection = 1;
-  double targetDirection = -1;
+  Vector2 moveDirection = Vector2(1, 0);
+  Vector2 targetDirection = Vector2(-1, 0);
 
   late final Player player = game.player;
   late final SpriteAnimation idleAnimation;
@@ -46,13 +46,13 @@ class Enemy extends SpriteAnimationGroupComponent
 
     if (isPlayerInRange()) {
       //player is in the range of enemy.
-      targetDirection =
+      targetDirection.x =
           (player.x + playerOffset < position.x + enemyOffset) ? -1 : 1;
-      velocity.x = targetDirection * runSpeed;
+      velocity.x = targetDirection.x * runSpeed;
     }
 
     //Changes enemy's direction when player changes direction.
-    moveDirection = lerpDouble(moveDirection, targetDirection, 0.1) ?? 1;
+    moveDirection.x = lerpDouble(moveDirection.x, targetDirection.x, 0.1) ?? 1;
 
     position.x += velocity.x * dt;
   }

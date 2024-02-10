@@ -75,7 +75,7 @@ class Trunk extends Enemy {
       SpriteAnimationData.sequenced(
         amount: amount,
         stepTime: stepTime,
-        textureSize: Vector2(64, 32),
+        textureSize: Vector2(32, 32),
       ),
     );
   }
@@ -86,8 +86,8 @@ class Trunk extends Enemy {
     }
 
     //Flips enemy depending on the player's direction.
-    if ((moveDirection > 0 && scale.x > 0) ||
-        (moveDirection < 0 && scale.x < 0)) {
+    if ((moveDirection.x > 0 && scale.x > 0) ||
+        (moveDirection.x < 0 && scale.x < 0)) {
       flipHorizontallyAroundCenter();
     }
   }
