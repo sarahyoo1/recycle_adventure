@@ -28,9 +28,6 @@ class Enemy extends SpriteAnimationGroupComponent
   Vector2 targetDirection = Vector2(-1, 0);
 
   late final Player player = game.player;
-  late final SpriteAnimation idleAnimation;
-  late final SpriteAnimation runAnimation;
-  late final SpriteAnimation hitAnimation;
 
   void calculateRange() {
     rangeNegative = position.x - offsetNegative * tileSize;

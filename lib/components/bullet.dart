@@ -1,0 +1,66 @@
+import 'dart:async';
+
+import 'package:flame/components.dart';
+import 'package:pixel_adventure/components/player.dart';
+import 'package:pixel_adventure/pixel_adventure.dart';
+
+class Bullet extends SpriteAnimationComponent with HasGameRef<PixelAdventure> {
+  double speed;
+  String imagePath;
+  int animationAmount;
+  bool moveVertically;
+  double moveDirection;
+  Bullet({
+    super.position,
+    this.speed = -450,
+    this.imagePath = "Bullet.png",
+    this.animationAmount = 1,
+    this.moveVertically = false,
+    this.moveDirection = -1,
+  }) : super(
+          size: Vector2(25, 25),
+          anchor: Anchor.center,
+        );
+
+  late final Player player;
+
+  @override
+  FutureOr<void> onLoad() {
+    debugMode = true;
+    player = game.player;
+    updateBulletDirection();
+    animation = SpriteAnimation.fromFrameData(
+      game.images.fromCache(imagePath),
+      SpriteAnimationData.sequenced(
+        amount: animationAmount,
+        stepTime: 0.2,
+        textureSize: Vector2(16, 16),
+      ),
+    );
+    return super.onLoad();
+  }
+
+  @override
+  void update(double dt) {
+    movement(dt);
+    super.update(dt);
+  }
+
+  void movement(dt) {
+    if (moveVertically) {
+      position.y += speed * dt;
+    } else {
+      position.x += moveDirection * speed * dt;
+    }
+
+    if (position.y < -height || position.x < 0 || position.x > 520) {
+      removeFromParent();
+    }
+  }
+
+  void updateBulletDirection() {
+    if (moveDirection == -1) {
+      flipHorizontallyAroundCenter();
+    }
+  }
+}

@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 
-import 'package:pixel_adventure/components/backgrounds/background.dart';
-import 'package:pixel_adventure/components/backgrounds/background_tile.dart';
 import 'package:pixel_adventure/components/checkpoint.dart';
 import 'package:pixel_adventure/components/enemies/bat.dart';
 import 'package:pixel_adventure/components/enemies/chicken.dart';
@@ -35,7 +33,7 @@ class Floor extends World with HasGameRef<PixelAdventure> {
     //_scrollingBackground();
     _spawningObjects();
     _addCollisions();
-    addAll([Background()]);
+    //addAll([Background()]);
 
     return super.onLoad();
   }

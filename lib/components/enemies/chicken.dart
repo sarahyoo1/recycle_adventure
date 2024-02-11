@@ -22,6 +22,10 @@ class Chicken extends Enemy {
   static const _stompedHeight = 260.0;
   bool gotStopmed = false;
 
+  late final SpriteAnimation _idleAnimation;
+  late final SpriteAnimation _runAnimation;
+  late final SpriteAnimation _hitAnimation;
+
   @override
   FutureOr<void> onLoad() {
     debugMode = false;
@@ -48,14 +52,14 @@ class Chicken extends Enemy {
   }
 
   void _loadAnimations() {
-    idleAnimation = _spriteAnimation('Idle', 13);
-    runAnimation = _spriteAnimation('Run', 14);
-    hitAnimation = _spriteAnimation('Hit', 15)..loop = false;
+    _idleAnimation = _spriteAnimation('Idle', 13);
+    _runAnimation = _spriteAnimation('Run', 14);
+    _hitAnimation = _spriteAnimation('Hit', 15)..loop = false;
 
     animations = {
-      State.idle: idleAnimation,
-      State.run: runAnimation,
-      State.hit: hitAnimation,
+      State.idle: _idleAnimation,
+      State.run: _runAnimation,
+      State.hit: _hitAnimation,
     };
 
     current = State.idle;

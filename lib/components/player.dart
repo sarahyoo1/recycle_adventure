@@ -4,6 +4,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/src/services/raw_keyboard.dart';
+import 'package:pixel_adventure/components/bullet.dart';
 import 'package:pixel_adventure/components/checkpoint.dart';
 import 'package:pixel_adventure/components/enemies/bat.dart';
 import 'package:pixel_adventure/components/enemies/chicken.dart';
@@ -68,6 +69,9 @@ class Player extends SpriteAnimationGroupComponent
     height: 28,
   );
 
+  bool hasShooted = false;
+  double bulletHorizontalDirection = -1; //initially set to be right.
+
   @override
   FutureOr<void> onLoad() {
     _loadAllAnimations();
@@ -81,6 +85,7 @@ class Player extends SpriteAnimationGroupComponent
       position: Vector2(hitbox.offsetX, hitbox.offsetY),
       size: Vector2(hitbox.width, hitbox.height),
     ));
+
     return super.onLoad();
   }
 
@@ -92,6 +97,10 @@ class Player extends SpriteAnimationGroupComponent
       _checkHorizontalCollisions();
       _applyGravity(dt);
       _checkVerticalCollisions();
+
+      if (hasShooted) {
+        _shootBullet();
+      }
     }
     super.update(dt);
   }
@@ -113,6 +122,9 @@ class Player extends SpriteAnimationGroupComponent
 
     //checks if the player is jumping.
     hasJumped = keysPressed.contains(LogicalKeyboardKey.space);
+
+    //Checks if the player shoots bullet.
+    hasShooted = keysPressed.contains(LogicalKeyboardKey.tab);
 
     return super.onKeyEvent(event, keysPressed);
   }
@@ -212,9 +224,11 @@ class Player extends SpriteAnimationGroupComponent
     //if going to the left.
     if (velocity.x < 0 && scale.x > 0) {
       flipHorizontallyAroundCenter();
+      bulletHorizontalDirection = 1;
       //if going to the right.
     } else if (velocity.x > 0 && scale.x < 0) {
       flipHorizontallyAroundCenter();
+      bulletHorizontalDirection = -1;
     }
 
     //checks if moving, set player's state to be running.
@@ -359,5 +373,20 @@ class Player extends SpriteAnimationGroupComponent
 
   void collidedWithEnemy() {
     _respawn();
+  }
+
+  void _shootBullet() {
+    if (hasShooted) {
+      Bullet bullet = Bullet(
+        moveVertically: false,
+        position: (bulletHorizontalDirection == -1)
+            ? Vector2(position.x + 20, position.y + 16)
+            : Vector2(position.x - 20, position.y + 16),
+        moveDirection: bulletHorizontalDirection,
+      );
+      parent?.add(bullet);
+
+      hasShooted = false;
+    }
   }
 }

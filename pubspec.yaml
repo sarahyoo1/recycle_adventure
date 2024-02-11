@@ -65,6 +65,7 @@ flutter:
   assets:
     - assets/audio/
     - assets/tiles/
+    - assets/images/
     - assets/images/Terrain/
     - assets/images/Background/
     - assets/images/HUD/
