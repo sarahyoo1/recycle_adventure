@@ -4,6 +4,7 @@
  <layer id="1" name="Background" width="40" height="23">
   <properties>
    <property name="BackgroundColor" value="Purple"/>
+   <property name="BackgroundImage" value=""/>
   </properties>
   <data encoding="csv">
 24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,

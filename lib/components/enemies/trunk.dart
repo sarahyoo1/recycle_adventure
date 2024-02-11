@@ -75,7 +75,7 @@ class Trunk extends Enemy {
       SpriteAnimationData.sequenced(
         amount: amount,
         stepTime: stepTime,
-        textureSize: Vector2(32, 32),
+        textureSize: Vector2(64, 32),
       ),
     );
   }

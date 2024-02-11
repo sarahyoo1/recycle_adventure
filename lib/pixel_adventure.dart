@@ -10,6 +10,7 @@ import 'package:pixel_adventure/components/floor.dart';
 
 class PixelAdventure extends FlameGame
     with HasKeyboardHandlerComponents, DragCallbacks, HasCollisionDetection {
+  //sets default background color
   @override
   Color backgroundColor() => const Color(0xFF211F30);
 
@@ -25,7 +26,7 @@ class PixelAdventure extends FlameGame
 
   @override
   FutureOr<void> onLoad() async {
-    //loas all images into cache.
+    //loads all images into cache.
     await images.loadAllImages();
 
     _loadFloor();
