@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
@@ -10,13 +11,15 @@ class Bullet extends SpriteAnimationComponent with HasGameRef<PixelAdventure> {
   int animationAmount;
   bool moveVertically;
   double moveDirection;
+  RectangleHitbox hitbox;
   Bullet({
     super.position,
-    this.speed = -450,
+    this.speed = 450,
     this.imagePath = "Bullet.png",
     this.animationAmount = 1,
     this.moveVertically = false,
-    this.moveDirection = -1,
+    this.moveDirection = 1,
+    required this.hitbox,
   }) : super(
           size: Vector2(25, 25),
           anchor: Anchor.center,
@@ -28,7 +31,11 @@ class Bullet extends SpriteAnimationComponent with HasGameRef<PixelAdventure> {
   FutureOr<void> onLoad() {
     debugMode = true;
     player = game.player;
+
     updateBulletDirection();
+
+    add(hitbox);
+
     animation = SpriteAnimation.fromFrameData(
       game.images.fromCache(imagePath),
       SpriteAnimationData.sequenced(
@@ -59,7 +66,7 @@ class Bullet extends SpriteAnimationComponent with HasGameRef<PixelAdventure> {
   }
 
   void updateBulletDirection() {
-    if (moveDirection == -1) {
+    if (moveDirection == 1) {
       flipHorizontallyAroundCenter();
     }
   }

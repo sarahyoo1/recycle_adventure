@@ -224,11 +224,11 @@ class Player extends SpriteAnimationGroupComponent
     //if going to the left.
     if (velocity.x < 0 && scale.x > 0) {
       flipHorizontallyAroundCenter();
-      bulletHorizontalDirection = 1;
+      bulletHorizontalDirection = -1;
       //if going to the right.
     } else if (velocity.x > 0 && scale.x < 0) {
       flipHorizontallyAroundCenter();
-      bulletHorizontalDirection = -1;
+      bulletHorizontalDirection = 1;
     }
 
     //checks if moving, set player's state to be running.
@@ -379,10 +379,14 @@ class Player extends SpriteAnimationGroupComponent
     if (hasShooted) {
       Bullet bullet = Bullet(
         moveVertically: false,
-        position: (bulletHorizontalDirection == -1)
+        position: (bulletHorizontalDirection == 1)
             ? Vector2(position.x + 20, position.y + 16)
             : Vector2(position.x - 20, position.y + 16),
         moveDirection: bulletHorizontalDirection,
+        hitbox: RectangleHitbox(
+          position: Vector2(2, 9),
+          size: Vector2(22, 10),
+        ),
       );
       parent?.add(bullet);
 
