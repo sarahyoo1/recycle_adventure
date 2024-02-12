@@ -18,7 +18,7 @@ class Bullet extends SpriteAnimationComponent with HasGameRef<PixelAdventure> {
     this.imagePath = "Bullet.png",
     this.animationAmount = 1,
     this.moveVertically = false,
-    this.moveDirection = 1,
+    required this.moveDirection,
     required this.hitbox,
   }) : super(
           size: Vector2(25, 25),

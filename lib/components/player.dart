@@ -70,7 +70,7 @@ class Player extends SpriteAnimationGroupComponent
   );
 
   bool hasShooted = false;
-  double bulletHorizontalDirection = -1; //initially set to be right.
+  double bulletHorizontalDirection = 1; //initially set to be right.
 
   @override
   FutureOr<void> onLoad() {
