@@ -24,6 +24,7 @@ class Cucumber extends Enemy {
     super.size,
     super.offsetPositive,
     super.offsetNegative,
+    super.lives,
   });
 
   late final SpriteAnimation _idleAnimation;
@@ -61,6 +62,7 @@ class Cucumber extends Enemy {
 
   @override
   void update(double dt) {
+    checkLives();
     if (!dead) {
       _updateState();
       movement(dt);
@@ -117,7 +119,6 @@ class Cucumber extends Enemy {
     }
   }
 
-  @override
   void collidedWithPlayer() {
     if (game.playSounds) {
       FlameAudio.play('enemyKilled.wav', volume: game.soundVolume);
@@ -127,5 +128,11 @@ class Cucumber extends Enemy {
     dead = true;
     current = State.deadGround;
     player.collidedWithEnemy();
+  }
+
+  void checkLives() {
+    if (lives <= 0) {
+      removeFromParent();
+    }
   }
 }

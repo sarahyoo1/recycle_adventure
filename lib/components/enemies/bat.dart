@@ -4,7 +4,9 @@ import 'dart:ui';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
+import 'package:pixel_adventure/components/bullet.dart';
 import 'package:pixel_adventure/components/enemy.dart';
+import 'package:pixel_adventure/components/player.dart';
 
 enum State {
   idle,
@@ -20,6 +22,7 @@ class Bat extends Enemy {
     super.size,
     super.offsetPositive,
     super.offsetNegative,
+    super.lives,
   });
 
   late final SpriteAnimation _idleAnimation;
@@ -51,6 +54,7 @@ class Bat extends Enemy {
 
   @override
   void update(double dt) {
+    checkLives();
     if (!gotStomped) {
       _updateState();
       movement(dt);
@@ -123,7 +127,6 @@ class Bat extends Enemy {
     position += velocity * dt;
   }
 
-  @override
   void collidedWithPlayer() async {
     if (player.velocity.y > 0 && player.y + player.height > position.y) {
       if (game.playSounds) {
@@ -136,6 +139,12 @@ class Bat extends Enemy {
       removeFromParent();
     } else {
       player.collidedWithEnemy();
+    }
+  }
+
+  void checkLives() {
+    if (lives <= 0) {
+      removeFromParent();
     }
   }
 }

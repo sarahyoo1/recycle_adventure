@@ -112,6 +112,7 @@ class Floor extends World with HasGameRef<PixelAdventure> {
               size: Vector2(spawnPoint.width, spawnPoint.height),
               offsetPositive: spawnPoint.properties.getValue('offsetPositive'),
               offsetNegative: spawnPoint.properties.getValue('offsetNegative'),
+              lives: spawnPoint.properties.getValue('lives'),
             );
             add(chicken);
             break;
@@ -121,6 +122,7 @@ class Floor extends World with HasGameRef<PixelAdventure> {
               size: Vector2(spawnPoint.width, spawnPoint.height),
               offsetPositive: spawnPoint.properties.getValue('offsetPositive'),
               offsetNegative: spawnPoint.properties.getValue('offsetNegative'),
+              lives: spawnPoint.properties.getValue('lives'),
             );
             add(slime);
             break;
@@ -130,6 +132,7 @@ class Floor extends World with HasGameRef<PixelAdventure> {
               size: Vector2(spawnPoint.width, spawnPoint.height),
               offsetPositive: spawnPoint.properties.getValue('offsetPositive'),
               offsetNegative: spawnPoint.properties.getValue('offsetNegative'),
+              lives: spawnPoint.properties.getValue('lives'),
             );
             add(bat);
             break;
@@ -139,6 +142,7 @@ class Floor extends World with HasGameRef<PixelAdventure> {
               size: Vector2(spawnPoint.width, spawnPoint.height),
               offsetPositive: spawnPoint.properties.getValue('offsetPositive'),
               offsetNegative: spawnPoint.properties.getValue('offsetNegative'),
+              lives: spawnPoint.properties.getValue('lives'),
             );
             add(trunk);
             break;
@@ -148,6 +152,7 @@ class Floor extends World with HasGameRef<PixelAdventure> {
               size: Vector2(spawnPoint.width, spawnPoint.height),
               offsetPositive: spawnPoint.properties.getValue('offsetPositive'),
               offsetNegative: spawnPoint.properties.getValue('offsetNegative'),
+              lives: spawnPoint.properties.getValue('lives'),
             );
             add(cucumber);
             break;
@@ -157,6 +162,7 @@ class Floor extends World with HasGameRef<PixelAdventure> {
               size: Vector2(spawnPoint.width, spawnPoint.height),
               offsetPositive: spawnPoint.properties.getValue('offsetPositive'),
               offsetNegative: spawnPoint.properties.getValue('offsetNegative'),
+              lives: spawnPoint.properties.getValue('lives'),
             );
             add(whale);
             break;

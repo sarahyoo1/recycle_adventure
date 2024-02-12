@@ -55,6 +55,7 @@
   <object id="58" name="Checkpoint" type="Checkpoint" x="432" y="160" width="64" height="64"/>
   <object id="59" name="Chciken" type="Chicken" x="256" y="288" width="32" height="32">
    <properties>
+    <property name="lives" type="int" value="3"/>
     <property name="offsetNegative" type="float" value="5"/>
     <property name="offsetPositive" type="float" value="5"/>
    </properties>

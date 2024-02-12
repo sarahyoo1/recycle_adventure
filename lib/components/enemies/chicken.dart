@@ -17,6 +17,7 @@ class Chicken extends Enemy {
     super.size,
     super.offsetPositive,
     super.offsetNegative,
+    super.lives,
   });
 
   static const _stompedHeight = 260.0;
@@ -44,6 +45,7 @@ class Chicken extends Enemy {
 
   @override
   void update(double dt) {
+    checkLives();
     if (!gotStopmed) {
       _updateState();
       movement(dt);
@@ -86,7 +88,6 @@ class Chicken extends Enemy {
     }
   }
 
-  @override
   void collidedWithPlayer() async {
     //when the bottom of the player hit chicken's top.
     // TODO: fix the error that player sometimes dies when stomped enemy.
@@ -101,6 +102,12 @@ class Chicken extends Enemy {
       removeFromParent();
     } else {
       player.collidedWithEnemy();
+    }
+  }
+
+  void checkLives() {
+    if (lives <= 0) {
+      removeFromParent();
     }
   }
 }

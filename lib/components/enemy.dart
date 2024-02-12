@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:flame_audio/flame_audio.dart';
+import 'package:pixel_adventure/components/bullet.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
@@ -10,11 +10,13 @@ class Enemy extends SpriteAnimationGroupComponent
     with HasGameRef<PixelAdventure>, CollisionCallbacks {
   final double offsetPositive;
   final double offsetNegative;
+  int lives;
   Enemy({
     super.position,
     super.size,
     this.offsetPositive = 0,
     this.offsetNegative = 0,
+    this.lives = 1,
   });
 
   double stepTime = 0.05;
@@ -64,10 +66,13 @@ class Enemy extends SpriteAnimationGroupComponent
     //player.y + player.height > position.y  --> this makes enemies stop when player is not on the ground.
   }
 
-  void collidedWithPlayer() {
-    if (game.playSounds) {
-      FlameAudio.play('enemyKilled.wav', volume: game.soundVolume);
+  @override
+  void onCollisionStart(
+      Set<Vector2> intersectionPoints, PositionComponent other) {
+    super.onCollisionStart(intersectionPoints, other);
+    if (other is Bullet) {
+      lives--;
+      other.removeFromParent();
     }
-    player.collidedWithEnemy();
   }
 }

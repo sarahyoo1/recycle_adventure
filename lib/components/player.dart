@@ -137,7 +137,6 @@ class Player extends SpriteAnimationGroupComponent
         lives--;
       } else {
         //TODO: Game Over
-        print('Game Over');
       }
 
       if (other is Fruit) other.collidedWithPlayer();
@@ -384,6 +383,7 @@ class Player extends SpriteAnimationGroupComponent
             : Vector2(position.x - 20, position.y + 16),
         moveDirection: bulletHorizontalDirection,
         hitbox: RectangleHitbox(
+          collisionType: CollisionType.passive,
           position: Vector2(2, 9),
           size: Vector2(22, 10),
         ),

@@ -18,6 +18,7 @@ class Trunk extends Enemy {
     super.size,
     super.offsetPositive,
     super.offsetNegative,
+    super.lives,
   });
 
   late final SpriteAnimation _idleAnimation;
@@ -45,6 +46,7 @@ class Trunk extends Enemy {
 
   @override
   void update(double dt) {
+    checkLives();
     if (!gotStopmed) {
       _updateState();
       movement(dt);
@@ -97,7 +99,6 @@ class Trunk extends Enemy {
     current = State.attack;
   }
 
-  @override
   void collidedWithPlayer() async {
     // TODO: fix the error that player sometimes dies when stomped enemy.
     if (player.velocity.y > 0 && player.y + player.height > position.y) {
@@ -111,6 +112,12 @@ class Trunk extends Enemy {
       removeFromParent();
     } else {
       player.collidedWithEnemy();
+    }
+  }
+
+  void checkLives() {
+    if (lives <= 0) {
+      removeFromParent();
     }
   }
 }

@@ -18,6 +18,7 @@ class Slime extends Enemy {
     super.size,
     super.offsetPositive,
     super.offsetNegative,
+    super.lives,
   });
 
   late final SpriteAnimation _idleAnimation;
@@ -26,7 +27,7 @@ class Slime extends Enemy {
   late final SpriteAnimation _particlesAnimation;
 
   static const _stompedHeight = 260.0;
-  static const _runSpeed = 30;
+
   bool gotStopmed = false;
   bool hitboxActive = true;
   RectangleHitbox? hitbox;
@@ -51,6 +52,7 @@ class Slime extends Enemy {
 
   @override
   void update(double dt) {
+    checkLives();
     _updateState();
     movement(dt);
 
@@ -107,7 +109,6 @@ class Slime extends Enemy {
     }
   }
 
-  @override
   void collidedWithPlayer() async {
     // TODO: fix the error that player sometimes dies when stomped enemy.
     if (player.velocity.y > 0 && player.y + player.height > position.y) {
@@ -124,6 +125,12 @@ class Slime extends Enemy {
       current = State.particles;
     } else {
       player.collidedWithEnemy();
+    }
+  }
+
+  void checkLives() {
+    if (lives <= 0) {
+      removeFromParent();
     }
   }
 }

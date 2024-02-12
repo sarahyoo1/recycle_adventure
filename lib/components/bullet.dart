@@ -2,10 +2,17 @@ import 'dart:async';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:pixel_adventure/components/enemies/bat.dart';
+import 'package:pixel_adventure/components/enemies/chicken.dart';
+import 'package:pixel_adventure/components/enemies/cucumber.dart';
+import 'package:pixel_adventure/components/enemies/slime.dart';
+import 'package:pixel_adventure/components/enemies/trunk.dart';
+import 'package:pixel_adventure/components/enemies/whale.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
-class Bullet extends SpriteAnimationComponent with HasGameRef<PixelAdventure> {
+class Bullet extends SpriteAnimationComponent
+    with HasGameRef<PixelAdventure>, CollisionCallbacks {
   double speed;
   String imagePath;
   int animationAmount;
