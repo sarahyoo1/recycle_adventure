@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
+import 'package:pixel_adventure/components/bullet.dart';
 import 'package:pixel_adventure/components/enemy.dart';
 
 enum State {
@@ -51,6 +52,17 @@ class Chicken extends Enemy {
       movement(dt);
     }
     super.update(dt);
+  }
+
+  @override
+  void onCollisionStart(
+      Set<Vector2> intersectionPoints, PositionComponent other) {
+    super.onCollisionStart(intersectionPoints, other);
+    if (other is Bullet) {
+      current = State.hit;
+      lives--;
+      other.removeFromParent();
+    }
   }
 
   void _loadAnimations() {
@@ -107,6 +119,9 @@ class Chicken extends Enemy {
 
   void checkLives() {
     if (lives <= 0) {
+      if (game.playSounds) {
+        FlameAudio.play('enemyKilled.wav', volume: game.soundVolume);
+      }
       removeFromParent();
     }
   }

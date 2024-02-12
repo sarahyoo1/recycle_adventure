@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
+import 'package:pixel_adventure/components/bullet.dart';
 import 'package:pixel_adventure/components/enemy.dart';
+import 'package:pixel_adventure/components/player.dart';
 
 enum State {
   idle,
@@ -28,8 +30,7 @@ class Slime extends Enemy {
 
   static const _stompedHeight = 260.0;
 
-  bool gotStopmed = false;
-  bool hitboxActive = true;
+  bool dead = false;
   RectangleHitbox? hitbox;
 
   @override
@@ -37,12 +38,12 @@ class Slime extends Enemy {
     debugMode = false;
 
     //add rectangle hitbox.
-    if (hitboxActive) {
-      hitbox = RectangleHitbox(
-        position: Vector2(4, 6),
-        size: Vector2(24, 26),
-      );
-    }
+
+    hitbox = RectangleHitbox(
+      position: Vector2(4, 6),
+      size: Vector2(24, 26),
+    );
+
     add(hitbox!);
 
     _loadAnimations();
@@ -52,11 +53,26 @@ class Slime extends Enemy {
 
   @override
   void update(double dt) {
-    checkLives();
     _updateState();
     movement(dt);
 
     super.update(dt);
+  }
+
+  @override
+  void onCollisionStart(
+      Set<Vector2> intersectionPoints, PositionComponent other) {
+    super.onCollisionStart(intersectionPoints, other);
+    if (other is Bullet) {
+      if (lives > 0) {
+        current = State.hit;
+        lives--;
+        other.removeFromParent();
+      } else {
+        dead = true;
+        onDead();
+      }
+    }
   }
 
   void _loadAnimations() {
@@ -98,7 +114,7 @@ class Slime extends Enemy {
   }
 
   void _updateState() {
-    if (!gotStopmed) {
+    if (!dead) {
       current = (velocity.x != 0) ? State.run : State.idle;
     }
 
@@ -115,22 +131,22 @@ class Slime extends Enemy {
       if (game.playSounds) {
         FlameAudio.play('enemyKilled.wav', volume: game.soundVolume);
       }
-      gotStopmed = true;
+      dead = true;
       current = State.hit;
       player.velocity.y = -_stompedHeight;
-      remove(hitbox!); //removes hitbox.
       await animationTicker?.completed;
-      position.y += 15;
-      size = Vector2(26, 26);
-      current = State.particles;
+      onDead();
     } else {
       player.collidedWithEnemy();
     }
   }
 
-  void checkLives() {
-    if (lives <= 0) {
-      removeFromParent();
+  void onDead() {
+    if (dead) {
+      remove(hitbox!);
+      position.y += 15;
+      size = Vector2(26, 26);
+      current = State.particles;
     }
   }
 }

@@ -65,14 +65,4 @@ class Enemy extends SpriteAnimationGroupComponent
 
     //player.y + player.height > position.y  --> this makes enemies stop when player is not on the ground.
   }
-
-  @override
-  void onCollisionStart(
-      Set<Vector2> intersectionPoints, PositionComponent other) {
-    super.onCollisionStart(intersectionPoints, other);
-    if (other is Bullet) {
-      lives--;
-      other.removeFromParent();
-    }
-  }
 }

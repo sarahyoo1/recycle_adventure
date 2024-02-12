@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
+import 'package:pixel_adventure/components/bullet.dart';
 import 'package:pixel_adventure/components/enemy.dart';
 
 enum State {
@@ -38,13 +39,15 @@ class Cucumber extends Enemy {
   late final SpriteAnimation _deadGroundAnimatiom;
   late final SpriteAnimation _deadHitAnimatiom;
 
+  final int deadGroundLives = 4;
+
   bool hitboxActive = true;
   RectangleHitbox? hitbox;
-  bool dead = false;
+  bool deadGround = false;
 
   @override
   FutureOr<void> onLoad() {
-    debugMode = false;
+    debugMode = true;
     priority = -1;
 
     _loadAnimations();
@@ -63,12 +66,33 @@ class Cucumber extends Enemy {
   @override
   void update(double dt) {
     checkLives();
-    if (!dead) {
+    if (!deadGround) {
       _updateState();
       movement(dt);
     }
 
     super.update(dt);
+  }
+
+  @override
+  void onCollisionStart(
+      Set<Vector2> intersectionPoints, PositionComponent other) async {
+    super.onCollisionStart(intersectionPoints, other);
+    if (deadGround) {
+      if (game.playSounds) {
+        FlameAudio.play('enemyKilled.wav', volume: game.soundVolume);
+      }
+      current = State.deadHit;
+      await animationTicker?.completed;
+      current = State.deadGround;
+    } else {
+      current = State.hit;
+    }
+
+    if (other is Bullet) {
+      lives--;
+      other.removeFromParent();
+    }
   }
 
   void _loadAnimations() {
@@ -120,17 +144,14 @@ class Cucumber extends Enemy {
   }
 
   void collidedWithPlayer() {
-    if (game.playSounds) {
-      FlameAudio.play('enemyKilled.wav', volume: game.soundVolume);
-    }
-    //TODO
-    remove(hitbox!); //removes hitbox.
-    dead = true;
-    current = State.deadGround;
     player.collidedWithEnemy();
   }
 
   void checkLives() {
+    if (lives <= deadGroundLives) {
+      deadGround = true;
+      current = State.deadHit;
+    }
     if (lives <= 0) {
       removeFromParent();
     }

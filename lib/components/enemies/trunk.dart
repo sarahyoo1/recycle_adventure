@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
+import 'package:pixel_adventure/components/bullet.dart';
 import 'package:pixel_adventure/components/enemy.dart';
 
 enum State {
@@ -51,8 +52,18 @@ class Trunk extends Enemy {
       _updateState();
       movement(dt);
     }
-
     super.update(dt);
+  }
+
+  @override
+  void onCollisionStart(
+      Set<Vector2> intersectionPoints, PositionComponent other) {
+    super.onCollisionStart(intersectionPoints, other);
+    if (other is Bullet) {
+      current = State.hit;
+      lives--;
+      other.removeFromParent();
+    }
   }
 
   void _loadAnimations() {
@@ -94,6 +105,7 @@ class Trunk extends Enemy {
     }
   }
 
+//TODO
   void _shootBullets() {
     //creates bullet
     current = State.attack;

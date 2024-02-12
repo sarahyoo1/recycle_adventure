@@ -6,7 +6,6 @@ import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:pixel_adventure/components/bullet.dart';
 import 'package:pixel_adventure/components/enemy.dart';
-import 'package:pixel_adventure/components/player.dart';
 
 enum State {
   idle,
@@ -63,6 +62,19 @@ class Bat extends Enemy {
     super.update(dt);
   }
 
+  @override
+  void onCollisionStart(
+      Set<Vector2> intersectionPoints, PositionComponent other) async {
+    super.onCollisionStart(intersectionPoints, other);
+    if (other is Bullet) {
+      current = State.hit;
+      await animationTicker?.completed;
+      current = State.flying;
+      lives--;
+      other.removeFromParent();
+    }
+  }
+
   void _loadAnimations() {
     _idleAnimation = _spriteAnimation('Idle', 12);
     _flyingAnimation = _spriteAnimation('Flying', 7);
@@ -74,8 +86,8 @@ class Bat extends Enemy {
       State.idle: _idleAnimation,
       State.flying: _flyingAnimation,
       State.hit: _hitAnimation,
-      State.ceilingIn: _ceilingInAnimation..loop = false,
-      State.ceilingOut: _ceilingOutAnimation..loop = false,
+      State.ceilingIn: _ceilingInAnimation,
+      State.ceilingOut: _ceilingOutAnimation,
     };
 
     current = State.idle;
