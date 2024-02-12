@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import 'package:pixel_adventure/components/backgrounds/background.dart';
 
 import 'package:pixel_adventure/components/checkpoint.dart';
 import 'package:pixel_adventure/components/enemies/bat.dart';
@@ -23,17 +24,18 @@ class Floor extends World with HasGameRef<PixelAdventure> {
   Floor({required this.floorName, required this.player});
   late TiledComponent floor;
   List<CollisionBlock> collisionBlocks = [];
+  late String backgroundName;
 
   @override
   FutureOr<void> onLoad() async {
     floor = await TiledComponent.load('$floorName.tmx', Vector2.all(16));
 
     add(floor);
-
+    _adaptBackgroundName();
+    addAll([Background(backgroundName: backgroundName)]);
     //_scrollingBackground();
     _spawningObjects();
     _addCollisions();
-    //addAll([Background()]);
 
     return super.onLoad();
   }
@@ -61,6 +63,20 @@ class Floor extends World with HasGameRef<PixelAdventure> {
   //     }
   //   }
   // }
+
+  void _adaptBackgroundName() {
+    switch (floorName) {
+      case 'Floor-01':
+        backgroundName = "sewer1";
+        break;
+      case 'Floor-02':
+        backgroundName = "sewer2";
+        break;
+      default:
+        backgroundName = "sewer1";
+        break;
+    }
+  }
 
   void _spawningObjects() {
     //adding spawn points

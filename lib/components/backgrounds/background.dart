@@ -4,9 +4,9 @@ import 'package:flame/components.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
 class Background extends SpriteComponent with HasGameRef<PixelAdventure> {
-  final String imageName;
+  final String backgroundName;
   Background({
-    this.imageName = 'city3',
+    this.backgroundName = 'sewer1',
     super.position,
   });
 
@@ -14,7 +14,7 @@ class Background extends SpriteComponent with HasGameRef<PixelAdventure> {
   FutureOr<void> onLoad() {
     priority = -3;
 
-    sprite = Sprite(game.images.fromCache('Background/$imageName.png'));
+    sprite = Sprite(game.images.fromCache('Background/$backgroundName.png'));
     return super.onLoad();
   }
 }

@@ -2,12 +2,6 @@ import 'dart:async';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:pixel_adventure/components/enemies/bat.dart';
-import 'package:pixel_adventure/components/enemies/chicken.dart';
-import 'package:pixel_adventure/components/enemies/cucumber.dart';
-import 'package:pixel_adventure/components/enemies/slime.dart';
-import 'package:pixel_adventure/components/enemies/trunk.dart';
-import 'package:pixel_adventure/components/enemies/whale.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
