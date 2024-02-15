@@ -143,12 +143,6 @@ class Player extends SpriteAnimationGroupComponent
       if (other is Item) other.collidedWithPlayer();
       if (other is Saw) _respawn();
       if (other is Checkpoint && !reachedCheckpoint) _reachedCheckpoint();
-      if (other is Chicken) other.collidedWithPlayer();
-      if (other is Slime) other.collidedWithPlayer();
-      if (other is Trunk) other.collidedWithPlayer();
-      if (other is Bat) other.collidedWithPlayer();
-      if (other is Cucumber) other.collidedWithPlayer();
-      if (other is Whale) other.collidedWithPlayer();
     }
 
     super.onCollision(intersectionPoints, other);
@@ -371,6 +365,7 @@ class Player extends SpriteAnimationGroupComponent
   }
 
   void collidedWithEnemy() {
+    game.health--;
     _respawn();
   }
 

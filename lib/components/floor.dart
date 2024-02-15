@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import 'package:pixel_adventure/components/HUD/hud.dart';
 import 'package:pixel_adventure/components/backgrounds/background.dart';
 
 import 'package:pixel_adventure/components/checkpoint.dart';
@@ -33,6 +34,7 @@ class Floor extends World with HasGameRef<PixelAdventure> {
     add(floor);
     _adaptBackgroundName();
     addAll([Background(backgroundName: backgroundName)]);
+    add(Hud());
     //_scrollingBackground();
     _spawningObjects();
     _addCollisions();

@@ -6,6 +6,7 @@ import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:pixel_adventure/components/bullet.dart';
 import 'package:pixel_adventure/components/enemy.dart';
+import 'package:pixel_adventure/components/player.dart';
 
 enum State {
   idle,
@@ -73,6 +74,7 @@ class Bat extends Enemy {
       lives--;
       other.removeFromParent();
     }
+    if (other is Player) other.collidedWithEnemy();
   }
 
   void _loadAnimations() {

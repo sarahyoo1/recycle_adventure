@@ -16,6 +16,7 @@ class PixelAdventure extends FlameGame
 
   late CameraComponent cam;
   Player player = Player(character: 'Ninja Frog');
+  int health = 5; //player health
 
   late JoystickComponent joystick;
   bool showJoystick = false;
@@ -28,9 +29,9 @@ class PixelAdventure extends FlameGame
   FutureOr<void> onLoad() async {
     //loads all images into cache.
     await images.loadAllImages();
-
+    //loads floor
     _loadFloor();
-
+    //loads joystick
     if (showJoystick) {
       addJoystick();
     }

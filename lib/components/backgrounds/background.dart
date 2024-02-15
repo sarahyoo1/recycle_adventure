@@ -8,12 +8,11 @@ class Background extends SpriteComponent with HasGameRef<PixelAdventure> {
   Background({
     this.backgroundName = 'sewer1',
     super.position,
+    super.priority = -2,
   });
 
   @override
   FutureOr<void> onLoad() {
-    priority = -3;
-
     sprite = Sprite(game.images.fromCache('Background/$backgroundName.png'));
     return super.onLoad();
   }
