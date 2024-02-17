@@ -34,6 +34,7 @@ class Player extends SpriteAnimationGroupComponent
     with HasGameRef<PixelAdventure>, KeyboardHandler, CollisionCallbacks {
   String character;
   int lives;
+  
   Player({
     super.position,
     this.character = 'Ninja Frog',
@@ -124,7 +125,9 @@ class Player extends SpriteAnimationGroupComponent
     hasJumped = keysPressed.contains(LogicalKeyboardKey.space);
 
     //Checks if the player shoots bullet.
-    hasShooted = keysPressed.contains(LogicalKeyboardKey.tab);
+    hasShooted = keysPressed.contains(LogicalKeyboardKey.keyJ) && !event.repeat;
+
+    
 
     return super.onKeyEvent(event, keysPressed);
   }
