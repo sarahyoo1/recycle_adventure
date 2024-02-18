@@ -65,7 +65,7 @@ class Trunk extends Enemy {
       lives--;
       other.removeFromParent();
     }
-    if (other is Player) other.collidedWithEnemy();
+    if (other is Player) other.respawn();
   }
 
   void _loadAnimations() {
@@ -125,7 +125,7 @@ class Trunk extends Enemy {
       await animationTicker?.completed;
       removeFromParent();
     } else {
-      player.collidedWithEnemy();
+      player.respawn();
     }
   }
 

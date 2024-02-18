@@ -91,7 +91,7 @@ class PixelAdventure extends FlameGame
       currentFloorIndex++;
       _loadFloor();
     } else {
-      //if there is no more levels
+      //if there is no more floors
       currentFloorIndex = 0;
       _loadFloor();
     }

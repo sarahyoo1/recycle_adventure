@@ -73,7 +73,7 @@ class Slime extends Enemy {
         onDead();
       }
     }
-    if (other is Player) other.collidedWithEnemy();
+    if (other is Player) other.respawn();
   }
 
   void _loadAnimations() {
@@ -138,7 +138,7 @@ class Slime extends Enemy {
       await animationTicker?.completed;
       onDead();
     } else {
-      player.collidedWithEnemy();
+      player.respawn();
     }
   }
 

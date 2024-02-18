@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="13">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="15">
+ <properties>
+  <property name="Background" value="city2"/>
+ </properties>
  <tileset firstgid="1" source="Pixel Adventure.tsx"/>
- <tileset firstgid="243" source="Objects Tileset.tsx"/>
+ <tileset firstgid="243" source="Objects Tileset (32x32).tsx"/>
  <layer id="1" name="Background" width="40" height="23">
   <properties>
    <property name="Background" value="city2"/>
@@ -26,7 +29,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,244,0,0,0,243,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,243,0,244,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,
 118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,
 118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118
@@ -34,13 +37,16 @@
  </layer>
  <objectgroup id="2" name="Collisions">
   <object id="1" x="0" y="320" width="640" height="48"/>
-  <object id="7" x="336" y="288" width="32" height="32"/>
-  <object id="8" x="400" y="288" width="32" height="32"/>
   <object id="10" x="624" y="0" width="16" height="320"/>
   <object id="11" x="0" y="0" width="16" height="320"/>
  </objectgroup>
  <objectgroup id="3" name="Spawnpoints">
-  <object id="2" name="Player" type="Player" x="16" y="288" width="32" height="32"/>
-  <object id="3" name="Car" type="Car" x="256" y="288" width="32" height="32"/>
+  <object id="2" name="Player" type="Player" x="64" y="288" width="32" height="32"/>
+  <object id="3" name="CarSpawnManager" type="CarSpawnManager" x="480" y="272" width="96" height="48">
+   <properties>
+    <property name="direction" type="int" value="-1"/>
+   </properties>
+  </object>
+  <object id="14" name="Checkpoint" type="Checkpoint" x="400" y="256" width="64" height="64"/>
  </objectgroup>
 </map>

@@ -94,7 +94,7 @@ class Cucumber extends Enemy {
       lives--;
       other.removeFromParent();
     }
-    if (other is Player) other.collidedWithEnemy();
+    if (other is Player) other.respawn();
   }
 
   void _loadAnimations() {
@@ -146,7 +146,7 @@ class Cucumber extends Enemy {
   }
 
   void collidedWithPlayer() {
-    player.collidedWithEnemy();
+    player.respawn();
   }
 
   void checkLives() {

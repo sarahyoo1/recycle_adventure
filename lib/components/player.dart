@@ -6,17 +6,12 @@ import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/src/services/raw_keyboard.dart';
 import 'package:pixel_adventure/components/bullet.dart';
 import 'package:pixel_adventure/components/checkpoint.dart';
-import 'package:pixel_adventure/components/enemies/bat.dart';
-import 'package:pixel_adventure/components/enemies/chicken.dart';
 import 'package:pixel_adventure/components/collision_block.dart';
 import 'package:pixel_adventure/components/custom_hitbox.dart';
-import 'package:pixel_adventure/components/enemies/cucumber.dart';
-import 'package:pixel_adventure/components/enemies/slime.dart';
-import 'package:pixel_adventure/components/enemies/trunk.dart';
-import 'package:pixel_adventure/components/enemies/whale.dart';
 import 'package:pixel_adventure/components/fruit.dart';
 import 'package:pixel_adventure/components/item.dart';
-import 'package:pixel_adventure/components/saw.dart';
+import 'package:pixel_adventure/components/traps/car.dart';
+import 'package:pixel_adventure/components/traps/saw.dart';
 import 'package:pixel_adventure/components/utils.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
@@ -34,7 +29,7 @@ class Player extends SpriteAnimationGroupComponent
     with HasGameRef<PixelAdventure>, KeyboardHandler, CollisionCallbacks {
   String character;
   int lives;
-  
+
   Player({
     super.position,
     this.character = 'Ninja Frog',
@@ -52,7 +47,7 @@ class Player extends SpriteAnimationGroupComponent
   late final SpriteAnimation disappearingAnimation;
 
   final double _gravity = 9.8;
-  final double _jumpForce = 260;
+  final double _jumpForce = 300;
   final double _terminalVelocity = 300;
   double horizontalMovement = 0;
   double moveSpeed = 100;
@@ -127,8 +122,6 @@ class Player extends SpriteAnimationGroupComponent
     //Checks if the player shoots bullet.
     hasShooted = keysPressed.contains(LogicalKeyboardKey.keyJ) && !event.repeat;
 
-    
-
     return super.onKeyEvent(event, keysPressed);
   }
 
@@ -144,8 +137,9 @@ class Player extends SpriteAnimationGroupComponent
 
       if (other is Fruit) other.collidedWithPlayer();
       if (other is Item) other.collidedWithPlayer();
-      if (other is Saw) _respawn();
+      if (other is Saw) respawn();
       if (other is Checkpoint && !reachedCheckpoint) _reachedCheckpoint();
+      if (other is Car) other.collidedWithPlayer();
     }
 
     super.onCollision(intersectionPoints, other);
@@ -315,10 +309,11 @@ class Player extends SpriteAnimationGroupComponent
     isOnGround = false;
   }
 
-  void _respawn() async {
+  void respawn() async {
     // if (game.playSounds) {
     //   FlameAudio.play('dead.wav', volume: game.soundVolume);
     // }
+    game.health--;
     gotHit = true;
     current = PlayerState.hit;
 
@@ -335,6 +330,7 @@ class Player extends SpriteAnimationGroupComponent
 
     velocity = Vector2.zero();
     position = startingPosition;
+
     _updatePlayerState();
     Future.delayed(
       const Duration(microseconds: 400),
@@ -365,11 +361,6 @@ class Player extends SpriteAnimationGroupComponent
       const Duration(milliseconds: 3000),
       () => game.loadNextFloor(),
     );
-  }
-
-  void collidedWithEnemy() {
-    game.health--;
-    _respawn();
   }
 
   void _shootBullet() {

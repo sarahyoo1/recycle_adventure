@@ -16,7 +16,9 @@ import 'package:pixel_adventure/components/enemies/whale.dart';
 import 'package:pixel_adventure/components/fruit.dart';
 import 'package:pixel_adventure/components/item.dart';
 import 'package:pixel_adventure/components/player.dart';
-import 'package:pixel_adventure/components/saw.dart';
+import 'package:pixel_adventure/components/traps/car_manager.dart';
+import 'package:pixel_adventure/components/traps/saw.dart';
+import 'package:pixel_adventure/components/traps/car.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
 class Floor extends World with HasGameRef<PixelAdventure> {
@@ -110,6 +112,13 @@ class Floor extends World with HasGameRef<PixelAdventure> {
               isVertical: spawnPoint.properties.getValue('isVertical'),
             );
             add(saw);
+            break;
+          case 'CarSpawnManager':
+            final carSpawnManager = CarSpawnManager(
+              position: Vector2(spawnPoint.x, spawnPoint.y),
+              direction: spawnPoint.properties.getValue('direction'),
+            );
+            add(carSpawnManager);
             break;
           case 'Checkpoint':
             final checkpoint = Checkpoint(

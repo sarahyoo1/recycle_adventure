@@ -67,6 +67,7 @@ flutter:
     - assets/tiles/
     - assets/images/
     - assets/images/Terrain/
+    - assets/images/Objects/
     - assets/images/Background/
     - assets/images/HUD/
     - assets/images/Items/Fruits/

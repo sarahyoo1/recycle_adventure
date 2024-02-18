@@ -93,7 +93,7 @@ class Whale extends Enemy {
       lives--;
       other.removeFromParent();
     }
-    if (other is Player) other.collidedWithEnemy();
+    if (other is Player) other.respawn();
   }
 
   void _loadAnimations() {
@@ -146,7 +146,7 @@ class Whale extends Enemy {
 
 //TODO
   void collidedWithPlayer() {
-    player.collidedWithEnemy();
+    player.respawn();
   }
 
   void checkLives() {
