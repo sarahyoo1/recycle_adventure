@@ -16,7 +16,7 @@ class Bullet extends SpriteAnimationComponent
   Bullet({
     super.position,
     this.speed = 450,
-    this.imagePath = "Bullet.png",
+    this.imagePath = "Bullet.png", //default bullet
     this.animationAmount = 1,
     this.moveVertically = false,
     required this.moveDirection,

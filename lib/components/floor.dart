@@ -32,10 +32,9 @@ class Floor extends World with HasGameRef<PixelAdventure> {
     floor = await TiledComponent.load('$floorName.tmx', Vector2.all(16));
 
     add(floor);
-    _adaptBackgroundName();
-    addAll([Background(backgroundName: backgroundName)]);
     add(Hud());
     //_scrollingBackground();
+    _addBackground();
     _spawningObjects();
     _addCollisions();
 
@@ -66,17 +65,11 @@ class Floor extends World with HasGameRef<PixelAdventure> {
   //   }
   // }
 
-  void _adaptBackgroundName() {
-    switch (floorName) {
-      case 'Floor-01':
-        backgroundName = "sewer1";
-        break;
-      case 'Floor-02':
-        backgroundName = "sewer2";
-        break;
-      default:
-        backgroundName = "sewer1";
-        break;
+  void _addBackground() {
+    final backgroundLayer = floor.tileMap.getLayer<TileLayer>('Background');
+    if (backgroundLayer != null) {
+      backgroundName = backgroundLayer.properties.getValue('Background');
+      addAll([Background(backgroundName: backgroundName)]);
     }
   }
 
@@ -107,6 +100,7 @@ class Floor extends World with HasGameRef<PixelAdventure> {
               amount: spawnPoint.properties.getValue('amount'),
             );
             add(item);
+            break;
           case 'Saw':
             final saw = Saw(
               position: Vector2(spawnPoint.x, spawnPoint.y),

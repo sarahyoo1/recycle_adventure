@@ -22,8 +22,8 @@ class PixelAdventure extends FlameGame
   bool showJoystick = false;
   bool playSounds = false; //turns on game audios
   double soundVolume = 1.0;
-  List<String> floorNames = ['Floor-01', 'Floor-02'];
-  int currentFloorIndex = 0; //Should initially set to be 0.
+  List<String> floorNames = ['Floor-01', 'Floor-02', 'Floor-03'];
+  int currentFloorIndex = 2; //Should initially set to be 0.
 
   @override
   FutureOr<void> onLoad() async {

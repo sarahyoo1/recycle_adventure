@@ -15,7 +15,7 @@ class Item extends SpriteAnimationComponent
     super.size,
     super.removeOnFinish = true,
     this.item = "Heart", //default item to be heart.
-    this.amount = 22,
+    this.amount = 22, //default heart item sprite animation amount
   });
 
   final double stepTime = 0.05;
