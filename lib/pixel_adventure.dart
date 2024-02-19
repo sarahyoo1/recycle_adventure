@@ -25,15 +25,20 @@ class PixelAdventure extends FlameGame
   List<String> floorNames = ['Floor-01', 'Floor-02', 'Floor-03'];
   int currentFloorIndex = 2; //Should initially set to be 0.
 
+  bool _isAlreadyLoaded = false;
+
   @override
   FutureOr<void> onLoad() async {
-    //loads all images into cache.
-    await images.loadAllImages();
-    //loads floor
-    _loadFloor();
-    //loads joystick
-    if (showJoystick) {
-      addJoystick();
+    if (!_isAlreadyLoaded) {
+      //loads all images into cache.
+      await images.loadAllImages();
+      //loads floor
+      _loadFloor();
+      //loads joystick
+      if (showJoystick) {
+        addJoystick();
+      }
+      _isAlreadyLoaded = true;
     }
 
     return super.onLoad();
@@ -116,5 +121,10 @@ class PixelAdventure extends FlameGame
         addAll([cam, world]);
       },
     );
+  }
+
+  void reset() {
+    currentFloorIndex = 0;
+    health = 5;
   }
 }

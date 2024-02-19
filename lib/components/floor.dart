@@ -4,7 +4,6 @@ import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:pixel_adventure/components/HUD/hud.dart';
 import 'package:pixel_adventure/components/backgrounds/background.dart';
-
 import 'package:pixel_adventure/components/checkpoint.dart';
 import 'package:pixel_adventure/components/enemies/bat.dart';
 import 'package:pixel_adventure/components/enemies/chicken.dart';
@@ -18,7 +17,6 @@ import 'package:pixel_adventure/components/item.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/components/traps/car_manager.dart';
 import 'package:pixel_adventure/components/traps/saw.dart';
-import 'package:pixel_adventure/components/traps/car.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
 class Floor extends World with HasGameRef<PixelAdventure> {

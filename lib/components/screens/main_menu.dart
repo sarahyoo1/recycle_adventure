@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:pixel_adventure/components/screens/game_play.dart';
-import 'package:pixel_adventure/pixel_adventure.dart';
 
 class MainMenu extends StatelessWidget {
   const MainMenu({super.key});

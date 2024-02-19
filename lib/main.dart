@@ -9,7 +9,7 @@ void main() async {
   await Flame.device.setLandscape();
 
   runApp(MaterialApp(
-    themeMode: ThemeMode.system,
+    themeMode: ThemeMode.dark,
     darkTheme: ThemeData.dark().copyWith(
       textTheme: GoogleFonts.bungeeInlineTextTheme(),
       scaffoldBackgroundColor: Colors.black,
