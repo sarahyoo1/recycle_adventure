@@ -5,7 +5,13 @@ import 'package:flame/components.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
-class Checkpoint extends SpriteAnimationComponent
+enum State {
+  idle,
+  flagOut,
+  noFlag,
+}
+
+class Checkpoint extends SpriteAnimationGroupComponent
     with HasGameRef<PixelAdventure>, CollisionCallbacks {
   Checkpoint({
     position,
@@ -15,13 +21,16 @@ class Checkpoint extends SpriteAnimationComponent
           size: size,
         );
 
-  double stepTime = 0.05;
-  bool reachedCheckpoint = false;
+  late final SpriteAnimation _idleSpriteAnimation;
+  late final SpriteAnimation _flagOutSpriteAnimation;
+  late final SpriteAnimation _noFlagSpriteAnimation;
 
   @override
   FutureOr<void> onLoad() {
     debugMode = false;
     priority = -1;
+
+    _loadSpriteAnimations();
 
     add(
       RectangleHitbox(
@@ -31,50 +40,45 @@ class Checkpoint extends SpriteAnimationComponent
       ),
     );
 
-    animation = SpriteAnimation.fromFrameData(
-      game.images
-          .fromCache('Items/Checkpoints/Checkpoint/Checkpoint (No Flag).png'),
-      SpriteAnimationData.sequenced(
-        amount: 1,
-        stepTime: stepTime,
-        textureSize: Vector2.all(64),
-      ),
-    );
     return super.onLoad();
   }
 
   @override
-  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    if (other is Player && !reachedCheckpoint) _reachedCheckpoint();
-    super.onCollision(intersectionPoints, other);
+  void onCollisionStart(
+      Set<Vector2> intersectionPoints, PositionComponent other) {
+    if (other is Player) _reachedCheckpoint();
+    super.onCollisionStart(intersectionPoints, other);
   }
 
-  void _reachedCheckpoint() {
-    reachedCheckpoint = true;
-    animation = SpriteAnimation.fromFrameData(
-      game.images.fromCache(
-          'Items/Checkpoints/Checkpoint/Checkpoint (Flag Out) (64x64).png'),
-      SpriteAnimationData.sequenced(
-        amount: 26,
-        stepTime: stepTime,
-        textureSize: Vector2.all(64),
-        loop: false,
-      ),
-    );
+  void _reachedCheckpoint() async {
+    current = State.flagOut;
+    await animationTicker?.completed;
+    current = State.idle;
+  }
 
-    Future.delayed(
-      const Duration(milliseconds: 1300),
-      () {
-        animation = SpriteAnimation.fromFrameData(
-          game.images.fromCache(
-              'Items/Checkpoints/Checkpoint/Checkpoint (Flag Idle) (64x64).png'),
-          SpriteAnimationData.sequenced(
-            amount: 10,
-            stepTime: stepTime,
-            textureSize: Vector2.all(64),
-          ),
-        );
-      },
+  void _loadSpriteAnimations() {
+    _idleSpriteAnimation = _spriteAnimation(10, 'Flag Idle');
+    _flagOutSpriteAnimation = _spriteAnimation(26, 'Flag Out')..loop = false;
+    _noFlagSpriteAnimation = _spriteAnimation(1, 'No Flag');
+
+    animations = {
+      State.idle: _idleSpriteAnimation,
+      State.flagOut: _flagOutSpriteAnimation,
+      State.noFlag: _noFlagSpriteAnimation,
+    };
+
+    current = State.noFlag;
+  }
+
+  SpriteAnimation _spriteAnimation(int amount, String name) {
+    return SpriteAnimation.fromFrameData(
+      game.images.fromCache(
+          'Items/Checkpoints/Checkpoint/Checkpoint ($name) (64x64).png'),
+      SpriteAnimationData.sequenced(
+        amount: amount,
+        stepTime: 0.05,
+        textureSize: Vector2.all(64),
+      ),
     );
   }
 }

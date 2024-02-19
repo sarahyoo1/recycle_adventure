@@ -24,36 +24,28 @@ class Fruit extends SpriteAnimationComponent
     height: 12,
   );
 
-  bool isCollected = false;
-
   @override
   FutureOr<void> onLoad() {
     debugMode = false;
-    priority = -1; //makes fruits go behind the player.
+    priority = -1;
 
-    //adds fruit items hitbox.
     add(RectangleHitbox(
       position: Vector2(hitbox.offsetX, hitbox.offsetY),
       size: Vector2(hitbox.width, hitbox.height),
       collisionType: CollisionType.passive,
     ));
 
-    //animates fruit itmes.
     animation = _spriteAnimation(fruit, 17, true);
     return super.onLoad();
   }
 
   void collidedWithPlayer() async {
-    if (!isCollected) {
-      isCollected = true;
-      if (game.playSounds) {
-        FlameAudio.play('pickupItem.wav', volume: game.soundVolume);
-      }
-      animation = _spriteAnimation('Collected', 6, false);
-
-      await animationTicker?.completed;
-      removeFromParent();
+    if (game.playSounds) {
+      FlameAudio.play('pickupItem.wav', volume: game.soundVolume);
     }
+    animation = _spriteAnimation('Collected', 6, false);
+    await animationTicker?.completed;
+    removeFromParent();
   }
 
   SpriteAnimation _spriteAnimation(String name, int amount, bool isLooped) {

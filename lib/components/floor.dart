@@ -4,6 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:pixel_adventure/components/HUD/hud.dart';
 import 'package:pixel_adventure/components/backgrounds/background.dart';
+import 'package:pixel_adventure/components/backgrounds/background_tile.dart';
 import 'package:pixel_adventure/components/checkpoint.dart';
 import 'package:pixel_adventure/components/enemies/bat.dart';
 import 'package:pixel_adventure/components/enemies/chicken.dart';
@@ -44,23 +45,11 @@ class Floor extends World with HasGameRef<PixelAdventure> {
   // void _scrollingBackground() {
   //   final backgroundLayer = floor.tileMap.getLayer('Background');
 
-  //   const tileSize = 64;
-  //   final numOfTilesY = (game.size.y / tileSize).floor();
-  //   final numOfTilesX = (game.size.x / tileSize).floor();
-
   //   if (backgroundLayer != null) {
   //     final backgroundColor =
   //         backgroundLayer.properties.getValue('BackgroundColor');
-
-  //     //Fills the entire background with tiles
-  //     for (double y = 0; y < numOfTilesY + 1; y++) {
-  //       for (double x = 0; x < numOfTilesX; x++) {
-  //         final backgroundTile = BackgroundTile(
-  //           color: backgroundColor ?? 'Gray', //The name of a tile
-  //           position: Vector2(x * tileSize - tileSize, y * tileSize - tileSize),
-  //         );
-  //         add(backgroundTile);
-  //       }
+  //     final backgroundTile = BackgroundTile(color: backgroundColor ?? 'Gray', position: Vector2(0, 0),);
+  //     add(backgroundTile);
   //     }
   //   }
   // }
@@ -82,6 +71,7 @@ class Floor extends World with HasGameRef<PixelAdventure> {
         switch (spawnPoint.class_) {
           case 'Player':
             player.position = Vector2(spawnPoint.x, spawnPoint.y);
+            player.scale.x = 1; //makes player spawned facing to the right.
             add(player);
             break;
           case 'Fruit':

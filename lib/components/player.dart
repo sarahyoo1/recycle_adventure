@@ -125,9 +125,9 @@ class Player extends SpriteAnimationGroupComponent
     return super.onKeyEvent(event, keysPressed);
   }
 
-  //Checkts collisions with other objects.
   @override
-  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+  void onCollisionStart(
+      Set<Vector2> intersectionPoints, PositionComponent other) {
     if (!reachedCheckpoint) {
       if (lives > 0) {
         lives--;
@@ -141,18 +141,18 @@ class Player extends SpriteAnimationGroupComponent
       if (other is Checkpoint && !reachedCheckpoint) _reachedCheckpoint();
       if (other is Car) other.collidedWithPlayer();
     }
-
-    super.onCollision(intersectionPoints, other);
+    super.onCollisionStart(intersectionPoints, other);
   }
 
   void _loadAllAnimations() {
-    idleAnimation = _spriteAnimation('Idle', 11, true);
-    runningAnimation = _spriteAnimation('Run', 12, true);
-    jumpingAnimation = _spriteAnimation('Jump', 1, true);
-    fallingAnimation = _spriteAnimation('Fall', 1, true);
-    hitAnimation = _spriteAnimation('Hit', 7, false)..loop = false;
-    appearingAnimation = _specialSpriteAnimation('Appearing', 7, false);
-    disappearingAnimation = _specialSpriteAnimation('Disappearing', 7, false);
+    idleAnimation = _spriteAnimation('Idle', 11);
+    runningAnimation = _spriteAnimation('Run', 12);
+    jumpingAnimation = _spriteAnimation('Jump', 1);
+    fallingAnimation = _spriteAnimation('Fall', 1);
+    hitAnimation = _spriteAnimation('Hit', 7)..loop = false;
+    appearingAnimation = _specialSpriteAnimation('Appearing', 7)..loop = false;
+    disappearingAnimation = _specialSpriteAnimation('Disappearing', 7)
+      ..loop = false;
 
     //Sets animations for each state.
     animations = {
@@ -169,27 +169,24 @@ class Player extends SpriteAnimationGroupComponent
     current = PlayerState.running;
   }
 
-  SpriteAnimation _spriteAnimation(String state, int amount, bool isLooped) {
+  SpriteAnimation _spriteAnimation(String state, int amount) {
     return SpriteAnimation.fromFrameData(
       game.images.fromCache('Main Characters/$character/$state (32x32).png'),
       SpriteAnimationData.sequenced(
         amount: amount,
         stepTime: stepTime,
         textureSize: Vector2.all(32),
-        loop: isLooped,
       ),
     );
   }
 
-  SpriteAnimation _specialSpriteAnimation(
-      String state, int amount, bool isLooped) {
+  SpriteAnimation _specialSpriteAnimation(String state, int amount) {
     return SpriteAnimation.fromFrameData(
       game.images.fromCache('Main Characters/$state (96x96).png'),
       SpriteAnimationData.sequenced(
         amount: amount,
         stepTime: stepTime,
         textureSize: Vector2.all(96),
-        loop: isLooped,
       ),
     );
   }
@@ -320,9 +317,8 @@ class Player extends SpriteAnimationGroupComponent
     await animationTicker?.completed;
     animationTicker?.reset();
 
-    scale.x = 1; //makes player character always directing to the right.
+    scale.x = 1; //makes player face to the right.
     position = startingPosition - Vector2.all(32); //96 - 64 = 32
-
     current = PlayerState.appearing;
 
     await animationTicker?.completed;
@@ -330,7 +326,6 @@ class Player extends SpriteAnimationGroupComponent
 
     velocity = Vector2.zero();
     position = startingPosition;
-
     _updatePlayerState();
     Future.delayed(
       const Duration(microseconds: 400),

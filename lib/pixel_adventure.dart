@@ -5,11 +5,16 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/painting.dart';
+import 'package:pixel_adventure/components/HUD/jump_button.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/components/floor.dart';
 
 class PixelAdventure extends FlameGame
-    with HasKeyboardHandlerComponents, DragCallbacks, HasCollisionDetection {
+    with
+        HasKeyboardHandlerComponents,
+        DragCallbacks,
+        HasCollisionDetection,
+        TapCallbacks {
   //sets default background color
   @override
   Color backgroundColor() => const Color(0xFF211F30);
@@ -19,11 +24,11 @@ class PixelAdventure extends FlameGame
   int health = 5; //player health
 
   late JoystickComponent joystick;
-  bool showJoystick = false;
+  bool showControls = false;
   bool playSounds = false; //turns on game audios
   double soundVolume = 1.0;
   List<String> floorNames = ['Floor-01', 'Floor-02', 'Floor-03'];
-  int currentFloorIndex = 2; //Should initially set to be 0.
+  int currentFloorIndex = 0; //Should initially set to be 0.
 
   bool _isAlreadyLoaded = false;
 
@@ -35,8 +40,9 @@ class PixelAdventure extends FlameGame
       //loads floor
       _loadFloor();
       //loads joystick
-      if (showJoystick) {
+      if (showControls) {
         addJoystick();
+        add(JumpButton());
       }
       _isAlreadyLoaded = true;
     }
@@ -46,7 +52,7 @@ class PixelAdventure extends FlameGame
 
   @override
   void update(double dt) {
-    if (showJoystick) {
+    if (showControls) {
       updateJoystick();
     }
     super.update(dt);
@@ -54,6 +60,7 @@ class PixelAdventure extends FlameGame
 
   void addJoystick() {
     joystick = JoystickComponent(
+      priority: 10,
       knob: SpriteComponent(
         sprite: Sprite(
           images.fromCache('HUD/Knob.png'),
