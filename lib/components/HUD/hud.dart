@@ -17,6 +17,7 @@ class Hud extends PositionComponent with HasGameRef<PixelAdventure> {
   });
 
   late TextComponent _floorTextComponent;
+  final int maxHeartNum = 5;
 
   @override
   FutureOr<void> onLoad() {
@@ -47,7 +48,7 @@ class Hud extends PositionComponent with HasGameRef<PixelAdventure> {
   }
 
   void _addHeartHealthComponent() async {
-    for (int i = 1; i <= game.health; i++) {
+    for (int i = 1; i <= maxHeartNum; i++) {
       final positionX = 25 * i;
       await add(
         HeartHealthComponent(

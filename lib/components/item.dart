@@ -31,7 +31,6 @@ class Item extends SpriteAnimationComponent
   @override
   FutureOr<void> onLoad() {
     debugMode = false;
-    priority = -1;
 
     add(RectangleHitbox(
       position: Vector2(hitbox.offsetX, hitbox.offsetY),
@@ -51,6 +50,10 @@ class Item extends SpriteAnimationComponent
       }
       animation = _spriteAnimation('Collected', 6)..loop = false;
       await animationTicker?.completed;
+
+      if (item == 'Heart') {
+        game.health++;
+      }
       removeFromParent();
     }
   }

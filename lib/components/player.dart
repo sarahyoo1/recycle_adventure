@@ -21,6 +21,8 @@ enum PlayerState {
   jumping,
   falling,
   hit,
+  attack,
+  dead,
   appearing,
   disappearing
 }
@@ -28,15 +30,11 @@ enum PlayerState {
 class Player extends SpriteAnimationGroupComponent
     with HasGameRef<PixelAdventure>, KeyboardHandler, CollisionCallbacks {
   String character;
-  int lives;
-
   Player({
     super.position,
-    this.character = 'Ninja Frog',
-    this.lives = 5,
+    required this.character,
   });
 
-  final double stepTime = 0.05;
   late final Player player;
   late final SpriteAnimation idleAnimation;
   late final SpriteAnimation runningAnimation;
@@ -45,9 +43,11 @@ class Player extends SpriteAnimationGroupComponent
   late final SpriteAnimation hitAnimation;
   late final SpriteAnimation appearingAnimation;
   late final SpriteAnimation disappearingAnimation;
+  late final SpriteAnimation attackAnimation;
+  late final SpriteAnimation deadAnimation;
 
   final double _gravity = 9.8;
-  final double _jumpForce = 300;
+  final double _jumpForce = 240;
   final double _terminalVelocity = 300;
   double horizontalMovement = 0;
   double moveSpeed = 100;
@@ -59,7 +59,7 @@ class Player extends SpriteAnimationGroupComponent
   bool reachedCheckpoint = false;
   List<CollisionBlock> collisionBlocks = [];
   CustomHitbox hitbox = CustomHitbox(
-    offsetX: 10,
+    offsetX: 8,
     offsetY: 4,
     width: 14,
     height: 28,
@@ -87,6 +87,9 @@ class Player extends SpriteAnimationGroupComponent
 
   @override
   void update(double dt) {
+    if (game.health <= 0) {
+      _dead();
+    }
     if (!gotHit && !reachedCheckpoint) {
       _updatePlayerState();
       _updatePlayerMovement(dt);
@@ -120,7 +123,7 @@ class Player extends SpriteAnimationGroupComponent
     hasJumped = keysPressed.contains(LogicalKeyboardKey.space);
 
     //Checks if the player shoots bullet.
-    hasShooted = keysPressed.contains(LogicalKeyboardKey.keyJ) && !event.repeat;
+    hasShooted = keysPressed.contains(LogicalKeyboardKey.keyQ) && !event.repeat;
 
     return super.onKeyEvent(event, keysPressed);
   }
@@ -129,12 +132,6 @@ class Player extends SpriteAnimationGroupComponent
   void onCollisionStart(
       Set<Vector2> intersectionPoints, PositionComponent other) {
     if (!reachedCheckpoint) {
-      if (lives > 0) {
-        lives--;
-      } else {
-        //TODO: Game Over
-      }
-
       if (other is Fruit) other.collidedWithPlayer();
       if (other is Item) other.collidedWithPlayer();
       if (other is Saw) respawn();
@@ -145,11 +142,13 @@ class Player extends SpriteAnimationGroupComponent
   }
 
   void _loadAllAnimations() {
-    idleAnimation = _spriteAnimation('Idle', 11);
-    runningAnimation = _spriteAnimation('Run', 12);
-    jumpingAnimation = _spriteAnimation('Jump', 1);
-    fallingAnimation = _spriteAnimation('Fall', 1);
-    hitAnimation = _spriteAnimation('Hit', 7)..loop = false;
+    idleAnimation = _spriteAnimation('Idle', 4, 0.27);
+    runningAnimation = _spriteAnimation('Run', 8, 0.05);
+    jumpingAnimation = _spriteAnimation('Jump', 1, 0.27);
+    fallingAnimation = _spriteAnimation('Fall', 1, 0.27);
+    hitAnimation = _spriteAnimation('disappear', 3, 0.25)..loop = false;
+    attackAnimation = _spriteAnimation('attack', 8, 0.2)..loop = false;
+    deadAnimation = _spriteAnimation('dead', 8, 0.27)..loop = false;
     appearingAnimation = _specialSpriteAnimation('Appearing', 7)..loop = false;
     disappearingAnimation = _specialSpriteAnimation('Disappearing', 7)
       ..loop = false;
@@ -161,15 +160,17 @@ class Player extends SpriteAnimationGroupComponent
       PlayerState.jumping: jumpingAnimation,
       PlayerState.falling: fallingAnimation,
       PlayerState.hit: hitAnimation,
+      PlayerState.attack: attackAnimation,
+      PlayerState.dead: deadAnimation,
       PlayerState.appearing: appearingAnimation,
       PlayerState.disappearing: disappearingAnimation,
     };
 
     //Sets current animation.
-    current = PlayerState.running;
+    current = PlayerState.idle;
   }
 
-  SpriteAnimation _spriteAnimation(String state, int amount) {
+  SpriteAnimation _spriteAnimation(String state, int amount, double stepTime) {
     return SpriteAnimation.fromFrameData(
       game.images.fromCache('Main Characters/$character/$state (32x32).png'),
       SpriteAnimationData.sequenced(
@@ -185,7 +186,7 @@ class Player extends SpriteAnimationGroupComponent
       game.images.fromCache('Main Characters/$state (96x96).png'),
       SpriteAnimationData.sequenced(
         amount: amount,
-        stepTime: stepTime,
+        stepTime: 0.05,
         textureSize: Vector2.all(96),
       ),
     );
@@ -206,7 +207,7 @@ class Player extends SpriteAnimationGroupComponent
   }
 
   void _updatePlayerState() {
-    PlayerState playerState = PlayerState.idle;
+    current = (velocity.x != 0) ? PlayerState.running : PlayerState.idle;
 
     //if going to the left.
     if (velocity.x < 0 && scale.x > 0) {
@@ -219,16 +220,13 @@ class Player extends SpriteAnimationGroupComponent
     }
 
     //checks if moving, set player's state to be running.
-    if (velocity.x > 0 || velocity.x < 0) playerState = PlayerState.running;
+    if (velocity.x > 0 || velocity.x < 0) current = PlayerState.running;
 
     //if jumping, set state to be jumping.
-    if (velocity.y < 0) playerState = PlayerState.jumping;
+    if (velocity.y < 0) current = PlayerState.jumping;
 
     //If falling, set state to be falling.
-    if (velocity.y > _gravity) playerState = PlayerState.falling;
-
-    //sets current animation.
-    current = playerState;
+    if (velocity.y > _gravity) current = PlayerState.falling;
   }
 
   //Checks collisions with block horizontally.
@@ -359,22 +357,27 @@ class Player extends SpriteAnimationGroupComponent
   }
 
   void _shootBullet() {
-    if (hasShooted) {
-      Bullet bullet = Bullet(
-        moveVertically: false,
-        position: (bulletHorizontalDirection == 1)
-            ? Vector2(position.x + 20, position.y + 16)
-            : Vector2(position.x - 20, position.y + 16),
-        moveDirection: bulletHorizontalDirection,
-        hitbox: RectangleHitbox(
-          collisionType: CollisionType.passive,
-          position: Vector2(2, 9),
-          size: Vector2(22, 10),
-        ),
-      );
-      parent?.add(bullet);
+    current = PlayerState.attack; //TODO:
 
-      hasShooted = false;
-    }
+    Bullet bullet = Bullet(
+      moveVertically: false,
+      position: (bulletHorizontalDirection == 1)
+          ? Vector2(position.x + 20, position.y + 16)
+          : Vector2(position.x - 20, position.y + 16),
+      moveDirection: bulletHorizontalDirection,
+      hitbox: RectangleHitbox(
+        collisionType: CollisionType.passive,
+        position: Vector2(2, 9),
+        size: Vector2(22, 10),
+      ),
+    );
+    parent?.add(bullet);
+
+    hasShooted = false;
+  }
+
+  void _dead() {
+    current = PlayerState.dead;
+    //TODO: GameOver
   }
 }

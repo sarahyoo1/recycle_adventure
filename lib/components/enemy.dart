@@ -20,7 +20,7 @@ class Enemy extends SpriteAnimationGroupComponent
 
   double stepTime = 0.05;
   double tileSize = 16;
-  double runSpeed = 80;
+  double runSpeed = 55;
 
   double rangeNegative = 0;
   double rangePositive = 0;

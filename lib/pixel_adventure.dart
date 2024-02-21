@@ -20,7 +20,7 @@ class PixelAdventure extends FlameGame
   Color backgroundColor() => const Color(0xFF211F30);
 
   late CameraComponent cam;
-  Player player = Player(character: 'Ninja Frog');
+  Player player = Player(character: 'Hood');
   int health = 5; //player health
 
   late JoystickComponent joystick;
