@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
+import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
 class Saw extends SpriteAnimationComponent with HasGameRef<PixelAdventure> {
@@ -19,6 +21,8 @@ class Saw extends SpriteAnimationComponent with HasGameRef<PixelAdventure> {
           size: size,
         );
 
+  late final Player player;
+
   static const double sawSpeed = 0.05;
   static const moveSpeed = 50;
   static const tileSize = 16;
@@ -30,6 +34,8 @@ class Saw extends SpriteAnimationComponent with HasGameRef<PixelAdventure> {
   FutureOr<void> onLoad() {
     debugMode = false;
     priority = -1;
+    player = game.player;
+
     add(CircleHitbox());
 
     //Sets movement range.
@@ -81,5 +87,12 @@ class Saw extends SpriteAnimationComponent with HasGameRef<PixelAdventure> {
       moveDirection = 1;
     }
     position.x += moveDirection * moveSpeed * dt;
+  }
+
+  void collidedWithPlayer() {
+    if (game.playSounds) {
+      FlameAudio.play('dead.wav', volume: game.soundVolume);
+    }
+    player.respawn();
   }
 }

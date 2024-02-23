@@ -8,6 +8,7 @@ import 'package:pixel_adventure/components/bullet.dart';
 import 'package:pixel_adventure/components/checkpoint.dart';
 import 'package:pixel_adventure/components/collision_block.dart';
 import 'package:pixel_adventure/components/custom_hitbox.dart';
+import 'package:pixel_adventure/components/enemies/projectile/projectile.dart';
 import 'package:pixel_adventure/components/fruit.dart';
 import 'package:pixel_adventure/components/item.dart';
 import 'package:pixel_adventure/components/traps/car.dart';
@@ -58,13 +59,16 @@ class Player extends SpriteAnimationGroupComponent
   bool gotHit = false;
   bool reachedCheckpoint = false;
   List<CollisionBlock> collisionBlocks = [];
-  CustomHitbox hitbox = CustomHitbox(
+  CustomHitbox hitboxSetting = CustomHitbox(
     offsetX: 8,
     offsetY: 4,
     width: 14,
     height: 28,
   );
 
+  late final RectangleHitbox hitbox;
+
+  bool isHitboxActive = false;
   bool hasShooted = false;
   double bulletHorizontalDirection = 1; //initially set to be right.
 
@@ -76,11 +80,14 @@ class Player extends SpriteAnimationGroupComponent
 
     startingPosition = Vector2(position.x, position.y);
 
-    //adds player's hitbox.
-    add(RectangleHitbox(
-      position: Vector2(hitbox.offsetX, hitbox.offsetY),
-      size: Vector2(hitbox.width, hitbox.height),
-    ));
+    if (!isHitboxActive) {
+      hitbox = RectangleHitbox(
+        position: Vector2(hitboxSetting.offsetX, hitboxSetting.offsetY),
+        size: Vector2(hitboxSetting.width, hitboxSetting.height),
+      );
+      add(hitbox);
+      isHitboxActive = true;
+    }
 
     return super.onLoad();
   }
@@ -109,20 +116,16 @@ class Player extends SpriteAnimationGroupComponent
     //initially sets direction to be none.
     horizontalMovement = 0;
 
-    //Checks if left or right key is pressed.
     final isLeftKeyPressed = keysPressed.contains(LogicalKeyboardKey.keyA) ||
         keysPressed.contains(LogicalKeyboardKey.arrowLeft);
     final isRightKeyPressed = keysPressed.contains(LogicalKeyboardKey.keyD) ||
         keysPressed.contains(LogicalKeyboardKey.arrowRight);
 
-    //changes direction of movement.
     horizontalMovement += isLeftKeyPressed ? -1 : 0;
     horizontalMovement += isRightKeyPressed ? 1 : 0;
 
-    //checks if the player is jumping.
     hasJumped = keysPressed.contains(LogicalKeyboardKey.space);
 
-    //Checks if the player shoots bullet.
     hasShooted = keysPressed.contains(LogicalKeyboardKey.keyQ) && !event.repeat;
 
     return super.onKeyEvent(event, keysPressed);
@@ -134,9 +137,10 @@ class Player extends SpriteAnimationGroupComponent
     if (!reachedCheckpoint) {
       if (other is Fruit) other.collidedWithPlayer();
       if (other is Item) other.collidedWithPlayer();
-      if (other is Saw) respawn();
+      if (other is Saw) other.collidedWithPlayer();
       if (other is Checkpoint && !reachedCheckpoint) _reachedCheckpoint();
       if (other is Car) other.collidedWithPlayer();
+      if (other is Projectile) _collidedWithProjectile();
     }
     super.onCollisionStart(intersectionPoints, other);
   }
@@ -153,7 +157,6 @@ class Player extends SpriteAnimationGroupComponent
     disappearingAnimation = _specialSpriteAnimation('Disappearing', 7)
       ..loop = false;
 
-    //Sets animations for each state.
     animations = {
       PlayerState.idle: idleAnimation,
       PlayerState.running: runningAnimation,
@@ -166,7 +169,6 @@ class Player extends SpriteAnimationGroupComponent
       PlayerState.disappearing: disappearingAnimation,
     };
 
-    //Sets current animation.
     current = PlayerState.idle;
   }
 
@@ -232,19 +234,21 @@ class Player extends SpriteAnimationGroupComponent
   //Checks collisions with block horizontally.
   void _checkHorizontalCollisions() {
     for (final block in collisionBlocks) {
-      //handle collisions.
       if (!block.isPlatform) {
         if (checkCollision(this, block)) {
           if (velocity.x > 0) {
             //when directing to the right.
             velocity.x = 0;
-            position.x = block.x - hitbox.offsetX - hitbox.width;
+            position.x = block.x - hitboxSetting.offsetX - hitboxSetting.width;
             break;
           }
           if (velocity.x < 0) {
             //when directing to the left.
             velocity.x = 0;
-            position.x = block.x + block.width + hitbox.width + hitbox.offsetX;
+            position.x = block.x +
+                block.width +
+                hitboxSetting.width +
+                hitboxSetting.offsetX;
             break;
           }
         }
@@ -261,7 +265,7 @@ class Player extends SpriteAnimationGroupComponent
           //if falling
           if (velocity.y > 0) {
             velocity.y = 0;
-            position.y = block.y - hitbox.height - hitbox.offsetY;
+            position.y = block.y - hitboxSetting.height - hitboxSetting.offsetY;
             isOnGround = true;
             break;
           }
@@ -272,14 +276,14 @@ class Player extends SpriteAnimationGroupComponent
           //if falling
           if (velocity.y > 0) {
             velocity.y = 0;
-            position.y = block.y - hitbox.height - hitbox.offsetY;
+            position.y = block.y - hitboxSetting.height - hitboxSetting.offsetY;
             isOnGround = true;
             break;
           }
           //if jumping
           if (velocity.y < 0) {
             velocity.y = 0;
-            position.y = block.y + block.height - hitbox.offsetY;
+            position.y = block.y + block.height - hitboxSetting.offsetY;
             break;
           }
         }
@@ -316,7 +320,7 @@ class Player extends SpriteAnimationGroupComponent
     animationTicker?.reset();
 
     scale.x = 1; //makes player face to the right.
-    position = startingPosition - Vector2.all(32); //96 - 64 = 32
+    position = startingPosition - Vector2.all(32);
     current = PlayerState.appearing;
 
     await animationTicker?.completed;
@@ -357,7 +361,7 @@ class Player extends SpriteAnimationGroupComponent
   }
 
   void _shootBullet() {
-    current = PlayerState.attack; //TODO:
+    current = PlayerState.attack; //TODO: Player animation doesn't work
 
     Bullet bullet = Bullet(
       moveVertically: false,
@@ -377,7 +381,21 @@ class Player extends SpriteAnimationGroupComponent
   }
 
   void _dead() {
+    if (isHitboxActive) {
+      remove(hitbox);
+      isHitboxActive = false;
+    }
+
     current = PlayerState.dead;
-    //TODO: GameOver
+    //TODO: add GameOver
+  }
+
+  void _collidedWithProjectile() {
+    //TODO: add hit2 animation
+    if (game.playSounds) {
+      FlameAudio.play('dead.wav', volume: game.soundVolume);
+    }
+    gotHit = true;
+    game.health--;
   }
 }

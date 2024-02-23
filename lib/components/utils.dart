@@ -1,5 +1,5 @@
 bool checkCollision(player, block) {
-  final hitbox = player.hitbox;
+  final hitbox = player.hitboxSetting;
   final playerX = player.position.x + hitbox.offsetX;
   final playerY = player.position.y + hitbox.offsetY;
   final playerWidth = hitbox.width;

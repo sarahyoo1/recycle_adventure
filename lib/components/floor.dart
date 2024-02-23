@@ -17,6 +17,7 @@ import 'package:pixel_adventure/components/fruit.dart';
 import 'package:pixel_adventure/components/item.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/components/traps/car_manager.dart';
+import 'package:pixel_adventure/components/traps/rock_head.dart';
 import 'package:pixel_adventure/components/traps/saw.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
@@ -100,6 +101,13 @@ class Floor extends World with HasGameRef<PixelAdventure> {
               isVertical: spawnPoint.properties.getValue('isVertical'),
             );
             add(saw);
+            break;
+          case 'Rock Head':
+            final rockHead = RockHead(
+              position: Vector2(spawnPoint.x, spawnPoint.y),
+              size: Vector2(spawnPoint.width, spawnPoint.height),
+            );
+            add(rockHead);
             break;
           case 'CarSpawnManager':
             final carSpawnManager = CarSpawnManager(

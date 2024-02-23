@@ -65,7 +65,7 @@ class Trunk extends Enemy {
       lives--;
       other.removeFromParent();
     }
-    if (other is Player) other.respawn();
+    if (other is Player) _collidedWithPlayer();
   }
 
   void _loadAnimations() {
@@ -113,8 +113,7 @@ class Trunk extends Enemy {
     current = State.attack;
   }
 
-  void collidedWithPlayer() async {
-    // TODO: fix the error that player sometimes dies when stomped enemy.
+  void _collidedWithPlayer() async {
     if (player.velocity.y > 0 && player.y + player.height > position.y) {
       if (game.playSounds) {
         FlameAudio.play('enemyKilled.wav', volume: game.soundVolume);

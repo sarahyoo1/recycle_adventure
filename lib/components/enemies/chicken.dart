@@ -64,7 +64,7 @@ class Chicken extends Enemy {
       lives--;
       other.removeFromParent();
     }
-    if (other is Player) other.respawn();
+    if (other is Player) _collidedWithPlayer();
   }
 
   void _loadAnimations() {
@@ -102,9 +102,7 @@ class Chicken extends Enemy {
     }
   }
 
-  void collidedWithPlayer() async {
-    //when the bottom of the player hit chicken's top.
-    // TODO: fix the error that player sometimes dies when stomped enemy.
+  void _collidedWithPlayer() async {
     if (player.velocity.y > 0 && player.y + player.height > position.y) {
       if (game.playSounds) {
         FlameAudio.play('enemyKilled.wav', volume: game.soundVolume);

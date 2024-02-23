@@ -86,11 +86,10 @@ class Cucumber extends Enemy {
       current = State.deadHit;
       await animationTicker?.completed;
       current = State.deadGround;
-    } else {
-      current = State.hit;
     }
 
     if (other is Bullet) {
+      current = State.hit;
       lives--;
       other.removeFromParent();
     }

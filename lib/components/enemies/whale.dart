@@ -4,6 +4,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:pixel_adventure/components/bullet.dart';
+import 'package:pixel_adventure/components/enemies/projectile/projectile_manager.dart';
 import 'package:pixel_adventure/components/enemy.dart';
 import 'package:pixel_adventure/components/player.dart';
 
@@ -40,6 +41,8 @@ class Whale extends Enemy {
   late final SpriteAnimation _deadHitAnimation;
   late final SpriteAnimation _swallowAnimation;
 
+  late final EnemyProjectileManager _projectileManager;
+
   final int deadGroundLives = 4;
 
   bool hitboxActive = true;
@@ -61,6 +64,16 @@ class Whale extends Enemy {
       );
     }
     add(hitbox!);
+
+    _projectileManager = EnemyProjectileManager(
+      position: Vector2(
+        position.x + 9,
+        position.y + 18,
+      ),
+      limit: 1,
+    );
+    parent?.add(_projectileManager);
+
     return super.onLoad();
   }
 
@@ -85,15 +98,14 @@ class Whale extends Enemy {
       current = State.deadHit;
       await animationTicker?.completed;
       current = State.deadGround;
-    } else {
-      current = State.hit;
     }
 
     if (other is Bullet) {
+      current = State.hit;
       lives--;
       other.removeFromParent();
     }
-    if (other is Player) other.respawn();
+    if (other is Player) _collidedWithPlayer();
   }
 
   void _loadAnimations() {
@@ -145,7 +157,7 @@ class Whale extends Enemy {
   }
 
 //TODO
-  void collidedWithPlayer() {
+  void _collidedWithPlayer() {
     player.respawn();
   }
 

@@ -64,8 +64,8 @@ class Slime extends Enemy {
       Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollisionStart(intersectionPoints, other);
     if (other is Bullet) {
+      current = State.hit;
       if (lives > 0) {
-        current = State.hit;
         lives--;
         other.removeFromParent();
       } else {
@@ -73,7 +73,7 @@ class Slime extends Enemy {
         onDead();
       }
     }
-    if (other is Player) other.respawn();
+    if (other is Player) _collidedWithPlayer();
   }
 
   void _loadAnimations() {
@@ -126,8 +126,7 @@ class Slime extends Enemy {
     }
   }
 
-  void collidedWithPlayer() async {
-    // TODO: fix the error that player sometimes dies when stomped enemy.
+  void _collidedWithPlayer() async {
     if (player.velocity.y > 0 && player.y + player.height > position.y) {
       if (game.playSounds) {
         FlameAudio.play('enemyKilled.wav', volume: game.soundVolume);

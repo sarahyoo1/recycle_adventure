@@ -35,11 +35,10 @@ class PixelAdventure extends FlameGame
   @override
   FutureOr<void> onLoad() async {
     if (!_isAlreadyLoaded) {
-      //loads all images into cache.
       await images.loadAllImages();
-      //loads floor
+
       _loadFloor();
-      //loads joystick
+
       if (showControls) {
         addJoystick();
         add(JumpButton());

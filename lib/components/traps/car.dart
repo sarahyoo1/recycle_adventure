@@ -39,12 +39,12 @@ class Car extends SpriteAnimationGroupComponent
     player = game.player;
     spawnPointX = position.x;
     _loadSpriteAnimations();
-    _randomSpeed();
+    _applyRandomSpeed();
 
     add(
       RectangleHitbox(
-        position: Vector2(8, 2),
-        size: Vector2(80, 45),
+        position: Vector2(8, 16),
+        size: Vector2(20, 19),
       ),
     );
   }
@@ -67,7 +67,8 @@ class Car extends SpriteAnimationGroupComponent
       Color.blue: _blueCarSpriteAnimation,
       Color.green: _greenCarSpriteAnimation,
     };
-    _randomColor();
+
+    _applyRandomColor();
   }
 
   SpriteAnimation _spriteAnimation(String color) {
@@ -86,18 +87,15 @@ class Car extends SpriteAnimationGroupComponent
 
     if (position.x < -96) {
       position.x = spawnPointX + 100;
-      // _randomColor();
-      // _randomSpeed();
       removeFromParent();
     }
   }
 
   void collidedWithPlayer() {
-    //TODO: add collision top && fix deducting player healths...
     player.respawn();
   }
 
-  void _randomColor() {
+  void _applyRandomColor() {
     int randNum = Random().nextInt(3); //from 0 to 3.
 
     switch (randNum) {
@@ -116,7 +114,7 @@ class Car extends SpriteAnimationGroupComponent
     }
   }
 
-  void _randomSpeed() {
+  void _applyRandomSpeed() {
     speed = Random().nextDouble() * 100 + 80; //from 80 to 180.
   }
 }

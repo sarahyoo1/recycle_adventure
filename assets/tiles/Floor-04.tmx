@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="17">
- <properties>
-  <property name="Background" value="city2"/>
- </properties>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="6">
  <tileset firstgid="1" source="Pixel Adventure.tsx"/>
- <tileset firstgid="243" source="Objects Tileset (32x32).tsx"/>
  <layer id="1" name="Background" width="40" height="23">
   <properties>
-   <property name="Background" value="city2"/>
+   <property name="Background" value="city1"/>
   </properties>
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -29,33 +25,21 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,243,0,244,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,
-118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,
-118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,
+24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24
 </data>
  </layer>
  <objectgroup id="2" name="Collisions">
   <object id="1" x="0" y="320" width="640" height="48"/>
-  <object id="10" x="624" y="0" width="16" height="320"/>
-  <object id="11" x="0" y="0" width="16" height="320"/>
- </objectgroup>
- <objectgroup id="3" name="Spawnpoints">
-  <object id="2" name="Player" type="Player" x="64" y="288" width="32" height="32"/>
-  <object id="14" name="Checkpoint" type="Checkpoint" x="400" y="256" width="64" height="64"/>
-  <object id="15" name="Whale" type="Whale" x="496" y="272" width="48" height="48">
+  <object id="2" x="-16" y="0" width="16" height="368"/>
+  <object id="3" x="640" y="0" width="16" height="368"/>
+  <object id="4" name="Rock Head" type="Rock Head" x="576" y="272" width="48" height="48">
    <properties>
-    <property name="lives" type="int" value="7"/>
-    <property name="offsetNegative" type="float" value="8"/>
-    <property name="offsetPositive" type="float" value="8"/>
-   </properties>
-  </object>
-  <object id="16" name="Cucumber" type="Cucumber" x="256" y="272" width="48" height="48">
-   <properties>
-    <property name="lives" type="int" value="10"/>
-    <property name="offsetNegative" type="float" value="8"/>
-    <property name="offsetPositive" type="float" value="8"/>
+    <property name="Background" value="city3"/>
    </properties>
   </object>
  </objectgroup>
+ <objectgroup id="3" name="Spawnpoints"/>
 </map>

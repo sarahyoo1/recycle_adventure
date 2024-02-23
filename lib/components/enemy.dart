@@ -35,15 +35,14 @@ class Enemy extends SpriteAnimationGroupComponent
     rangePositive = position.x + offsetPositive * tileSize;
   }
 
+//default movement
   void movement(dt) {
-    //sets velocity to be 0;
     velocity.x = 0;
 
     double playerOffset = (player.scale.x > 0) ? 0 : -player.width;
     double enemyOffset = (scale.x > 0) ? 0 : -width;
 
     if (isPlayerInRange()) {
-      //player is in the range of enemy.
       targetDirection.x =
           (player.x + playerOffset < position.x + enemyOffset) ? -1 : 1;
       velocity.x = targetDirection.x * runSpeed;
@@ -55,7 +54,6 @@ class Enemy extends SpriteAnimationGroupComponent
     position.x += velocity.x * dt;
   }
 
-  //Checks if player is within the range of enemy's detection.
   bool isPlayerInRange() {
     double playerOffsetX = (player.scale.x > 0) ? 0 : -player.width;
 

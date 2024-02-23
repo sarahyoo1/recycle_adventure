@@ -9,7 +9,7 @@ class CarSpawnManager extends Component {
     required this.position,
     this.direction = -1, //defalut direction: left
   }) : super() {
-    _timer = Timer(2, onTick: _spawnCars, repeat: true);
+    _timer = Timer(2.5, onTick: _spawnCars, repeat: true);
   }
 
   @override
@@ -32,8 +32,8 @@ class CarSpawnManager extends Component {
 
   void _spawnCars() {
     Car car = Car(
-      position: position,
-      size: Vector2(96, 48),
+      position: Vector2(position.x, position.y + 12),
+      size: Vector2(96, 42),
       direction: direction,
     );
     add(car);
