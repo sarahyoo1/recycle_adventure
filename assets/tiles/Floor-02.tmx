@@ -39,6 +39,7 @@
   <object id="1" name="Player" type="Player" x="48" y="288" width="34" height="32.6667"/>
   <object id="56" name="Saw" type="Saw" x="576" y="224" width="32" height="32">
    <properties>
+    <property name="initial direction" type="int" value="-1"/>
     <property name="isVertical" type="bool" value="false"/>
     <property name="offsetNegative" type="float" value="2"/>
     <property name="offsetPositive" type="float" value="2"/>
@@ -47,6 +48,7 @@
   <object id="58" name="Checkpoint" type="Checkpoint" x="576" y="96" width="64" height="64"/>
   <object id="78" name="Saw" type="Saw" x="544" y="64" width="32" height="32">
    <properties>
+    <property name="initial direction" type="int" value="1"/>
     <property name="isVertical" type="bool" value="true"/>
     <property name="offsetNegative" type="float" value="4"/>
     <property name="offsetPositive" type="float" value="14"/>

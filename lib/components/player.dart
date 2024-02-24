@@ -285,9 +285,11 @@ class Player extends SpriteAnimationGroupComponent
           }
           //if jumping
           if (velocity.y < 0) {
-            velocity.y = 0;
-            position.y = block.y + block.height - hitboxSetting.offsetY;
-            break;
+            if (!(player.position.y < position.y)) {
+              velocity.y = 0;
+              position.y = block.y + block.height - hitboxSetting.offsetY;
+              break;
+            }
           }
         }
       }

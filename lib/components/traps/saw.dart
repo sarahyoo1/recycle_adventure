@@ -10,10 +10,12 @@ class Saw extends SpriteAnimationComponent with HasGameRef<PixelAdventure> {
   final bool isVertical;
   final double offsetNegative;
   final double offsetPositive;
+  final int intialDirection;
   Saw({
     this.isVertical = false,
     this.offsetNegative = 0,
     this.offsetPositive = 0,
+    this.intialDirection = 0,
     position,
     size,
   }) : super(
@@ -93,7 +95,7 @@ class Saw extends SpriteAnimationComponent with HasGameRef<PixelAdventure> {
     if (game.playSounds) {
       FlameAudio.play('dead.wav', volume: game.soundVolume);
     }
-    game.health --;
+    game.health--;
     player.respawn();
   }
 }

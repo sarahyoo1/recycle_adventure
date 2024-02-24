@@ -99,6 +99,8 @@ class Floor extends World with HasGameRef<PixelAdventure> {
               offsetPositive: spawnPoint.properties.getValue('offsetPositive'),
               offsetNegative: spawnPoint.properties.getValue('offsetNegative'),
               isVertical: spawnPoint.properties.getValue('isVertical'),
+              intialDirection:
+                  spawnPoint.properties.getValue('initial direction'),
             );
             add(saw);
             break;

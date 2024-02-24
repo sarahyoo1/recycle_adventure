@@ -15,7 +15,7 @@ class Projectile extends SpriteAnimationComponent
   Projectile({
     super.position,
     this.speed = 450,
-    this.imagePath = "Bullet.png", //default bullet
+    this.imagePath = "Bullets/bullet_default.png", //default bullet
     this.animationAmount = 1,
     this.moveVertically = false,
     required this.moveDirection,

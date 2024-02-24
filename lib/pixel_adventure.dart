@@ -28,7 +28,7 @@ class PixelAdventure extends FlameGame
   bool playSounds = false; //turns on game audios
   double soundVolume = 1.0;
   List<String> floorNames = ['Floor-01', 'Floor-02', 'Floor-03', 'Floor-04'];
-  int currentFloorIndex = 3; //Should initially set to be 0.
+  int currentFloorIndex = 2; //Should initially set to be 0.
 
   bool _isAlreadyLoaded = false;
 

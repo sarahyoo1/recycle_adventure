@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="18">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="66">
  <properties>
   <property name="Background" value="city2"/>
  </properties>
@@ -7,43 +7,60 @@
  <tileset firstgid="243" source="Objects Tileset (32x32).tsx"/>
  <layer id="1" name="Background" width="40" height="23">
   <properties>
-   <property name="Background" value="city2"/>
+   <property name="Background" value="sewer2"/>
   </properties>
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,106,107,107,108,
+0,0,0,0,0,0,0,0,101,102,102,102,102,102,102,102,102,102,102,102,102,102,102,102,102,102,102,102,102,102,102,103,104,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,104,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,126,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,126,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,126,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,126,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,126,0,0,0,101,102,102,103,
+0,0,0,0,0,0,0,0,126,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,126,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,126,13,14,15,0,0,13,14,15,0,0,0,13,14,15,0,0,0,13,14,15,40,41,42,126,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,126,0,78,78,0,0,78,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,126,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,148,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,40,41,42,126,0,0,0,101,102,102,103,
+0,0,0,0,0,0,0,0,101,102,102,102,102,102,102,102,102,102,102,102,102,102,102,102,102,102,102,102,103,0,0,0,126,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,40,41,42,126,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,126,0,0,0,0,0,0,0,
+101,102,102,103,0,0,0,0,101,102,102,102,102,102,102,102,102,102,102,102,102,102,102,102,102,102,102,102,102,102,102,103,148,144,0,0,101,102,102,103,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,243,0,244,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,
-118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,
-118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,78,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,243,0,244,0,0,0,78,78,0,0,0,0,0,0,0,0,0,0,0,0,
+2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,
+24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24
 </data>
  </layer>
  <objectgroup id="2" name="Collisions">
   <object id="1" x="0" y="320" width="640" height="48"/>
-  <object id="10" x="624" y="0" width="16" height="320"/>
-  <object id="11" x="0" y="0" width="16" height="320"/>
+  <object id="10" x="640" y="0" width="16" height="320"/>
+  <object id="11" x="-16" y="0" width="16" height="320"/>
+  <object id="29" x="128" y="256" width="368" height="16"/>
+  <object id="30" x="0" y="256" width="64" height="16"/>
+  <object id="32" x="128" y="80" width="384" height="16"/>
+  <object id="34" x="576" y="64" width="64" height="16"/>
+  <object id="45" x="144" y="160" width="48" height="16"/>
+  <object id="46" x="224" y="160" width="48" height="16"/>
+  <object id="47" x="320" y="160" width="48" height="16"/>
+  <object id="48" x="416" y="160" width="48" height="16"/>
+  <object id="49" type="Platform" x="464" y="224" width="48" height="16"/>
+  <object id="50" type="Platform" x="464" y="192" width="48" height="16"/>
+  <object id="51" type="Platform" x="464" y="160" width="48" height="16"/>
+  <object id="52" x="128" y="208" width="336" height="16"/>
+  <object id="53" x="512" y="80" width="16" height="192"/>
+  <object id="54" x="576" y="256" width="64" height="16"/>
+  <object id="55" x="576" y="128" width="64" height="16"/>
+  <object id="56" x="576" y="192" width="64" height="16"/>
+  <object id="57" x="128" y="96" width="16" height="112"/>
  </objectgroup>
  <objectgroup id="3" name="Spawnpoints">
-  <object id="2" name="Player" type="Player" x="64" y="288" width="32" height="32"/>
-  <object id="14" name="Checkpoint" type="Checkpoint" x="400" y="256" width="64" height="64"/>
-  <object id="15" name="Whale" type="Whale" x="496" y="272" width="48" height="48">
+  <object id="2" name="Player" type="Player" x="32" y="224" width="32" height="32"/>
+  <object id="14" name="Checkpoint" type="Checkpoint" x="576" y="0" width="64" height="64"/>
+  <object id="15" name="Whale" type="Whale" x="128" y="272" width="48" height="48">
    <properties>
     <property name="lives" type="int" value="7"/>
     <property name="offsetNegative" type="float" value="8"/>
@@ -55,6 +72,54 @@
     <property name="lives" type="int" value="10"/>
     <property name="offsetNegative" type="float" value="8"/>
     <property name="offsetPositive" type="float" value="8"/>
+   </properties>
+  </object>
+  <object id="18" name="RockHead" type="RockHead" x="528" y="272" width="48" height="48"/>
+  <object id="19" name="Plastic Bag" type="Item" x="32" y="288" width="32" height="32">
+   <properties>
+    <property name="amount" type="int" value="11"/>
+   </properties>
+  </object>
+  <object id="20" name="Plastic Bag" type="Item" x="144" y="128" width="32" height="32">
+   <properties>
+    <property name="amount" type="int" value="11"/>
+   </properties>
+  </object>
+  <object id="21" name="Plastic Bag" type="Item" x="32" y="160" width="32" height="32">
+   <properties>
+    <property name="amount" type="int" value="11"/>
+   </properties>
+  </object>
+  <object id="26" name="Plastic Bag" type="Item" x="240" y="16" width="32" height="32">
+   <properties>
+    <property name="amount" type="int" value="11"/>
+   </properties>
+  </object>
+  <object id="36" name="Saw" type="Saw" x="272" y="176" width="32" height="32">
+   <properties>
+    <property name="initial direction" type="int" value="-1"/>
+    <property name="isVertical" type="bool" value="false"/>
+    <property name="offsetNegative" type="float" value="9"/>
+    <property name="offsetPositive" type="float" value="9"/>
+   </properties>
+  </object>
+  <object id="42" name="Plastic Bag" type="Item" x="400" y="16" width="32" height="32">
+   <properties>
+    <property name="amount" type="int" value="11"/>
+   </properties>
+  </object>
+  <object id="43" name="Plastic Bag" type="Item" x="576" y="160" width="32" height="32">
+   <properties>
+    <property name="amount" type="int" value="11"/>
+   </properties>
+  </object>
+  <object id="60" name="Melon" type="Fruit" x="160" y="16" width="32" height="32"/>
+  <object id="61" name="Melon" type="Fruit" x="320" y="128" width="32" height="32"/>
+  <object id="62" name="Melon" type="Fruit" x="320" y="16" width="32" height="32"/>
+  <object id="63" name="Melon" type="Fruit" x="576" y="224" width="32" height="32"/>
+  <object id="65" name="Heart" type="Item" x="480" y="16" width="32" height="32">
+   <properties>
+    <property name="amount" type="int" value="10"/>
    </properties>
   </object>
  </objectgroup>
