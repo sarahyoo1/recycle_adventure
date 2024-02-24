@@ -39,7 +39,7 @@ class Car extends SpriteAnimationGroupComponent
   @override
   FutureOr<void> onLoad() {
     super.onLoad();
-    debugMode = false;
+    debugMode = true;
     player = game.player;
     spawnPointX = position.x;
     _loadSpriteAnimations();
@@ -48,7 +48,7 @@ class Car extends SpriteAnimationGroupComponent
     add(
       RectangleHitbox(
         position: Vector2(8, 16),
-        size: Vector2(30, 19),
+        size: Vector2(80, 20),
       ),
     );
   }
@@ -94,9 +94,14 @@ class Car extends SpriteAnimationGroupComponent
     velocity.x = direction * speed;
     position.x += velocity.x * dt;
 
-    if (position.x < -96) {
-      position.x = spawnPointX + 100;
-      removeFromParent();
+    if (direction == -1) {
+      if (position.x < -96) {
+        removeFromParent();
+      }
+    } else if (direction == 1) {
+      if (position.x > 736) {
+        removeFromParent();
+      }
     }
   }
 

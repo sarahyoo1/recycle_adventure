@@ -57,6 +57,5 @@
     <property name="offsetPositive" type="float" value="8"/>
    </properties>
   </object>
-  <object id="17" name="RockHead" type="RockHead" x="160" y="272" width="48" height="48"/>
  </objectgroup>
 </map>
