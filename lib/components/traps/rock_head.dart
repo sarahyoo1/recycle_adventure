@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:pixel_adventure/components/player.dart';
+import 'package:pixel_adventure/components/utils.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
 enum State {
@@ -15,12 +17,15 @@ enum State {
 
 class RockHead extends SpriteAnimationGroupComponent
     with HasGameRef<PixelAdventure> {
+  bool isPlatform;
   RockHead({
     super.position,
     super.size,
+    this.isPlatform = false,
   });
 
-  final double speed = 200;
+  final double speed = 160;
+  Vector2 velocity = Vector2.zero();
   double directionX = 0;
   double directionY = 0;
 
@@ -31,9 +36,13 @@ class RockHead extends SpriteAnimationGroupComponent
   late final SpriteAnimation _rightHitAnimation;
   late final SpriteAnimation _topHitAnimation;
 
+  late Player player;
+
   @override
   FutureOr<void> onLoad() {
-    debugMode = true;
+    debugMode = false;
+    player = game.player;
+
     _loadSpriteAnimations();
 
     add(
@@ -48,6 +57,8 @@ class RockHead extends SpriteAnimationGroupComponent
   @override
   void update(double dt) {
     super.update(dt);
+    _checkVerticalCollisions(dt);
+    _checkHorizomtalCollisions(dt);
     _movement(dt);
   }
 
@@ -105,7 +116,49 @@ class RockHead extends SpriteAnimationGroupComponent
       directionY = 1;
     }
 
-    position.x += speed * directionX * dt;
-    position.y += speed * directionY * dt;
+    velocity.x = speed * directionX;
+    velocity.y = speed * directionY;
+
+    position += velocity * dt;
+  }
+
+  void _checkVerticalCollisions(dt) {
+    if (checkCollision(player, this)) {
+      player.position.x += velocity.x * dt;
+
+      if (player.velocity.y > 0) {
+        player.velocity.y = 0;
+        player.position.y = position.y -
+            player.hitboxSetting.height -
+            player.hitboxSetting.offsetY;
+        player.isOnGround = true;
+      }
+
+      if (player.velocity.y < 0) {
+        player.isOnGround = false;
+        player.velocity.y = 0;
+        player.position.y = position.y + height - player.hitboxSetting.offsetY;
+      }
+    }
+  }
+
+  void _checkHorizomtalCollisions(dt) {
+    if (checkCollision(player, this)) {
+      //when going right
+      if (player.velocity.x > 0 && player.position.x < position.x) {
+        player.velocity.x = 0;
+        player.x = position.x -
+            player.hitboxSetting.offsetX -
+            player.hitboxSetting.width;
+      }
+      //when going left
+      if (player.velocity.x < 0 && player.position.x > position.x) {
+        player.velocity.x = 0;
+        player.position.x = position.x +
+            width +
+            player.hitboxSetting.width +
+            player.hitboxSetting.offsetX;
+      }
+    }
   }
 }

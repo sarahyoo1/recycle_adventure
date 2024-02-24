@@ -33,14 +33,14 @@
 </data>
  </layer>
  <objectgroup id="3" name="Spawnpoints">
-  <object id="1" name="Player" type="Player" x="48" y="240" width="32.5455" height="31.3333"/>
+  <object id="1" name="Player" type="Player" x="64" y="240" width="32.5455" height="31.3333"/>
   <object id="14" name="Checkpoint" type="Checkpoint" x="288" y="96" width="64" height="64"/>
-  <object id="28" name="Plastic Bottle" type="Item" x="304" y="288" width="32" height="32">
+  <object id="28" name="Plastic Bottle" type="Item" x="320" y="288" width="32" height="32">
    <properties>
     <property name="amount" type="int" value="11"/>
    </properties>
   </object>
-  <object id="29" name="Plastic Bag" type="Item" x="208" y="288" width="32" height="32">
+  <object id="29" name="Plastic Bag" type="Item" x="224" y="288" width="32" height="32">
    <properties>
     <property name="amount" type="int" value="11"/>
    </properties>
@@ -50,14 +50,9 @@
     <property name="amount" type="int" value="11"/>
    </properties>
   </object>
-  <object id="46" name="Plastic Bag" type="Item" x="448" y="144" width="32" height="32">
+  <object id="46" name="Plastic Bag" type="Item" x="432" y="144" width="32" height="32">
    <properties>
     <property name="amount" type="int" value="11"/>
-   </properties>
-  </object>
-  <object id="47" name="Rock Head" type="Rock Head" x="576" y="272" width="48" height="48">
-   <properties>
-    <property name="Background" value="city3"/>
    </properties>
   </object>
  </objectgroup>

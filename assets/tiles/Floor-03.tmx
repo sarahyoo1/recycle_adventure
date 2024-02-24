@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="17">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="18">
  <properties>
   <property name="Background" value="city2"/>
  </properties>
@@ -57,5 +57,6 @@
     <property name="offsetPositive" type="float" value="8"/>
    </properties>
   </object>
+  <object id="17" name="RockHead" type="RockHead" x="160" y="272" width="48" height="48"/>
  </objectgroup>
 </map>

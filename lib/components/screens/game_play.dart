@@ -1,6 +1,7 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:pixel_adventure/components/widgets/game_over_menu.dart';
 import 'package:pixel_adventure/components/widgets/pause_button.dart';
 import 'package:pixel_adventure/components/widgets/pause_menu.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
@@ -25,6 +26,10 @@ class GamePlay extends StatelessWidget {
                 ),
             PauseMenu.ID: (BuildContext context, PixelAdventure gameRef) =>
                 PauseMenu(
+                  gameRef: gameRef,
+                ),
+            GameOverMenu.ID: (BuildContext context, PixelAdventure gameRef) =>
+                GameOverMenu(
                   gameRef: gameRef,
                 ),
           },

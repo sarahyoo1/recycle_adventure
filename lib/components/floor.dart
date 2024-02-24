@@ -102,7 +102,7 @@ class Floor extends World with HasGameRef<PixelAdventure> {
             );
             add(saw);
             break;
-          case 'Rock Head':
+          case 'RockHead':
             final rockHead = RockHead(
               position: Vector2(spawnPoint.x, spawnPoint.y),
               size: Vector2(spawnPoint.width, spawnPoint.height),

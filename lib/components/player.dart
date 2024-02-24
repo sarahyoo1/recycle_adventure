@@ -14,6 +14,7 @@ import 'package:pixel_adventure/components/item.dart';
 import 'package:pixel_adventure/components/traps/car.dart';
 import 'package:pixel_adventure/components/traps/saw.dart';
 import 'package:pixel_adventure/components/utils.dart';
+import 'package:pixel_adventure/components/widgets/game_over_menu.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
 enum PlayerState {
@@ -58,6 +59,9 @@ class Player extends SpriteAnimationGroupComponent
   bool hasJumped = false;
   bool gotHit = false;
   bool reachedCheckpoint = false;
+  bool isHitboxActive = false;
+  bool hasShooted = false;
+  bool dead = false;
   List<CollisionBlock> collisionBlocks = [];
   CustomHitbox hitboxSetting = CustomHitbox(
     offsetX: 8,
@@ -68,8 +72,6 @@ class Player extends SpriteAnimationGroupComponent
 
   late final RectangleHitbox hitbox;
 
-  bool isHitboxActive = false;
-  bool hasShooted = false;
   double bulletHorizontalDirection = 1; //initially set to be right.
 
   @override
@@ -95,9 +97,10 @@ class Player extends SpriteAnimationGroupComponent
   @override
   void update(double dt) {
     if (game.health <= 0) {
+      dead = true;
       _dead();
     }
-    if (!gotHit && !reachedCheckpoint) {
+    if (!gotHit && !reachedCheckpoint && !dead) {
       _updatePlayerState();
       _updatePlayerMovement(dt);
       _checkHorizontalCollisions();
@@ -309,10 +312,6 @@ class Player extends SpriteAnimationGroupComponent
   }
 
   void respawn() async {
-    // if (game.playSounds) {
-    //   FlameAudio.play('dead.wav', volume: game.soundVolume);
-    // }
-    game.health--;
     gotHit = true;
     current = PlayerState.hit;
 
@@ -361,7 +360,7 @@ class Player extends SpriteAnimationGroupComponent
   }
 
   void _shootBullet() {
-    current = PlayerState.attack; //TODO: Player animation doesn't work
+    //TODO: Player attack animation doesn't work
 
     Bullet bullet = Bullet(
       moveVertically: false,
@@ -380,14 +379,24 @@ class Player extends SpriteAnimationGroupComponent
     hasShooted = false;
   }
 
-  void _dead() {
-    if (isHitboxActive) {
-      remove(hitbox);
-      isHitboxActive = false;
-    }
+  void _dead() async {
+    if (dead) {
+      if (isHitboxActive) {
+        remove(hitbox);
+        isHitboxActive = false;
+      }
 
-    current = PlayerState.dead;
-    //TODO: add GameOver
+      if (isOnGround) {
+        current = PlayerState.dead;
+        await animationTicker?.completed;
+
+        //Game Over
+        gameRef.pauseEngine();
+        gameRef.overlays.add(GameOverMenu.ID);
+      } else {
+        dead = false;
+      }
+    }
   }
 
   void _collidedWithProjectile() {
@@ -395,7 +404,6 @@ class Player extends SpriteAnimationGroupComponent
     if (game.playSounds) {
       FlameAudio.play('dead.wav', volume: game.soundVolume);
     }
-    gotHit = true;
     game.health--;
   }
 }

@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:pixel_adventure/components/player.dart';
+import 'package:pixel_adventure/components/utils.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
 enum Color {
@@ -16,10 +17,12 @@ enum Color {
 class Car extends SpriteAnimationGroupComponent
     with HasGameRef<PixelAdventure> {
   int direction;
+  bool isPlatform;
   Car({
     super.position,
     super.size,
     required this.direction,
+    this.isPlatform = false,
   });
 
   late Player player;
@@ -31,11 +34,12 @@ class Car extends SpriteAnimationGroupComponent
   late final SpriteAnimation _greenCarSpriteAnimation;
 
   late double speed;
+  Vector2 velocity = Vector2.zero();
 
   @override
   FutureOr<void> onLoad() {
     super.onLoad();
-    debugMode = true;
+    debugMode = false;
     player = game.player;
     spawnPointX = position.x;
     _loadSpriteAnimations();
@@ -44,7 +48,7 @@ class Car extends SpriteAnimationGroupComponent
     add(
       RectangleHitbox(
         position: Vector2(8, 16),
-        size: Vector2(20, 19),
+        size: Vector2(30, 19),
       ),
     );
   }
@@ -52,6 +56,10 @@ class Car extends SpriteAnimationGroupComponent
   @override
   void update(double dt) {
     super.update(dt);
+    if (!player.gotHit && !player.dead) {
+      _checkVerticalCollisions(dt);
+      _checkHorizomtalCollisions(dt);
+    }
     movement(dt);
   }
 
@@ -83,7 +91,8 @@ class Car extends SpriteAnimationGroupComponent
   }
 
   void movement(double dt) {
-    position.x += direction * speed * dt;
+    velocity.x = direction * speed;
+    position.x += velocity.x * dt;
 
     if (position.x < -96) {
       position.x = spawnPointX + 100;
@@ -92,6 +101,7 @@ class Car extends SpriteAnimationGroupComponent
   }
 
   void collidedWithPlayer() {
+    game.health--;
     player.respawn();
   }
 
@@ -116,5 +126,46 @@ class Car extends SpriteAnimationGroupComponent
 
   void _applyRandomSpeed() {
     speed = Random().nextDouble() * 100 + 80; //from 80 to 180.
+  }
+
+  void _checkVerticalCollisions(dt) {
+    if (checkCollision(player, this)) {
+      player.position.x += velocity.x * dt;
+
+      if (player.velocity.y > 0) {
+        player.velocity.y = 0;
+        player.position.y = position.y -
+            player.hitboxSetting.height -
+            player.hitboxSetting.offsetY;
+        player.isOnGround = true;
+      }
+
+      if (player.velocity.y < 0) {
+        player.isOnGround = false;
+        player.velocity.y = 0;
+        player.position.y = position.y + height - player.hitboxSetting.offsetY;
+      }
+    }
+  }
+
+  void _checkHorizomtalCollisions(dt) {
+    if (checkCollision(player, this)) {
+      //when going right
+      if (player.velocity.x > 0 && player.position.x < position.x) {
+        player.velocity.x = 0;
+        player.x = position.x -
+            player.hitboxSetting.offsetX -
+            player.hitboxSetting.width +
+            12;
+      }
+      //when going left
+      if (player.velocity.x < 0 && player.position.x > position.x) {
+        player.velocity.x = 0;
+        player.position.x = position.x +
+            width +
+            player.hitboxSetting.width +
+            player.hitboxSetting.offsetX;
+      }
+    }
   }
 }

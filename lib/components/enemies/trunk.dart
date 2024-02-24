@@ -124,6 +124,7 @@ class Trunk extends Enemy {
       await animationTicker?.completed;
       removeFromParent();
     } else {
+      game.health--;
       player.respawn();
     }
   }

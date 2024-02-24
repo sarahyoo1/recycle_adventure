@@ -61,7 +61,9 @@ class Bullet extends SpriteAnimationComponent
       position.x += moveDirection * speed * dt;
     }
 
-    if (position.y < -height || position.x < 0 || position.x > 520) {
+    if (position.y < -game.size.y ||
+        position.x < 0 ||
+        position.x > game.size.x) {
       removeFromParent();
     }
   }

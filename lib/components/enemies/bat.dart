@@ -74,7 +74,10 @@ class Bat extends Enemy {
       lives--;
       other.removeFromParent();
     }
-    if (other is Player) other.respawn();
+    if (other is Player) {
+      game.health--;
+      other.respawn();
+    }
   }
 
   void _loadAnimations() {

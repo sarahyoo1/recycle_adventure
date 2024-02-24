@@ -3,13 +3,10 @@ import 'package:flame/components.dart';
 class CollisionBlock extends PositionComponent {
   bool isPlatform;
   CollisionBlock({
-    position,
-    size,
+    super.position,
+    super.size,
     this.isPlatform = false, //Set it is not platform as default.
-  }) : super(
-          position: position,
-          size: size,
-        ) {
+  }) {
     debugMode = false;
   }
 }

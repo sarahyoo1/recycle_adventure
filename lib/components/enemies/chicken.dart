@@ -64,7 +64,9 @@ class Chicken extends Enemy {
       lives--;
       other.removeFromParent();
     }
-    if (other is Player) _collidedWithPlayer();
+    if (other is Player) {
+      _collidedWithPlayer();
+    }
   }
 
   void _loadAnimations() {
@@ -113,6 +115,7 @@ class Chicken extends Enemy {
       await animationTicker?.completed;
       removeFromParent();
     } else {
+      game.health--;
       player.respawn();
     }
   }

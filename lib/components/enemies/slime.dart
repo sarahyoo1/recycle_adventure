@@ -137,6 +137,7 @@ class Slime extends Enemy {
       await animationTicker?.completed;
       onDead();
     } else {
+      game.health--;
       player.respawn();
     }
   }

@@ -156,8 +156,9 @@ class Whale extends Enemy {
     }
   }
 
-//TODO
+//TODO: should I add stomped?
   void _collidedWithPlayer() {
+    game.health--;
     player.respawn();
   }
 
