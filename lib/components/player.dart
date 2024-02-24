@@ -363,10 +363,12 @@ class Player extends SpriteAnimationGroupComponent
     //TODO: Player attack animation doesn't work
 
     Bullet bullet = Bullet(
+      imagePath: 'Bullets/player_bullet.png',
+      animationAmount: 4,
       moveVertically: false,
       position: (bulletHorizontalDirection == 1)
-          ? Vector2(position.x + 20, position.y + 16)
-          : Vector2(position.x - 20, position.y + 16),
+          ? Vector2(position.x + 20, position.y + 20)
+          : Vector2(position.x - 20, position.y + 20),
       moveDirection: bulletHorizontalDirection,
       hitbox: RectangleHitbox(
         collisionType: CollisionType.passive,

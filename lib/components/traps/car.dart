@@ -48,7 +48,7 @@ class Car extends SpriteAnimationGroupComponent
     add(
       RectangleHitbox(
         position: Vector2(8, 16),
-        size: Vector2(80, 20),
+        size: Vector2(70, 20),
       ),
     );
   }
