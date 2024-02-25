@@ -107,6 +107,7 @@ class Player extends SpriteAnimationGroupComponent
       _checkHorizontalCollisions();
       _applyGravity(dt);
       _checkVerticalCollisions();
+      _checkPlayerPosition();
 
       if (hasShooted) {
         _shootBullet();
@@ -143,7 +144,7 @@ class Player extends SpriteAnimationGroupComponent
       if (other is Item) other.collidedWithPlayer();
       if (other is Saw) other.collidedWithPlayer();
       if (other is Trampoline) other.collidedWithPlayer();
-      if (other is Checkpoint && !reachedCheckpoint) _reachedCheckpoint();
+      if (other is Checkpoint && !reachedCheckpoint) other.collidedWithPlayer();
       if (other is Car) other.collidedWithPlayer();
       if (other is Projectile) _collidedWithProjectile();
     }
@@ -336,7 +337,7 @@ class Player extends SpriteAnimationGroupComponent
     );
   }
 
-  void _reachedCheckpoint() async {
+  void reachesCheckpoint() async {
     reachedCheckpoint = true;
     if (game.playSounds) {
       FlameAudio.play('checkpoint.wav', volume: game.soundVolume);
@@ -409,5 +410,12 @@ class Player extends SpriteAnimationGroupComponent
       FlameAudio.play('dead.wav', volume: game.soundVolume);
     }
     game.health--;
+  }
+
+  void _checkPlayerPosition() {
+    if (position.y > game.size.y) {
+      game.health--;
+      respawn();
+    }
   }
 }

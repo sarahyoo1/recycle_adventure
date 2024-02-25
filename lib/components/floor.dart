@@ -27,10 +27,14 @@ import 'package:pixel_adventure/pixel_adventure.dart';
 class Floor extends World with HasGameRef<PixelAdventure> {
   final String floorName;
   final Player player;
-  Floor({required this.floorName, required this.player});
+  Floor({
+    required this.floorName,
+    required this.player,
+  });
   late TiledComponent floor;
   List<CollisionBlock> collisionBlocks = [];
   late String backgroundName;
+  late int totalItemsNum;
 
   @override
   FutureOr<void> onLoad() async {
@@ -42,8 +46,17 @@ class Floor extends World with HasGameRef<PixelAdventure> {
     _addBackground();
     _spawningObjects();
     _addCollisions();
+    _updateTotalItemsNum();
 
     return super.onLoad();
+  }
+
+  void _updateTotalItemsNum() {
+    final backgroundLayer = floor.tileMap.getLayer<TileLayer>('Background');
+    if (backgroundLayer != null) {
+      totalItemsNum = backgroundLayer.properties.getValue('totalItemsNum');
+      game.totalItemsNum = totalItemsNum;
+    }
   }
 
   // void _scrollingBackground() {

@@ -19,7 +19,7 @@ class Item extends SpriteAnimationComponent
   });
 
   final double stepTime = 0.05;
-  late final hitbox;
+  late final CustomHitbox hitbox;
 
   bool isCollected = false;
 
@@ -49,6 +49,8 @@ class Item extends SpriteAnimationComponent
 
       if (item == 'Heart') {
         game.health++;
+      } else {
+        game.itemsCollected++;
       }
       removeFromParent();
     }

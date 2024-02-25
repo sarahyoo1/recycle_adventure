@@ -14,21 +14,19 @@ enum State {
 class Checkpoint extends SpriteAnimationGroupComponent
     with HasGameRef<PixelAdventure>, CollisionCallbacks {
   Checkpoint({
-    position,
-    size,
-  }) : super(
-          position: position,
-          size: size,
-        );
+    super.position,
+    super.size,
+  });
 
   late final SpriteAnimation _idleSpriteAnimation;
   late final SpriteAnimation _flagOutSpriteAnimation;
   late final SpriteAnimation _noFlagSpriteAnimation;
+  late Player player;
 
   @override
   FutureOr<void> onLoad() {
     debugMode = false;
-    priority = -1;
+    player = game.player;
 
     _loadSpriteAnimations();
 
@@ -43,17 +41,13 @@ class Checkpoint extends SpriteAnimationGroupComponent
     return super.onLoad();
   }
 
-  @override
-  void onCollisionStart(
-      Set<Vector2> intersectionPoints, PositionComponent other) {
-    if (other is Player) _reachedCheckpoint();
-    super.onCollisionStart(intersectionPoints, other);
-  }
-
-  void _reachedCheckpoint() async {
-    current = State.flagOut;
-    await animationTicker?.completed;
-    current = State.idle;
+  void collidedWithPlayer() async {
+    if (game.isOkToNextFloor) {
+      player.reachesCheckpoint();
+      current = State.flagOut;
+      await animationTicker?.completed;
+      current = State.idle;
+    }
   }
 
   void _loadSpriteAnimations() {

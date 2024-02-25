@@ -5,6 +5,7 @@
  <layer id="1" name="Background" width="40" height="23">
   <properties>
    <property name="Background" value="sewer2"/>
+   <property name="totalItemsNum" type="int" value="4"/>
   </properties>
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,104,0,0,0,0,0,0,

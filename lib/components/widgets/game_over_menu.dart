@@ -23,8 +23,15 @@ class GameOverMenu extends StatelessWidget {
             child: Text(
               'Game Over',
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontSize: 50.5,
-                  ),
+                fontSize: 50.5,
+                shadows: [
+                  const Shadow(
+                    blurRadius: 20.0,
+                    color: Colors.white,
+                    offset: Offset(0, 0),
+                  )
+                ],
+              ),
             ),
           ),
 

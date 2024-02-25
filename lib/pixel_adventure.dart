@@ -22,12 +22,21 @@ class PixelAdventure extends FlameGame
   late CameraComponent cam;
   Player player = Player(character: 'Hood');
   int health = 5; //player health
+  int itemsCollected = 0;
+  int totalItemsNum = 0;
+  bool isOkToNextFloor = false;
 
   late JoystickComponent joystick;
   bool showControls = false;
   bool playSounds = false; //turns on game audios
   double soundVolume = 1.0;
-  List<String> floorNames = ['Floor-01', 'Floor-02', 'Floor-03', 'Floor-04', 'Floor-05'];
+  List<String> floorNames = [
+    'Floor-01',
+    'Floor-02',
+    'Floor-03',
+    'Floor-04',
+    'Floor-05'
+  ];
   int currentFloorIndex = 4; //Should initially set to be 0.
 
   bool _isAlreadyLoaded = false;

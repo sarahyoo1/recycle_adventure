@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="35">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="48">
  <tileset firstgid="1" source="industrial_objectset(32x32).tsx"/>
  <tileset firstgid="461" name="industrial_tileset" tilewidth="32" tileheight="32" tilecount="88" columns="8">
   <image source="../images/Terrain/industrial_tileset.png" width="256" height="352"/>
@@ -7,6 +7,7 @@
  <layer id="1" name="Background" width="40" height="23">
   <properties>
    <property name="Background" value="Factory"/>
+   <property name="totalItemsNum" type="int" value="4"/>
   </properties>
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -20,11 +21,11 @@
 463,0,481,0,481,0,481,0,481,0,461,0,481,0,481,0,481,0,481,0,481,0,481,0,481,0,481,0,481,0,481,0,481,0,481,0,481,0,481,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 463,0,481,0,481,0,481,0,481,0,461,0,481,0,481,0,481,0,481,0,481,0,481,0,481,0,481,0,481,0,481,0,481,0,481,0,481,0,481,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-472,0,481,0,481,0,481,0,481,0,499,0,480,0,480,0,480,0,490,0,498,0,489,0,489,0,489,0,480,0,499,0,480,0,489,0,489,0,489,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-465,0,465,0,465,0,465,0,496,0,496,0,466,0,462,0,506,0,506,0,506,0,462,0,506,0,506,0,506,0,506,0,506,0,506,0,464,0,531,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,464,0,465,0,
+472,0,481,0,481,0,481,0,481,0,499,0,480,0,480,0,480,0,490,0,498,0,489,0,489,0,489,0,480,0,499,0,480,0,489,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,473,0,463,0,
+465,0,465,0,465,0,465,0,496,0,496,0,466,0,462,0,506,0,506,0,506,0,462,0,506,0,506,0,506,0,506,0,506,0,506,0,0,0,463,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,473,0,0,0,
 474,0,474,0,474,0,474,0,474,0,474,0,475,0,506,0,506,0,506,0,462,0,506,0,506,0,506,0,506,0,506,0,506,0,462,0,473,0,474,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,473,0,0,0,
 474,0,474,0,474,0,474,0,474,0,474,0,475,0,506,0,506,0,506,0,506,0,506,0,506,0,462,0,506,0,506,0,506,0,462,0,473,0,474,0,
@@ -42,11 +43,11 @@
 0,0,0,0,0,0,0,0,76,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,76,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,14,0,0,0,0,86,0,0,0,0,0,0,0,0,0,0,0,521,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,14,0,0,0,0,86,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,505,0,0,0,0,0,0,0,0,0,0,0,0,0,521,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,505,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,505,0,0,0,523,0,0,0,0,0,0,0,0,0,0,0,0,0,530,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,505,0,0,0,523,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,514,0,0,22,523,0,74,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -57,36 +58,62 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,63,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,63,73,53,0,0,0,0,0
 </data>
  </layer>
  <objectgroup id="4" name="Spawnpoints">
-  <object id="13" name="Transporter1" type="Transporter" x="240" y="208" width="32" height="32"/>
-  <object id="14" name="Transporter2" type="Transporter" x="336" y="208" width="32" height="32"/>
-  <object id="19" name="Transporter2" type="Transporter" x="368" y="208" width="32" height="32"/>
-  <object id="20" name="Transporter3" type="Transporter" x="528" y="208" width="32" height="32"/>
-  <object id="21" name="Transporter2" type="Transporter" x="400" y="208" width="32" height="32"/>
-  <object id="22" name="Transporter2" type="Transporter" x="432" y="208" width="32" height="32"/>
-  <object id="23" name="Transporter2" type="Transporter" x="464" y="208" width="32" height="32"/>
-  <object id="24" name="Transporter2" type="Transporter" x="496" y="208" width="32" height="32"/>
-  <object id="25" name="Transporter2" type="Transporter" x="272" y="208" width="32" height="32"/>
-  <object id="26" name="Transporter2" type="Transporter" x="304" y="208" width="32" height="32"/>
+  <object id="13" name="Transporter1" type="Transporter" x="240" y="160" width="32" height="32"/>
+  <object id="14" name="Transporter2" type="Transporter" x="336" y="160" width="32" height="32"/>
+  <object id="19" name="Transporter2" type="Transporter" x="368" y="160" width="32" height="32"/>
+  <object id="20" name="Transporter3" type="Transporter" x="528" y="160" width="32" height="32"/>
+  <object id="21" name="Transporter2" type="Transporter" x="400" y="160" width="32" height="32"/>
+  <object id="22" name="Transporter2" type="Transporter" x="432" y="160" width="32" height="32"/>
+  <object id="23" name="Transporter2" type="Transporter" x="464" y="160" width="32" height="32"/>
+  <object id="24" name="Transporter2" type="Transporter" x="496" y="160" width="32" height="32"/>
+  <object id="25" name="Transporter2" type="Transporter" x="272" y="160" width="32" height="32"/>
+  <object id="26" name="Transporter2" type="Transporter" x="304" y="160" width="32" height="32"/>
   <object id="27" name="Player" type="Player" x="160" y="176" width="32" height="32"/>
-  <object id="32" name="Hammer" type="Hammer" x="256" y="80" width="32" height="64"/>
+  <object id="32" name="Hammer" type="Hammer" x="272" y="80" width="32" height="64"/>
+  <object id="39" name="Hammer" type="Hammer" x="352" y="80" width="32" height="64"/>
+  <object id="40" name="Hammer" type="Hammer" x="512" y="80" width="32" height="64"/>
+  <object id="41" name="metal-tuna can" type="Item" x="288" y="272" width="32" height="32">
+   <properties>
+    <property name="amount" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="42" name="glass-green soda bottle" type="Item" x="352" y="272" width="32" height="32">
+   <properties>
+    <property name="amount" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="43" name="paper-newspaper" type="Item" x="416" y="272" width="32" height="32">
+   <properties>
+    <property name="amount" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="45" name="Trampoline" type="Trampoline" x="208" y="272" width="32" height="32">
+   <properties>
+    <property name="offsetVertical" type="int" value="6"/>
+   </properties>
+  </object>
+  <object id="46" name="metal-tuna can" type="Item" x="432" y="128" width="32" height="32">
+   <properties>
+    <property name="amount" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="47" name="Checkpoint" type="Checkpoint" x="576" y="96" width="64" height="64"/>
  </objectgroup>
  <objectgroup id="3" name="Collisions">
-  <object id="1" x="0" y="208" width="224" height="160"/>
-  <object id="2" x="224" y="304" width="288" height="64"/>
+  <object id="1" x="0" y="208" width="208" height="160"/>
+  <object id="2" x="208" y="304" width="304" height="64"/>
   <object id="3" x="0" y="16" width="128" height="64"/>
   <object id="4" x="192" y="16" width="192" height="64"/>
   <object id="5" x="512" y="16" width="128" height="64"/>
-  <object id="6" x="320" y="80" width="32" height="96"/>
   <object id="12" x="128" y="0" width="32" height="112"/>
-  <object id="28" x="240" y="208" width="336" height="32"/>
-  <object id="29" x="576" y="208" width="64" height="160"/>
+  <object id="28" x="240" y="160" width="336" height="32"/>
+  <object id="29" x="576" y="160" width="64" height="208"/>
   <object id="30" x="-16" y="0" width="16" height="368"/>
   <object id="31" x="640" y="0" width="16" height="368"/>
-  <object id="34" name="Checkpoint" type="Checkpoint" x="576" y="144" width="64" height="64"/>
  </objectgroup>
 </map>
