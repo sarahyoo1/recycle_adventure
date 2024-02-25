@@ -17,12 +17,18 @@ enum State {
 
 class RockHead extends SpriteAnimationGroupComponent
     with HasGameRef<PixelAdventure> {
-  bool isPlatform;
+  final bool isPlatform;
+  final int offsetHorizontal;
+  final int offsetVertical;
   RockHead({
     super.position,
     super.size,
     this.isPlatform = false,
+    required this.offsetHorizontal,
+    required this.offsetVertical,
   });
+
+  double direction = -1;
 
   final double speed = 160;
   Vector2 velocity = Vector2.zero();
@@ -37,6 +43,11 @@ class RockHead extends SpriteAnimationGroupComponent
   late final SpriteAnimation _topHitAnimation;
 
   late Player player;
+  static const tileSize = 16;
+  late double rangeNegativeH,
+      rangePositiveH,
+      rangeNegativeV,
+      rangePositiveV = 0;
 
   @override
   FutureOr<void> onLoad() {
@@ -51,6 +62,12 @@ class RockHead extends SpriteAnimationGroupComponent
         size: Vector2(38, 38),
       ),
     );
+
+    rangeNegativeH = position.x - offsetHorizontal * tileSize;
+    rangePositiveH = position.x + offsetHorizontal * tileSize;
+    rangeNegativeV = position.y - offsetVertical * tileSize;
+    rangePositiveV = position.y + offsetVertical * tileSize;
+
     return super.onLoad();
   }
 
@@ -94,28 +111,30 @@ class RockHead extends SpriteAnimationGroupComponent
   }
 
   void _movement(double dt) async {
-    if (position.x > 0 && position.y > 270) {
-      current = State.bottomHit;
-
+    //print("this pos: ${position.y}");
+    // print("result: ${offsetHorizontal * tileSize + position.x}");
+    // print("threshold: ${offsetVertical * tileSize * 1.31}");
+    if (position.x >= offsetHorizontal * tileSize / 8) {
       directionX = -1;
       directionY = 0;
-    } else if (position.x < 0 && position.y > 0) {
-      current = State.leftHit;
-
+    }
+    if (position.x <= offsetHorizontal * tileSize / 8) {
       directionX = 0;
       directionY = -1;
-    } else if (position.x < 0 && position.y < 0) {
-      current = State.topHit;
-
+    }
+    if (position.y <= offsetVertical * tileSize / 5) {
       directionX = 1;
       directionY = 0;
-    } else if (position.x > 590 && position.y < 0) {
-      current = State.rightHit;
-
+    }
+    if (position.x >= offsetHorizontal * tileSize * 1.14) {
       directionX = 0;
       directionY = 1;
     }
-
+    if (position.x >= offsetHorizontal * tileSize * 1.14 &&
+        position.y >= offsetVertical * tileSize * 1.31) {
+      directionX = -1;
+      directionY = 0;
+    }
     velocity.x = speed * directionX;
     velocity.y = speed * directionY;
 

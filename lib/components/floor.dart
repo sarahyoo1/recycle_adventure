@@ -99,7 +99,7 @@ class Floor extends World with HasGameRef<PixelAdventure> {
               offsetPositive: spawnPoint.properties.getValue('offsetPositive'),
               offsetNegative: spawnPoint.properties.getValue('offsetNegative'),
               isVertical: spawnPoint.properties.getValue('isVertical'),
-              intialDirection:
+              initialDirection:
                   spawnPoint.properties.getValue('initial direction'),
             );
             add(saw);
@@ -108,6 +108,9 @@ class Floor extends World with HasGameRef<PixelAdventure> {
             final rockHead = RockHead(
               position: Vector2(spawnPoint.x, spawnPoint.y),
               size: Vector2(spawnPoint.width, spawnPoint.height),
+              offsetHorizontal:
+                  spawnPoint.properties.getValue('offsetHorizontal'),
+              offsetVertical: spawnPoint.properties.getValue('offsetVertical'),
             );
             add(rockHead);
             break;

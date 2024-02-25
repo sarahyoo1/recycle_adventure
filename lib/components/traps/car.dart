@@ -26,7 +26,6 @@ class Car extends SpriteAnimationGroupComponent
   });
 
   late Player player;
-  late final double spawnPointX;
 
   late final SpriteAnimation _redCarSpriteAnimation;
   late final SpriteAnimation _orangeCarSpriteAnimation;
@@ -41,7 +40,7 @@ class Car extends SpriteAnimationGroupComponent
     super.onLoad();
     debugMode = true;
     player = game.player;
-    spawnPointX = position.x;
+
     _loadSpriteAnimations();
     _applyRandomSpeed();
 

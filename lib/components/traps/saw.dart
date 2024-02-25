@@ -10,25 +10,21 @@ class Saw extends SpriteAnimationComponent with HasGameRef<PixelAdventure> {
   final bool isVertical;
   final double offsetNegative;
   final double offsetPositive;
-  final int intialDirection;
+  final int initialDirection;
   Saw({
     this.isVertical = false,
     this.offsetNegative = 0,
     this.offsetPositive = 0,
-    this.intialDirection = 0,
-    position,
-    size,
-  }) : super(
-          position: position,
-          size: size,
-        );
-
+    this.initialDirection = 0,
+    super.position,
+    super.size,
+  });
   late final Player player;
 
   static const double sawSpeed = 0.05;
   static const moveSpeed = 50;
   static const tileSize = 16;
-  double moveDirection = 1; //initially sets direction to the right.
+  late int moveDirection;
   double rangeNegative = 0;
   double rangePositive = 0;
 
@@ -37,6 +33,7 @@ class Saw extends SpriteAnimationComponent with HasGameRef<PixelAdventure> {
     debugMode = false;
     priority = -1;
     player = game.player;
+    moveDirection = initialDirection;
 
     add(CircleHitbox());
 
