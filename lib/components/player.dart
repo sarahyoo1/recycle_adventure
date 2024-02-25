@@ -13,6 +13,7 @@ import 'package:pixel_adventure/components/fruit.dart';
 import 'package:pixel_adventure/components/item.dart';
 import 'package:pixel_adventure/components/traps/car.dart';
 import 'package:pixel_adventure/components/traps/saw.dart';
+import 'package:pixel_adventure/components/traps/trampoline.dart';
 import 'package:pixel_adventure/components/utils.dart';
 import 'package:pixel_adventure/components/widgets/game_over_menu.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
@@ -141,6 +142,7 @@ class Player extends SpriteAnimationGroupComponent
       if (other is Fruit) other.collidedWithPlayer();
       if (other is Item) other.collidedWithPlayer();
       if (other is Saw) other.collidedWithPlayer();
+      if (other is Trampoline) other.collidedWithPlayer();
       if (other is Checkpoint && !reachedCheckpoint) _reachedCheckpoint();
       if (other is Car) other.collidedWithPlayer();
       if (other is Projectile) _collidedWithProjectile();
