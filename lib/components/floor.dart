@@ -20,6 +20,7 @@ import 'package:pixel_adventure/components/traps/car_manager.dart';
 import 'package:pixel_adventure/components/traps/rock_head.dart';
 import 'package:pixel_adventure/components/traps/saw.dart';
 import 'package:pixel_adventure/components/traps/trampoline.dart';
+import 'package:pixel_adventure/components/traps/transporter.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
 class Floor extends World with HasGameRef<PixelAdventure> {
@@ -112,6 +113,14 @@ class Floor extends World with HasGameRef<PixelAdventure> {
               offsetVertical: spawnPoint.properties.getValue('offsetVertical'),
             );
             add(trampoline);
+            break;
+          case 'Transporter':
+            final transporter = Transporter(
+              position: Vector2(spawnPoint.x, spawnPoint.y),
+              size: Vector2(spawnPoint.width, spawnPoint.height),
+              name: spawnPoint.name,
+            );
+            add(transporter);
             break;
           case 'RockHead':
             final rockHead = RockHead(

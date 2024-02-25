@@ -15,7 +15,7 @@ class Enemy extends SpriteAnimationGroupComponent
     super.size,
     this.offsetPositive = 0,
     this.offsetNegative = 0,
-    this.lives = 1,
+    this.lives = 1, //default lives
   });
 
   double stepTime = 0.05;
