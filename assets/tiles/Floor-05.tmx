@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="32">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="35">
  <tileset firstgid="1" source="industrial_objectset(32x32).tsx"/>
  <tileset firstgid="461" name="industrial_tileset" tilewidth="32" tileheight="32" tilecount="88" columns="8">
   <image source="../images/Terrain/industrial_tileset.png" width="256" height="352"/>
@@ -62,17 +62,18 @@
 </data>
  </layer>
  <objectgroup id="4" name="Spawnpoints">
-  <object id="13" name="Transporter1" type="Transporter" x="256" y="208" width="32" height="32"/>
-  <object id="14" name="Transporter2" type="Transporter" x="352" y="208" width="32" height="32"/>
-  <object id="19" name="Transporter2" type="Transporter" x="384" y="208" width="32" height="32"/>
-  <object id="20" name="Transporter3" type="Transporter" x="544" y="208" width="32" height="32"/>
-  <object id="21" name="Transporter2" type="Transporter" x="416" y="208" width="32" height="32"/>
-  <object id="22" name="Transporter2" type="Transporter" x="448" y="208" width="32" height="32"/>
-  <object id="23" name="Transporter2" type="Transporter" x="480" y="208" width="32" height="32"/>
-  <object id="24" name="Transporter2" type="Transporter" x="512" y="208" width="32" height="32"/>
-  <object id="25" name="Transporter2" type="Transporter" x="288" y="208" width="32" height="32"/>
-  <object id="26" name="Transporter2" type="Transporter" x="320" y="208" width="32" height="32"/>
+  <object id="13" name="Transporter1" type="Transporter" x="240" y="208" width="32" height="32"/>
+  <object id="14" name="Transporter2" type="Transporter" x="336" y="208" width="32" height="32"/>
+  <object id="19" name="Transporter2" type="Transporter" x="368" y="208" width="32" height="32"/>
+  <object id="20" name="Transporter3" type="Transporter" x="528" y="208" width="32" height="32"/>
+  <object id="21" name="Transporter2" type="Transporter" x="400" y="208" width="32" height="32"/>
+  <object id="22" name="Transporter2" type="Transporter" x="432" y="208" width="32" height="32"/>
+  <object id="23" name="Transporter2" type="Transporter" x="464" y="208" width="32" height="32"/>
+  <object id="24" name="Transporter2" type="Transporter" x="496" y="208" width="32" height="32"/>
+  <object id="25" name="Transporter2" type="Transporter" x="272" y="208" width="32" height="32"/>
+  <object id="26" name="Transporter2" type="Transporter" x="304" y="208" width="32" height="32"/>
   <object id="27" name="Player" type="Player" x="160" y="176" width="32" height="32"/>
+  <object id="32" name="Hammer" type="Hammer" x="256" y="80" width="32" height="64"/>
  </objectgroup>
  <objectgroup id="3" name="Collisions">
   <object id="1" x="0" y="208" width="224" height="160"/>
@@ -82,9 +83,10 @@
   <object id="5" x="512" y="16" width="128" height="64"/>
   <object id="6" x="320" y="80" width="32" height="96"/>
   <object id="12" x="128" y="0" width="32" height="112"/>
-  <object id="28" x="256" y="208" width="320" height="32"/>
+  <object id="28" x="240" y="208" width="336" height="32"/>
   <object id="29" x="576" y="208" width="64" height="160"/>
   <object id="30" x="-16" y="0" width="16" height="368"/>
   <object id="31" x="640" y="0" width="16" height="368"/>
+  <object id="34" name="Checkpoint" type="Checkpoint" x="576" y="144" width="64" height="64"/>
  </objectgroup>
 </map>
