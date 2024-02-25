@@ -14,17 +14,12 @@ class Item extends SpriteAnimationComponent
     super.position,
     super.size,
     super.removeOnFinish = true,
-    this.item = "Heart", //default item to be heart.
-    this.amount = 22, //default heart item sprite animation amount
+    required this.item,
+    required this.amount,
   });
 
   final double stepTime = 0.05;
-  final hitbox = CustomHitbox(
-    offsetX: 10,
-    offsetY: 10,
-    width: 12,
-    height: 12,
-  );
+  late final hitbox;
 
   bool isCollected = false;
 
@@ -32,13 +27,14 @@ class Item extends SpriteAnimationComponent
   FutureOr<void> onLoad() {
     debugMode = false;
 
+    _loadAnimation(); //must come before adding hitbox since it decalres hitbox setting.
+
     add(RectangleHitbox(
       position: Vector2(hitbox.offsetX, hitbox.offsetY),
       size: Vector2(hitbox.width, hitbox.height),
       collisionType: CollisionType.passive,
     ));
 
-    animation = _spriteAnimation(item, amount);
     return super.onLoad();
   }
 
@@ -48,7 +44,7 @@ class Item extends SpriteAnimationComponent
       if (game.playSounds) {
         FlameAudio.play('pickupItem.wav', volume: game.soundVolume);
       }
-      animation = _spriteAnimation('Collected', 6)..loop = false;
+      animation = _specialSpriteAnimation('Collected', 6)..loop = false;
       await animationTicker?.completed;
 
       if (item == 'Heart') {
@@ -58,9 +54,73 @@ class Item extends SpriteAnimationComponent
     }
   }
 
-  SpriteAnimation _spriteAnimation(String path, int amount) {
+  void _loadAnimation() {
+    switch (item) {
+      case 'Heart':
+        hitbox = CustomHitbox(
+          offsetX: 10,
+          offsetY: 10,
+          width: 12,
+          height: 12,
+        );
+        animation = _elseItemSpriteAnimation();
+        break;
+      case 'Plastic Bag':
+        hitbox = CustomHitbox(
+          offsetX: 10,
+          offsetY: 10,
+          width: 12,
+          height: 12,
+        );
+        animation = _specialSpriteAnimation('Recycle Items/$item', amount);
+        break;
+      case 'Plastic Bottle':
+        hitbox = CustomHitbox(
+          offsetX: 10,
+          offsetY: 10,
+          width: 12,
+          height: 12,
+        );
+        animation = _specialSpriteAnimation('Recycle Items/$item', amount);
+        break;
+      default:
+        //other recycle items
+        hitbox = CustomHitbox(
+          offsetX: 4,
+          offsetY: 5,
+          width: 12,
+          height: 12,
+        );
+        animation = _recycleItemSpriteAnimation();
+        break;
+    }
+  }
+
+  SpriteAnimation _elseItemSpriteAnimation() {
     return SpriteAnimation.fromFrameData(
-      game.images.fromCache('Items/Else/$path.png'),
+      game.images.fromCache('Items/Else/$item.png'),
+      SpriteAnimationData.sequenced(
+        amount: amount,
+        stepTime: stepTime,
+        textureSize: Vector2.all(32),
+      ),
+    );
+  }
+
+  SpriteAnimation _recycleItemSpriteAnimation() {
+    return SpriteAnimation.fromFrameData(
+      game.images.fromCache('Items/Recycle Items/$item.png'),
+      SpriteAnimationData.sequenced(
+        amount: amount,
+        stepTime: stepTime,
+        textureSize: Vector2.all(64),
+      ),
+    );
+  }
+
+  SpriteAnimation _specialSpriteAnimation(String path, int amount) {
+    return SpriteAnimation.fromFrameData(
+      game.images.fromCache('Items/$path.png'),
       SpriteAnimationData.sequenced(
         amount: amount,
         stepTime: stepTime,

@@ -41,10 +41,9 @@ class Whale extends Enemy {
   late final SpriteAnimation _deadHitAnimation;
   late final SpriteAnimation _swallowAnimation;
 
-  late final EnemyProjectileManager _projectileManager;
-
   final int deadGroundLives = 4;
 
+  EnemyProjectileManager? _projectileManager;
   bool hitboxActive = true;
   RectangleHitbox? hitbox;
   bool deadGround = false;
@@ -72,7 +71,7 @@ class Whale extends Enemy {
       ),
       limit: 1,
     );
-    parent?.add(_projectileManager);
+    parent?.add(_projectileManager!);
 
     return super.onLoad();
   }
@@ -99,7 +98,6 @@ class Whale extends Enemy {
       await animationTicker?.completed;
       current = State.deadGround;
     }
-
     if (other is Bullet) {
       current = State.hit;
       lives--;

@@ -73,8 +73,10 @@ flutter:
     - assets/images/Objects/
     - assets/images/Background/
     - assets/images/HUD/
+    - assets/images/Items/
     - assets/images/Items/Fruits/
     - assets/images/Items/Else/
+    - assets/images/Items/Recycle Items/
     - assets/images/Items/Checkpoints/Checkpoint/
     - assets/images/Traps/Saw/
     - assets/images/Traps/Cars/
