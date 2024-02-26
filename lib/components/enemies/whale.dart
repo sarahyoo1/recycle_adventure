@@ -43,25 +43,21 @@ class Whale extends Enemy {
 
   final int deadGroundLives = 4;
 
-  EnemyProjectileManager? _projectileManager;
-  bool hitboxActive = true;
-  RectangleHitbox? hitbox;
   bool deadGround = false;
+  RectangleHitbox? hitbox;
+  EnemyProjectileManager? _projectileManager;
 
   @override
   FutureOr<void> onLoad() {
     debugMode = true;
-    priority = -1;
 
     _loadAnimations();
     calculateRange();
 
-    if (hitboxActive) {
-      hitbox = RectangleHitbox(
-        position: Vector2(4, 5),
-        size: Vector2(35, 28),
-      );
-    }
+    hitbox = RectangleHitbox(
+      position: Vector2(4, 5),
+      size: Vector2(35, 28),
+    );
     add(hitbox!);
 
     _projectileManager = EnemyProjectileManager(
@@ -78,7 +74,7 @@ class Whale extends Enemy {
 
   @override
   void update(double dt) {
-    checkLives();
+    _checkLives();
     if (!deadGround) {
       _updateState();
       movement(dt);
@@ -160,12 +156,12 @@ class Whale extends Enemy {
     player.respawn();
   }
 
-  void checkLives() {
-    if (lives <= deadGroundLives) {
+  void _checkLives() {
+    if (lives <= deadGroundLives && lives > 0) {
       deadGround = true;
       current = State.deadHit;
-    }
-    if (lives <= 0) {
+      _projectileManager!.removeFromParent();
+    } else if (lives <= 0) {
       removeFromParent();
     }
   }

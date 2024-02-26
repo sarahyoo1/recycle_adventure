@@ -65,7 +65,7 @@ class Hud extends PositionComponent with HasGameRef<PixelAdventure> {
         ),
       ),
       anchor: Anchor.center,
-      position: Vector2(300, 15),
+      position: Vector2(320, 15),
     );
     add(_numberOfItemsCollected);
   }

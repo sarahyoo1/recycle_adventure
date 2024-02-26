@@ -20,7 +20,7 @@ class Hammer extends SpriteAnimationComponent with HasGameRef<PixelAdventure> {
       game.images.fromCache('Traps/Hammer/Idle.png'),
       SpriteAnimationData.sequenced(
         amount: 8,
-        stepTime: 0.05,
+        stepTime: 0.1,
         textureSize: Vector2(32, 64),
       ),
     );
