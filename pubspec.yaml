@@ -67,6 +67,9 @@ flutter:
     - assets/audio/
     - assets/tiles/
     - assets/images/
+    - assets/images/Boss/
+    - assets/images/Boss/drone1/
+    - assets/images/Boss/drone2/
     - assets/images/Menu/
     - assets/images/Bullets/
     - assets/images/Terrain/

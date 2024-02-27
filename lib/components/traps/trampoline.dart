@@ -51,7 +51,6 @@ class Trampoline extends SpriteAnimationGroupComponent
   @override
   void update(double dt) {
     super.update(dt);
-
     if (isPlayerOnTram) {
       _bouncePlayer(dt);
     }

@@ -5,6 +5,7 @@ import 'package:flame_tiled/flame_tiled.dart';
 import 'package:pixel_adventure/components/HUD/hud.dart';
 import 'package:pixel_adventure/components/backgrounds/background.dart';
 import 'package:pixel_adventure/components/backgrounds/background_tile.dart';
+import 'package:pixel_adventure/components/Boss/boss.dart';
 import 'package:pixel_adventure/components/checkpoint.dart';
 import 'package:pixel_adventure/components/enemies/bat.dart';
 import 'package:pixel_adventure/components/enemies/chicken.dart';
@@ -227,6 +228,12 @@ class Floor extends World with HasGameRef<PixelAdventure> {
             );
             add(whale);
             break;
+          case 'Boss':
+            final boss = Boss(
+              position: Vector2(spawnPoint.x, spawnPoint.y + 17),
+              size: Vector2(spawnPoint.width, spawnPoint.height),
+            );
+            add(boss);
           default:
         }
       }

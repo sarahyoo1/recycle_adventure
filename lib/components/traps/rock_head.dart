@@ -28,12 +28,13 @@ class RockHead extends SpriteAnimationGroupComponent
     required this.offsetVertical,
   });
 
-  double direction = -1;
-
   final double speed = 160;
   Vector2 velocity = Vector2.zero();
   double directionX = 0;
   double directionY = 0;
+
+  late int adjustedOffsetH;
+  late int adjustedOffsetV;
 
   late final SpriteAnimation _idleAnimation;
   late final SpriteAnimation _blinkAnimation;
@@ -44,10 +45,7 @@ class RockHead extends SpriteAnimationGroupComponent
 
   late Player player;
   static const tileSize = 16;
-  late double rangeNegativeH,
-      rangePositiveH,
-      rangeNegativeV,
-      rangePositiveV = 0;
+  late final Vector2 startingPoint = position;
 
   @override
   FutureOr<void> onLoad() {
@@ -55,6 +53,7 @@ class RockHead extends SpriteAnimationGroupComponent
     player = game.player;
 
     _loadSpriteAnimations();
+    _checkOffsets();
 
     add(
       RectangleHitbox(
@@ -63,16 +62,12 @@ class RockHead extends SpriteAnimationGroupComponent
       ),
     );
 
-    rangeNegativeH = position.x - offsetHorizontal * tileSize;
-    rangePositiveH = position.x + offsetHorizontal * tileSize;
-    rangeNegativeV = position.y - offsetVertical * tileSize;
-    rangePositiveV = position.y + offsetVertical * tileSize;
-
     return super.onLoad();
   }
 
   @override
   void update(double dt) {
+    print(startingPoint);
     super.update(dt);
     _checkVerticalCollisions(dt);
     _checkHorizomtalCollisions(dt);
@@ -110,35 +105,79 @@ class RockHead extends SpriteAnimationGroupComponent
     );
   }
 
-  void _movement(double dt) async {
-    //print("this pos: ${position.y}");
-    // print("result: ${offsetHorizontal * tileSize + position.x}");
-    // print("threshold: ${offsetVertical * tileSize * 1.31}");
-    if (position.x >= offsetHorizontal * tileSize / 8) {
-      directionX = -1;
-      directionY = 0;
+  void _checkOffsets() {
+    if (startingPoint.x - offsetHorizontal * tileSize < 0) {
+      adjustedOffsetH = -offsetHorizontal;
+    } else {
+      adjustedOffsetH = offsetHorizontal;
     }
-    if (position.x <= offsetHorizontal * tileSize / 8) {
-      directionX = 0;
-      directionY = -1;
-    }
-    if (position.y <= offsetVertical * tileSize / 5) {
-      directionX = 1;
-      directionY = 0;
-    }
-    if (position.x >= offsetHorizontal * tileSize * 1.14) {
-      directionX = 0;
-      directionY = 1;
-    }
-    if (position.x >= offsetHorizontal * tileSize * 1.14 &&
-        position.y >= offsetVertical * tileSize * 1.31) {
-      directionX = -1;
-      directionY = 0;
-    }
-    velocity.x = speed * directionX;
-    velocity.y = speed * directionY;
 
-    position += velocity * dt;
+    if (startingPoint.y - offsetHorizontal * tileSize < 0) {
+      adjustedOffsetV = -offsetVertical;
+    } else {
+      adjustedOffsetV = offsetVertical;
+    }
+  }
+
+  void _movement(double dt) async {
+    if (directionY == 0) {
+      //on horizontal movement
+      if (directionX == -1) {
+        //if moving to the left
+        if (position.x >= 528 - offsetHorizontal * tileSize) {
+          position.x += -speed * dt;
+        } else {
+          //stop moving horizontally and start moving vertically.
+          directionX = 0;
+          if (position.y >= 272) {
+            directionY = -1; //goes up
+          } else {
+            directionY = 1; //goes down
+          }
+        }
+      } else if (directionX == 1) {
+        //if moving to the right
+        if (position.x <= 528) {
+          position.x += speed * dt;
+        } else {
+          directionX = 0;
+          if (position.y >= 272 - offsetVertical * tileSize) {
+            directionY = -1; //goes up
+          } else {
+            directionY = 1; //goes down
+          }
+        }
+      }
+    } else {
+      //on vertical movement
+      if (directionY == 1) {
+        //if going up
+        if (position.y <= 272) {
+          position.y += speed * dt;
+        } else {
+          //stop moving vertically and start moving horizontally.
+          directionY = 0;
+          if (position.x >= 582 - offsetHorizontal * tileSize) {
+            directionX = -1; //goes left
+          } else {
+            directionX = 1; //goes right
+          }
+        }
+      } else if (directionY == -1) {
+        //if going down
+        if (position.y >= 272 - offsetVertical * tileSize) {
+          position.y += -speed * dt;
+        } else {
+          //stop moving vertically and start moving horizontally.
+          directionY = 0;
+          if (position.x <= 582) {
+            directionX = 1; //goes right
+          } else {
+            directionX = -1; //goes left
+          }
+        }
+      }
+    }
   }
 
   void _checkVerticalCollisions(dt) {
