@@ -202,7 +202,7 @@ class Boss extends SpriteAnimationGroupComponent
 
   void _randomlyChoosePattern() {
     if (!onPattern1 && !onPattern2 && !onPattern3 && !isHitOn) {
-      int rd = Random().nextInt(3);
+      int rd = Random().nextInt(1) + 1;
 
       switch (rd) {
         case 0:
