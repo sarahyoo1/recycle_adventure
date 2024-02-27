@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:pixel_adventure/components/Boss/bomb.dart';
 import 'package:pixel_adventure/components/Boss/drone_spawn_manager.dart';
+import 'package:pixel_adventure/components/bullet.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
@@ -20,15 +22,14 @@ enum State {
 }
 
 class Boss extends SpriteAnimationGroupComponent
-    with HasGameRef<PixelAdventure> {
+    with HasGameRef<PixelAdventure>, CollisionCallbacks {
   late Timer _timer;
   Boss({
     super.position,
     super.size,
   }) : super() {
-    _timer = Timer(2,
-        onTick: _randomlyChoosePattern,
-        repeat: true); //randomly chooses pattern every second.
+    //randomly chooses pattern every second.
+    _timer = Timer(1, onTick: _randomlyChoosePattern, repeat: true);
   }
 
   late final SpriteAnimation _idleSpriteAnimation;
@@ -41,8 +42,9 @@ class Boss extends SpriteAnimationGroupComponent
   late final SpriteAnimation _attack4SpriteAnimation;
   late final SpriteAnimation _deadSpriteAnimation;
 
-  final lives = 10;
+  int lives = 100;
   bool dead = false;
+  bool isHitOn = false;
   Vector2 velocity = Vector2.zero();
   double directionX = -1;
   double moveSpeed = 80;
@@ -52,46 +54,61 @@ class Boss extends SpriteAnimationGroupComponent
   bool onPattern3 = false;
 
   late final BombSpawnManager bombSpawnManager;
+  late final DroneSpawnManager droneSpawnManager;
   late final Player player;
 
   @override
   FutureOr<void> onLoad() {
-    debugMode = true;
+    debugMode = false;
     priority = 3;
 
     player = game.player;
     player.verticalShootingOn = true;
 
     bombSpawnManager = BombSpawnManager(
-      limit: 0.5,
+      limit: 1,
       droppingPosition: Vector2(42, 64),
     );
     add(bombSpawnManager);
     bombSpawnManager.timer.stop();
 
+    droneSpawnManager = DroneSpawnManager(
+      droneOnePosition: Vector2(42, 64),
+      droneTwoPosition: Vector2(42, 64),
+      limit: 1.3,
+    );
+    add(droneSpawnManager);
+    droneSpawnManager.timer.stop();
+
     _loadSpriteAnimations();
+
+    add(CircleHitbox());
+
     _timer.start();
+
     return super.onLoad();
   }
 
   @override
   void update(double dt) {
+    super.update(dt);
+    _timer.update(dt);
+    _checkLives();
     if (!dead) {
       _movement(dt);
-      _timer.update(dt);
 
-      if (!onPattern1 && !onPattern2 && !onPattern3) {
+      if (!onPattern1 && !onPattern2 && !onPattern3 && !isHitOn) {
         _updateState();
       }
 
       if (onPattern1) {
         _pattern1();
       }
+
       if (onPattern3) {
         _pattern3();
       }
     }
-    super.update(dt);
   }
 
   @override
@@ -100,12 +117,33 @@ class Boss extends SpriteAnimationGroupComponent
     _timer.stop();
   }
 
+  @override
+  void onCollisionStart(
+      Set<Vector2> intersectionPoints, PositionComponent other) {
+    super.onCollisionStart(intersectionPoints, other);
+    if (isHitOn) {
+      if (other is Bullet) {
+        current = State.hit;
+
+        Future.delayed(const Duration(milliseconds: 200), () {
+          current = State.idle;
+        });
+
+        lives--;
+        print('got hit');
+        print(lives);
+
+        other.removeFromParent();
+      }
+    }
+  }
+
   SpriteAnimation _spriteAnimation(String state, int amount) {
     return SpriteAnimation.fromFrameData(
       game.images.fromCache('Boss/Machine Operator/$state.png'),
       SpriteAnimationData.sequenced(
         amount: amount,
-        stepTime: 0.05,
+        stepTime: 0.1,
         textureSize: Vector2.all(96),
       ),
     );
@@ -153,8 +191,17 @@ class Boss extends SpriteAnimationGroupComponent
     position.x += velocity.x * dt;
   }
 
+  void _checkLives() {
+    if (lives <= 0) {
+      dead = true;
+      isHitOn = false;
+      current = State.dead;
+      _timer.stop();
+    }
+  }
+
   void _randomlyChoosePattern() {
-    if (!onPattern1 && !onPattern2 && !onPattern3) {
+    if (!onPattern1 && !onPattern2 && !onPattern3 && !isHitOn) {
       int rd = Random().nextInt(3);
 
       switch (rd) {
@@ -215,26 +262,28 @@ class Boss extends SpriteAnimationGroupComponent
         velocity.x = -1 * 80;
       } else {
         // Stop, print message, and set flag
+        current = State.idle;
         velocity.x = 0;
         position.x = 272;
-        onPattern1 = false;
+        Future.delayed(const Duration(seconds: 1), () {
+          onPattern1 = false;
+          isHitOn = true;
+        });
+        Future.delayed(const Duration(seconds: 6), () {
+          isHitOn = false;
+        });
       }
     }
   }
 
   void _pattern2() {
     current = State.attack1;
-
-    DroneSpawnManager droneSpawnManager = DroneSpawnManager(
-      droneOnePosition: Vector2(42, 64),
-      droneTwoPosition: Vector2(42, 64),
-      limit: 2,
-    );
-    add(droneSpawnManager);
+    droneSpawnManager.timer.resume();
 
     //spawns drones for 10 seconds.
     Future.delayed(const Duration(seconds: 10), () {
-      remove(droneSpawnManager);
+      droneSpawnManager.timer.stop();
+      current = State.idle;
       onPattern2 = false;
     });
   }
@@ -289,8 +338,14 @@ class Boss extends SpriteAnimationGroupComponent
         current = State.idle;
         velocity.x = 0;
         position.x = 272;
+
         Future.delayed(const Duration(seconds: 1), () {
           onPattern3 = false;
+          isHitOn = true;
+        });
+
+        Future.delayed(const Duration(seconds: 6), () {
+          isHitOn = false;
         });
       }
     }
