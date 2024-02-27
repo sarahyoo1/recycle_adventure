@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flutter/painting.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
@@ -56,7 +57,7 @@ class Bullet extends SpriteAnimationComponent
 
   void movement(dt) {
     if (moveVertically) {
-      position.y += speed * dt;
+      position.y -= speed * dt;
     } else {
       position.x += moveDirection * speed * dt;
     }
@@ -71,6 +72,9 @@ class Bullet extends SpriteAnimationComponent
   void updateBulletDirection() {
     if (moveDirection == 1) {
       flipHorizontallyAroundCenter();
+    }
+    if (moveVertically) {
+      angle = -90; //TODO
     }
   }
 }

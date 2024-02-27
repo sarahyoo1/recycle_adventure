@@ -63,6 +63,7 @@ class Player extends SpriteAnimationGroupComponent
   bool reachedCheckpoint = false;
   bool isHitboxActive = false;
   bool hasShooted = false;
+  bool verticalShootingOn = false;
   bool dead = false;
   List<CollisionBlock> collisionBlocks = [];
   CustomHitbox hitboxSetting = CustomHitbox(
@@ -79,7 +80,7 @@ class Player extends SpriteAnimationGroupComponent
   @override
   FutureOr<void> onLoad() {
     _loadAllAnimations();
-    debugMode = false;
+    debugMode = true;
     player = game.player;
 
     startingPosition = Vector2(position.x, position.y);
@@ -370,7 +371,7 @@ class Player extends SpriteAnimationGroupComponent
     Bullet bullet = Bullet(
       imagePath: 'Bullets/player_bullet.png',
       animationAmount: 4,
-      moveVertically: false,
+      moveVertically: verticalShootingOn,
       position: (bulletHorizontalDirection == 1)
           ? Vector2(position.x + 20, position.y + 20)
           : Vector2(position.x - 20, position.y + 20),

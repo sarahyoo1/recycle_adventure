@@ -22,6 +22,7 @@ class DroneOne extends SpriteAnimationGroupComponent
 
   @override
   FutureOr<void> onLoad() {
+    debugMode = true;
     _loadSpriteAnimations();
     return super.onLoad();
   }

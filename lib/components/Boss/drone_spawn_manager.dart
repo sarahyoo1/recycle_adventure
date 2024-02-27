@@ -6,10 +6,12 @@ import 'package:pixel_adventure/components/Boss/drones/drone2.dart';
 
 class DroneSpawnManager extends Component {
   late Timer _timer;
-  late Vector2 position;
+  late Vector2 droneOnePosition;
+  late Vector2 droneTwoPosition;
   late double limit;
   DroneSpawnManager({
-    required this.position,
+    required this.droneOnePosition,
+    required this.droneTwoPosition,
     required this.limit,
   }) : super() {
     _timer = Timer(limit, onTick: _spawnRandomDrone, repeat: true);
@@ -47,7 +49,7 @@ class DroneSpawnManager extends Component {
 
   void _spawnDrone1() {
     DroneOne drone1 = DroneOne(
-      position: Vector2(288, 112),
+      position: droneOnePosition,
     );
 
     add(drone1);
@@ -55,7 +57,7 @@ class DroneSpawnManager extends Component {
 
   void _spawnDrone2() {
     DroneTwo drone2 = DroneTwo(
-      position: Vector2(288, 112),
+      position: droneTwoPosition,
     );
 
     add(drone2);
