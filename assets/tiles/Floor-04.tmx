@@ -91,51 +91,19 @@
     <property name="offsetPositive" type="float" value="5"/>
    </properties>
   </object>
-  <object id="30" name="Plastic Bag" type="Item" x="0" y="208" width="32" height="32">
-   <properties>
-    <property name="amount" type="int" value="11"/>
-   </properties>
-  </object>
-  <object id="31" name="Heart" type="Item" x="0" y="112" width="32" height="32">
-   <properties>
-    <property name="amount" type="int" value="10"/>
-   </properties>
-  </object>
+  <object id="30" name="Plastic Bag" type="Item" x="0" y="208" width="32" height="32"/>
+  <object id="31" name="Heart" type="Item" x="0" y="112" width="32" height="32"/>
   <object id="32" name="Plastic Bottle" type="Item" x="0" y="160" width="32" height="32">
    <properties>
     <property name="amount" type="int" value="11"/>
    </properties>
   </object>
-  <object id="33" name="Heart" type="Item" x="592" y="256" width="32" height="32">
-   <properties>
-    <property name="amount" type="int" value="10"/>
-   </properties>
-  </object>
-  <object id="34" name="Heart" type="Item" x="256" y="144" width="32" height="32">
-   <properties>
-    <property name="amount" type="int" value="10"/>
-   </properties>
-  </object>
-  <object id="35" name="Plastic Bag" type="Item" x="128" y="144" width="32" height="32">
-   <properties>
-    <property name="amount" type="int" value="11"/>
-   </properties>
-  </object>
-  <object id="36" name="Plastic Bottle" type="Item" x="432" y="48" width="32" height="32">
-   <properties>
-    <property name="amount" type="int" value="11"/>
-   </properties>
-  </object>
-  <object id="37" name="Plastic Bottle" type="Item" x="304" y="256" width="32" height="32">
-   <properties>
-    <property name="amount" type="int" value="11"/>
-   </properties>
-  </object>
-  <object id="38" name="Plastic Bag" type="Item" x="608" y="112" width="32" height="32">
-   <properties>
-    <property name="amount" type="int" value="11"/>
-   </properties>
-  </object>
+  <object id="33" name="Heart" type="Item" x="592" y="256" width="32" height="32"/>
+  <object id="34" name="Heart" type="Item" x="256" y="144" width="32" height="32"/>
+  <object id="35" name="Plastic Bag" type="Item" x="128" y="144" width="32" height="32"/>
+  <object id="36" name="Plastic Bottle" type="Item" x="432" y="48" width="32" height="32"/>
+  <object id="37" name="Plastic Bottle" type="Item" x="304" y="256" width="32" height="32"/>
+  <object id="38" name="Plastic Bag" type="Item" x="608" y="112" width="32" height="32"/>
   <object id="46" name="Saw" type="Saw" x="64" y="80" width="32" height="32">
    <properties>
     <property name="initial direction" type="int" value="1"/>

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import 'package:pixel_adventure/components/Boss/item_spawn_manager.dart';
 import 'package:pixel_adventure/components/HUD/hud.dart';
 import 'package:pixel_adventure/components/backgrounds/background.dart';
 import 'package:pixel_adventure/components/backgrounds/background_tile.dart';
@@ -105,7 +106,6 @@ class Floor extends World with HasGameRef<PixelAdventure> {
               position: Vector2(spawnPoint.x, spawnPoint.y),
               size: Vector2(spawnPoint.width, spawnPoint.height),
               item: spawnPoint.name,
-              amount: spawnPoint.properties.getValue('amount'),
             );
             add(item);
             break;
@@ -160,6 +160,13 @@ class Floor extends World with HasGameRef<PixelAdventure> {
               direction: spawnPoint.properties.getValue('direction'),
             );
             add(carSpawnManager);
+            break;
+          case 'ItemSpawnManager':
+            final itemSpawnManager = ItemSpawnManager(
+              position: Vector2(spawnPoint.x, spawnPoint.y),
+              size: Vector2(spawnPoint.width, spawnPoint.height),
+            );
+            add(itemSpawnManager);
             break;
           case 'Checkpoint':
             final checkpoint = Checkpoint(

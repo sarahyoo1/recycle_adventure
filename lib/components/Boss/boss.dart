@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:pixel_adventure/components/Boss/bomb.dart';
-import 'package:pixel_adventure/components/Boss/drone_spawn_manager.dart';
+import 'package:pixel_adventure/components/Boss/drones/drone_spawn_manager.dart';
 import 'package:pixel_adventure/components/bullet.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
@@ -202,7 +202,7 @@ class Boss extends SpriteAnimationGroupComponent
 
   void _randomlyChoosePattern() {
     if (!onPattern1 && !onPattern2 && !onPattern3 && !isHitOn) {
-      int rd = Random().nextInt(1) + 1;
+      int rd = Random().nextInt(2);
 
       switch (rd) {
         case 0:

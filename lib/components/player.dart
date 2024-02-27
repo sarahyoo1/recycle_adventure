@@ -80,7 +80,7 @@ class Player extends SpriteAnimationGroupComponent
   @override
   FutureOr<void> onLoad() {
     _loadAllAnimations();
-    debugMode = true;
+    debugMode = false;
     player = game.player;
 
     startingPosition = Vector2(position.x, position.y);

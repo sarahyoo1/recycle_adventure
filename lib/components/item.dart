@@ -9,13 +9,11 @@ import 'package:pixel_adventure/pixel_adventure.dart';
 class Item extends SpriteAnimationComponent
     with HasGameRef<PixelAdventure>, CollisionCallbacks {
   final String item;
-  final int amount;
   Item({
     super.position,
     super.size,
     super.removeOnFinish = true,
     required this.item,
-    required this.amount,
   });
 
   final double stepTime = 0.05;
@@ -48,7 +46,9 @@ class Item extends SpriteAnimationComponent
       await animationTicker?.completed;
 
       if (item == 'Heart') {
-        game.health++;
+        if (game.health < 5) {
+          game.health++;
+        }
       } else {
         game.itemsCollected++;
       }
@@ -65,7 +65,7 @@ class Item extends SpriteAnimationComponent
           width: 12,
           height: 12,
         );
-        animation = _elseItemSpriteAnimation();
+        animation = _elseItemSpriteAnimation(10);
         break;
       case 'Plastic Bag':
         hitbox = CustomHitbox(
@@ -74,7 +74,7 @@ class Item extends SpriteAnimationComponent
           width: 12,
           height: 12,
         );
-        animation = _specialSpriteAnimation('Recycle Items/$item', amount);
+        animation = _specialSpriteAnimation('Recycle Items/$item', 11);
         break;
       case 'Plastic Bottle':
         hitbox = CustomHitbox(
@@ -83,7 +83,7 @@ class Item extends SpriteAnimationComponent
           width: 12,
           height: 12,
         );
-        animation = _specialSpriteAnimation('Recycle Items/$item', amount);
+        animation = _specialSpriteAnimation('Recycle Items/$item', 11);
         break;
       default:
         //other recycle items
@@ -98,7 +98,7 @@ class Item extends SpriteAnimationComponent
     }
   }
 
-  SpriteAnimation _elseItemSpriteAnimation() {
+  SpriteAnimation _elseItemSpriteAnimation(int amount) {
     return SpriteAnimation.fromFrameData(
       game.images.fromCache('Items/Else/$item.png'),
       SpriteAnimationData.sequenced(
@@ -113,7 +113,7 @@ class Item extends SpriteAnimationComponent
     return SpriteAnimation.fromFrameData(
       game.images.fromCache('Items/Recycle Items/$item.png'),
       SpriteAnimationData.sequenced(
-        amount: amount,
+        amount: 1,
         stepTime: stepTime,
         textureSize: Vector2.all(64),
       ),
