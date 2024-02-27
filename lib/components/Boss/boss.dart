@@ -7,7 +7,8 @@ import 'package:pixel_adventure/pixel_adventure.dart';
 
 enum State {
   idle,
-  walk,
+  left,
+  right,
   move,
   hit,
   attack1,
@@ -30,7 +31,8 @@ class Boss extends SpriteAnimationGroupComponent
   }
 
   late final SpriteAnimation _idleSpriteAnimation;
-  late final SpriteAnimation _walkSpriteAnimation;
+  late final SpriteAnimation _leftSpriteAnimation;
+  late final SpriteAnimation _rightSpriteAnimation;
   late final SpriteAnimation _moveSpriteAnimation;
   late final SpriteAnimation _hitSpriteAnimation;
   late final SpriteAnimation _attack1SpriteAnimation;
@@ -42,7 +44,7 @@ class Boss extends SpriteAnimationGroupComponent
   final _lives = 10;
   bool dead = false;
   Vector2 velocity = Vector2.zero();
-  late double directionX;
+  double directionX = -1;
   double moveSpeed = 80;
 
   bool onPattern1 = false;
@@ -77,29 +79,31 @@ class Boss extends SpriteAnimationGroupComponent
 
   SpriteAnimation _spriteAnimation(String state, int amount) {
     return SpriteAnimation.fromFrameData(
-      game.images.fromCache('Boss/$state.png'),
+      game.images.fromCache('Boss/Machine Operator/$state.png'),
       SpriteAnimationData.sequenced(
         amount: amount,
         stepTime: 0.05,
-        textureSize: Vector2(85, 85),
+        textureSize: Vector2.all(96),
       ),
     );
   }
 
   void _loadSpriteAnimations() {
-    _idleSpriteAnimation = _spriteAnimation('idle', 4);
-    _walkSpriteAnimation = _spriteAnimation('walk', 6);
-    _moveSpriteAnimation = _spriteAnimation('move', 6);
-    _hitSpriteAnimation = _spriteAnimation('hit', 2)..loop = false;
-    _attack1SpriteAnimation = _spriteAnimation('attack-1', 6)..loop = false;
-    _attack2SpriteAnimation = _spriteAnimation('attack-2', 6)..loop = false;
-    _attack3SpriteAnimation = _spriteAnimation('attack-3', 6)..loop = false;
-    _attack4SpriteAnimation = _spriteAnimation('attack-4', 6)..loop = false;
-    _deadSpriteAnimation = _spriteAnimation('dead', 6)..loop = false;
+    _idleSpriteAnimation = _spriteAnimation('Idle', 4);
+    _leftSpriteAnimation = _spriteAnimation('Left', 8);
+    _rightSpriteAnimation = _spriteAnimation('Right', 8);
+    _moveSpriteAnimation = _spriteAnimation('Move', 6);
+    _hitSpriteAnimation = _spriteAnimation('Hurt', 2)..loop = false;
+    _attack1SpriteAnimation = _spriteAnimation('Attack1', 8);
+    _attack2SpriteAnimation = _spriteAnimation('Attack2', 8);
+    _attack3SpriteAnimation = _spriteAnimation('Attack3', 8);
+    _attack4SpriteAnimation = _spriteAnimation('Attack4', 6);
+    _deadSpriteAnimation = _spriteAnimation('Death', 6)..loop = false;
 
     animations = {
       State.idle: _idleSpriteAnimation,
-      State.walk: _walkSpriteAnimation,
+      State.left: _leftSpriteAnimation,
+      State.right: _rightSpriteAnimation,
       State.move: _moveSpriteAnimation,
       State.hit: _hitSpriteAnimation,
       State.attack1: _attack1SpriteAnimation,
@@ -113,7 +117,15 @@ class Boss extends SpriteAnimationGroupComponent
   }
 
   void _updateState() {
-    current = (velocity.x != 0) ? State.walk : State.idle;
+    if (velocity.x != 0) {
+      if (velocity.x > 0) {
+        current = State.right;
+      } else {
+        current = State.left;
+      }
+    } else {
+      current = State.idle;
+    }
   }
 
   void _movement(dt) {
@@ -140,8 +152,6 @@ class Boss extends SpriteAnimationGroupComponent
   }
 
   void _pattern1() {
-    directionX = -1;
-
     if (directionX == -1) {
       if (position.x >= 100) {
         // Move left
@@ -177,6 +187,7 @@ class Boss extends SpriteAnimationGroupComponent
         // Stop, print message, and set flag
         velocity.x = 0;
         onPattern1 = false;
+        directionX = -1;
       }
     }
   }

@@ -34,7 +34,7 @@ class DroneSpawnManager extends Component {
   }
 
   void _spawnRandomDrone() {
-    int rd = Random().nextInt(2);
+    int rd = Random().nextInt(3);
     switch (rd) {
       case 0:
         _spawnDrone1();
@@ -47,7 +47,7 @@ class DroneSpawnManager extends Component {
 
   void _spawnDrone1() {
     DroneOne drone1 = DroneOne(
-      position: position,
+      position: Vector2(288, 112),
     );
 
     add(drone1);
@@ -55,7 +55,7 @@ class DroneSpawnManager extends Component {
 
   void _spawnDrone2() {
     DroneTwo drone2 = DroneTwo(
-      position: position,
+      position: Vector2(288, 112),
     );
 
     add(drone2);
