@@ -42,6 +42,9 @@ class Car extends SpriteAnimationGroupComponent
     player = game.player;
 
     _loadSpriteAnimations();
+    if (direction == 1) {
+      flipHorizontallyAroundCenter();
+    }
     _applyRandomSpeed();
 
     add(

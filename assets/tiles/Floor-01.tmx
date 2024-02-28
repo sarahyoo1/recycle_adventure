@@ -6,7 +6,7 @@
  <layer id="1" name="Background" width="40" height="23">
   <properties>
    <property name="Background" value="sewer1"/>
-   <property name="totalItemsNum" type="int" value="4"/>
+   <property name="totalItemsNum" type="int" value="14"/>
   </properties>
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -37,20 +37,20 @@
  <objectgroup id="3" name="Spawnpoints">
   <object id="1" name="Player" type="Player" x="16" y="240" width="32.5455" height="31.3333"/>
   <object id="14" name="Checkpoint" type="Checkpoint" x="288" y="64" width="64" height="64"/>
-  <object id="28" name="Plastic Bottle" type="Item" x="208" y="240" width="32" height="32"/>
+  <object id="28" name="Plastic Bottle" type="Item" x="176" y="240" width="32" height="32"/>
   <object id="29" name="Plastic Bag" type="Item" x="112" y="240" width="32" height="32"/>
-  <object id="45" name="glass-green soda bottle" type="Item" x="288" y="240" width="32" height="32"/>
+  <object id="45" name="glass-green soda bottle" type="Item" x="240" y="240" width="32" height="32"/>
   <object id="46" name="metal-tuna can" type="Item" x="432" y="112" width="32" height="32"/>
-  <object id="50" name="plastic-laundry soap bottle" type="Item" x="416" y="240" width="32" height="32"/>
-  <object id="51" name="paper-newspaper" type="Item" x="352" y="240" width="32" height="32"/>
-  <object id="52" name="other-pizza box" type="Item" x="480" y="240" width="32" height="32"/>
+  <object id="50" name="plastic-laundry soap bottle" type="Item" x="368" y="240" width="32" height="32"/>
+  <object id="51" name="paper-newspaper" type="Item" x="304" y="240" width="32" height="32"/>
+  <object id="52" name="other-pizza box" type="Item" x="432" y="240" width="32" height="32"/>
   <object id="55" name="other-polystyrene foam cup" type="Item" x="432" y="64" width="32" height="32"/>
   <object id="56" name="glass-jar" type="Item" x="528" y="208" width="32" height="32"/>
   <object id="57" name="paper-cardboard box" type="Item" x="528" y="160" width="32" height="32"/>
   <object id="58" name="plastic-milk jug" type="Item" x="528" y="96" width="32" height="32"/>
-  <object id="59" name="metal-red soda can" type="Item" x="416" y="192" width="32" height="32"/>
-  <object id="61" name="other-mug" type="Item" x="352" y="192" width="32" height="32"/>
-  <object id="62" name="Heart" type="Item" x="256" y="176" width="32" height="32"/>
+  <object id="59" name="metal-red soda can" type="Item" x="496" y="240" width="32" height="32"/>
+  <object id="61" name="other-mug" type="Item" x="592" y="240" width="32" height="32"/>
+  <object id="62" name="Heart" type="Item" x="352" y="96" width="32" height="32"/>
  </objectgroup>
  <objectgroup id="4" name="Collisions">
   <object id="8" x="288" y="128" width="96" height="16"/>

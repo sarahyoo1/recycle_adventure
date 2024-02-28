@@ -49,7 +49,6 @@ class Cucumber extends Enemy {
   @override
   FutureOr<void> onLoad() {
     debugMode = true;
-    priority = -1;
 
     _loadAnimations();
     calculateRange();

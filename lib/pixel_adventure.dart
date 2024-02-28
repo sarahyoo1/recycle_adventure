@@ -36,9 +36,12 @@ class PixelAdventure extends FlameGame
     'Floor-03',
     'Floor-04',
     'Floor-05',
+    'Floor-06',
+    'Floor-07',
+    'Floor-08',
     'BossFight',
   ];
-  int currentFloorIndex = 5; //Should initially set to be 0.
+  int currentFloorIndex = 6; //Should initially set to be 0.
 
   bool _isAlreadyLoaded = false;
 
