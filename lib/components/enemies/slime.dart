@@ -35,7 +35,7 @@ class Slime extends Enemy {
 
   @override
   FutureOr<void> onLoad() {
-    debugMode = false;
+    debugMode = true;
 
     //add rectangle hitbox.
 
@@ -66,9 +66,15 @@ class Slime extends Enemy {
     if (other is Bullet) {
       current = State.hit;
       if (lives > 0) {
+        if (game.playSounds) {
+          FlameAudio.play('damage.wav', volume: game.soundVolume);
+        }
         lives--;
         other.removeFromParent();
       } else {
+        if (game.playSounds) {
+          FlameAudio.play('enemyKilled.wav', volume: game.soundVolume);
+        }
         dead = true;
         onDead();
       }

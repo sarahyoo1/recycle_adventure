@@ -54,9 +54,9 @@ class Projectile extends SpriteAnimationComponent
       position.x += moveDirection * speed * dt;
     }
 
-    // if (position.y < -height || position.x < 0 || position.x > 520) {
-    //   removeFromParent();
-    // }
+    if (position.y < -height || position.x < 0 || position.x > 520) {
+      removeFromParent();
+    }
   }
 
   void updateBulletDirection() {

@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:pixel_adventure/components/Boss/item_spawn_manager.dart';
 import 'package:pixel_adventure/components/HUD/hud.dart';
-import 'package:pixel_adventure/components/backgrounds/background.dart';
-import 'package:pixel_adventure/components/backgrounds/background_tile.dart';
+import 'package:pixel_adventure/components/background.dart';
 import 'package:pixel_adventure/components/Boss/boss.dart';
 import 'package:pixel_adventure/components/checkpoint.dart';
 import 'package:pixel_adventure/components/enemies/bat.dart';
@@ -41,13 +41,12 @@ class Floor extends World with HasGameRef<PixelAdventure> {
   @override
   FutureOr<void> onLoad() async {
     floor = await TiledComponent.load('$floorName.tmx', Vector2.all(16));
-
     add(floor);
-    add(Hud());
-    //_scrollingBackground();
-    _addBackground();
-    _spawningObjects();
     _addCollisions();
+    _addBackground();
+    add(Hud());
+    _playBackgroundMusic();
+    _spawningObjects();
     _updateTotalItemsNum();
 
     return super.onLoad();
@@ -61,23 +60,38 @@ class Floor extends World with HasGameRef<PixelAdventure> {
     }
   }
 
-  // void _scrollingBackground() {
-  //   final backgroundLayer = floor.tileMap.getLayer('Background');
-
-  //   if (backgroundLayer != null) {
-  //     final backgroundColor =
-  //         backgroundLayer.properties.getValue('BackgroundColor');
-  //     final backgroundTile = BackgroundTile(color: backgroundColor ?? 'Gray', position: Vector2(0, 0),);
-  //     add(backgroundTile);
-  //     }
-  //   }
-  // }
-
   void _addBackground() {
     final backgroundLayer = floor.tileMap.getLayer<TileLayer>('Background');
     if (backgroundLayer != null) {
       backgroundName = backgroundLayer.properties.getValue('Background');
       addAll([Background(backgroundName: backgroundName)]);
+    }
+  }
+
+  void _playBackgroundMusic() {
+    switch (floorName) {
+      case 'Floor-1':
+        FlameAudio.bgm.play('tutorial-music.mp3', volume: game.musicVolume);
+        break;
+      case 'Floor-2':
+      case 'Floor-3':
+      case 'Floor-4':
+        FlameAudio.bgm.play('sewer-music.mp3', volume: game.musicVolume);
+        break;
+      case 'Floor-5':
+      case 'Floor-6':
+        FlameAudio.bgm.play('city-music.mp3', volume: game.musicVolume);
+        break;
+      case 'Floor-7':
+        FlameAudio.bgm
+            .play('a-short-break-music.mp3', volume: game.musicVolume);
+        break;
+      case 'Floor-8':
+        FlameAudio.bgm.play('factory-music.mp3', volume: game.musicVolume);
+        break;
+      case 'BoosFight':
+        FlameAudio.bgm.play('boss-fight-music.mp3', volume: game.musicVolume);
+        break;
     }
   }
 

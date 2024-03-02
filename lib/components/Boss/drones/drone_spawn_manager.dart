@@ -1,10 +1,12 @@
 import 'dart:math';
 
 import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:pixel_adventure/components/Boss/drones/drone1.dart';
 import 'package:pixel_adventure/components/Boss/drones/drone2.dart';
+import 'package:pixel_adventure/pixel_adventure.dart';
 
-class DroneSpawnManager extends Component {
+class DroneSpawnManager extends Component with HasGameRef<PixelAdventure> {
   late Timer timer;
   late Vector2 droneOnePosition;
   late Vector2 droneTwoPosition;
@@ -42,6 +44,9 @@ class DroneSpawnManager extends Component {
   }
 
   void _spawnDrone1() {
+    if (game.playSounds) {
+      FlameAudio.play('boss-drone-spawn.mp3', volume: game.soundVolume);
+    }
     DroneOne drone1 = DroneOne(
       position: droneOnePosition,
     );
@@ -50,6 +55,9 @@ class DroneSpawnManager extends Component {
   }
 
   void _spawnDrone2() {
+    if (game.playSounds) {
+      FlameAudio.play('boss-drone-spawn.mp3', volume: game.soundVolume);
+    }
     DroneTwo drone2 = DroneTwo(
       position: droneTwoPosition,
     );

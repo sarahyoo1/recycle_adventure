@@ -12,6 +12,7 @@ class Saw extends SpriteAnimationComponent with HasGameRef<PixelAdventure> {
   final double offsetPositive;
   final int initialDirection;
   Saw({
+    //default settings
     this.isVertical = false,
     this.offsetNegative = 0,
     this.offsetPositive = 0,

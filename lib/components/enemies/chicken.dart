@@ -60,6 +60,9 @@ class Chicken extends Enemy {
       Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollisionStart(intersectionPoints, other);
     if (other is Bullet) {
+      if (game.playSounds) {
+        FlameAudio.play('damage.wav', volume: game.soundVolume);
+      }
       current = State.hit;
       lives--;
       other.removeFromParent();

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
@@ -48,6 +49,9 @@ class Bomb extends SpriteAnimationGroupComponent
       Set<Vector2> intersectionPoints, PositionComponent other) async {
     super.onCollisionStart(intersectionPoints, other);
     if (other is Player) {
+      if (game.playSounds) {
+        FlameAudio.play('boss-bomb-explosion.wav', volume: game.soundVolume);
+      }
       hasBoomed = true;
       game.health--;
       velocity.y = 0;
@@ -94,7 +98,7 @@ class Bomb extends SpriteAnimationGroupComponent
 }
 
 //Bomb spawn manager class
-class BombSpawnManager extends Component {
+class BombSpawnManager extends Component with HasGameRef<PixelAdventure> {
   late Timer timer;
   double limit;
   Vector2 droppingPosition;
@@ -118,6 +122,9 @@ class BombSpawnManager extends Component {
   }
 
   void _spawnBombs() {
+    if (game.playSounds) {
+      FlameAudio.play('boss-bomb-spawn.mp3', volume: game.soundVolume);
+    }
     Bomb bomb = Bomb(position: droppingPosition);
     add(bomb);
   }

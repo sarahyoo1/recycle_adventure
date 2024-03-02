@@ -59,7 +59,5 @@ class Enemy extends SpriteAnimationGroupComponent
 
     return (player.x + playerOffsetX >= rangeNegative &&
         player.x + playerOffsetX <= rangePositive);
-
-    //player.y + player.height > position.y  --> this makes enemies stop when player is not on the ground.
-  }
+  } //player.y + player.height > position.y  --> this makes enemies stop when player is not on the ground.
 }

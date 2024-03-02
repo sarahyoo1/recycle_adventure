@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:pixel_adventure/components/Boss/bomb.dart';
 import 'package:pixel_adventure/components/Boss/drones/drone_spawn_manager.dart';
 import 'package:pixel_adventure/components/bullet.dart';
@@ -42,7 +43,7 @@ class Boss extends SpriteAnimationGroupComponent
   late final SpriteAnimation _attack4SpriteAnimation;
   late final SpriteAnimation _deadSpriteAnimation;
 
-  int lives = 100;
+  int lives = 1;
   bool dead = false;
   bool isHitOn = false;
   Vector2 velocity = Vector2.zero();
@@ -123,6 +124,9 @@ class Boss extends SpriteAnimationGroupComponent
     super.onCollisionStart(intersectionPoints, other);
     if (isHitOn) {
       if (other is Bullet) {
+        if (game.playSounds) {
+          FlameAudio.play('boss-damaged.mp3', volume: game.soundVolume);
+        }
         current = State.hit;
 
         Future.delayed(const Duration(milliseconds: 200), () {
@@ -193,6 +197,12 @@ class Boss extends SpriteAnimationGroupComponent
 
   void _checkLives() {
     if (lives <= 0) {
+      if (lives == 0) {
+        if (game.playSounds) {
+          FlameAudio.play('boss-dead.mp3', volume: game.soundVolume);
+          lives--;
+        }
+      }
       dead = true;
       isHitOn = false;
       current = State.dead;
@@ -202,7 +212,7 @@ class Boss extends SpriteAnimationGroupComponent
 
   void _randomlyChoosePattern() {
     if (!onPattern1 && !onPattern2 && !onPattern3 && !isHitOn) {
-      int rd = Random().nextInt(2);
+      int rd = Random().nextInt(3);
 
       switch (rd) {
         case 0:

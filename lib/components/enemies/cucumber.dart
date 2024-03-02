@@ -78,20 +78,23 @@ class Cucumber extends Enemy {
   void onCollisionStart(
       Set<Vector2> intersectionPoints, PositionComponent other) async {
     super.onCollisionStart(intersectionPoints, other);
-    if (deadGround) {
-      if (game.playSounds) {
-        FlameAudio.play('enemyKilled.wav', volume: game.soundVolume);
-      }
-      current = State.deadHit;
-      await animationTicker?.completed;
-      current = State.deadGround;
-    }
 
     if (other is Bullet) {
-      current = State.hit;
+      if (game.playSounds) {
+        FlameAudio.play('damage.wav', volume: game.soundVolume);
+      }
+      if (deadGround) {
+        current = State.deadHit;
+        await animationTicker?.completed;
+        current = State.deadGround;
+      } else {
+        current = State.hit;
+      }
       lives--;
+
       other.removeFromParent();
     }
+
     if (other is Player) {
       game.health--;
       other.respawn();
@@ -151,11 +154,10 @@ class Cucumber extends Enemy {
   }
 
   void checkLives() {
-    if (lives <= deadGroundLives) {
-      deadGround = true;
-      current = State.deadHit;
-    }
     if (lives <= 0) {
+      if (game.playSounds) {
+        FlameAudio.play('enemyKilled.wav', volume: game.soundVolume);
+      }
       removeFromParent();
     }
   }

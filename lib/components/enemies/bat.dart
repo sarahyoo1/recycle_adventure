@@ -68,6 +68,9 @@ class Bat extends Enemy {
       Set<Vector2> intersectionPoints, PositionComponent other) async {
     super.onCollisionStart(intersectionPoints, other);
     if (other is Bullet) {
+      if (game.playSounds) {
+        FlameAudio.play('damage.wav', volume: game.soundVolume);
+      }
       current = State.hit;
       await animationTicker?.completed;
       current = State.flying;

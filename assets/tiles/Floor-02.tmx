@@ -91,7 +91,7 @@
     <property name="offsetPositive" type="float" value="9"/>
    </properties>
   </object>
-  <object id="80" name="Slime" type="Slime" x="336" y="32" width="32" height="32">
+  <object id="80" name="Slime" type="Slime" x="320" y="32" width="32" height="32">
    <properties>
     <property name="lives" type="int" value="5"/>
     <property name="offsetNegative" type="float" value="3"/>

@@ -61,8 +61,12 @@ class Trunk extends Enemy {
       Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollisionStart(intersectionPoints, other);
     if (other is Bullet) {
-      current = State.hit;
+      if (game.playSounds) {
+        FlameAudio.play('damage.wav', volume: game.soundVolume);
+      }
       lives--;
+      current = State.hit;
+
       other.removeFromParent();
     }
     if (other is Player) _collidedWithPlayer();
@@ -131,6 +135,9 @@ class Trunk extends Enemy {
 
   void checkLives() {
     if (lives <= 0) {
+      if (game.playSounds) {
+        FlameAudio.play('enemyKilled.wav', volume: game.soundVolume);
+      }
       removeFromParent();
     }
   }

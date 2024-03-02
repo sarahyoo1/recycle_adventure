@@ -39,17 +39,21 @@ class Item extends SpriteAnimationComponent
   void collidedWithPlayer() async {
     if (!isCollected) {
       isCollected = true;
-      if (game.playSounds) {
-        FlameAudio.play('pickupItem.wav', volume: game.soundVolume);
-      }
+
       animation = _specialSpriteAnimation('Collected', 6)..loop = false;
       await animationTicker?.completed;
 
       if (item == 'Heart') {
+        if (game.playSounds) {
+          FlameAudio.play('health-up.mp3', volume: game.soundVolume);
+        }
         if (game.health < 5) {
           game.health++;
         }
       } else {
+        if (game.playSounds) {
+          FlameAudio.play('pickupItem.wav', volume: game.soundVolume);
+        }
         game.itemsCollected++;
       }
       removeFromParent();

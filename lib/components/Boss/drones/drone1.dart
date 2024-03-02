@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:pixel_adventure/components/bullet.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
@@ -54,6 +55,9 @@ class DroneOne extends SpriteAnimationGroupComponent
       Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollisionStart(intersectionPoints, other);
     if (other is Bullet) {
+      if (game.playSounds) {
+        FlameAudio.play('boss-drone-damaged.mp3', volume: game.soundVolume);
+      }
       lives--;
       other.removeFromParent();
     }

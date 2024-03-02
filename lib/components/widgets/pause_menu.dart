@@ -1,3 +1,4 @@
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:pixel_adventure/components/screens/main_menu.dart';
 import 'package:pixel_adventure/components/widgets/pause_button.dart';
@@ -41,6 +42,7 @@ class PauseMenu extends StatelessWidget {
             child: ElevatedButton(
               onPressed: () {
                 gameRef.resumeEngine();
+                FlameAudio.bgm.resume();
                 gameRef.overlays.remove(PauseMenu.ID);
                 gameRef.overlays.add(PauseButton.ID);
               },
