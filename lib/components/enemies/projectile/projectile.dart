@@ -43,6 +43,7 @@ class Projectile extends SpriteAnimationComponent
 
   @override
   void update(double dt) {
+    updateBulletDirection();
     movement(dt);
     super.update(dt);
   }

@@ -135,10 +135,10 @@ class Bat extends Enemy {
           (player.x + playerOffset < position.x + enemyOffset) ? -1 : 1;
       targetDirection.y = (player.y < position.y) ? -1 : 1;
 
-      velocity.x = targetDirection.x * runSpeed;
+      velocity.x = targetDirection.x * moveSpeed;
 
       //TODO: Make the bat follow player, regardless their y position.
-      velocity.y = targetDirection.y * runSpeed + 4;
+      velocity.y = targetDirection.y * moveSpeed + 4;
     }
 
     //Changes enemy's direction when player changes direction.

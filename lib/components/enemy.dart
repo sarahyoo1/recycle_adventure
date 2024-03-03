@@ -20,7 +20,7 @@ class Enemy extends SpriteAnimationGroupComponent
 
   double stepTime = 0.05;
   double tileSize = 16;
-  double runSpeed = 55;
+  double moveSpeed = 55;
 
   double rangeNegative = 0;
   double rangePositive = 0;
@@ -45,7 +45,7 @@ class Enemy extends SpriteAnimationGroupComponent
     if (isPlayerInRange()) {
       targetDirection.x =
           (player.x + playerOffset < position.x + enemyOffset) ? -1 : 1;
-      velocity.x = targetDirection.x * runSpeed;
+      velocity.x = targetDirection.x * moveSpeed;
     }
 
     //Changes enemy's direction when player changes direction.

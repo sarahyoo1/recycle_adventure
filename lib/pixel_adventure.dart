@@ -21,14 +21,15 @@ class PixelAdventure extends FlameGame
 
   late CameraComponent cam;
   Player player = Player(character: 'Hood');
-  int health = 5; //player health
+  final int maxHealth = 5;
+  late int health; //player health
   int itemsCollected = 0;
   int totalItemsNum = 0;
   bool isOkToNextFloor = false;
 
   late JoystickComponent joystick;
   bool showControls = false;
-  bool playSounds = true; //turns on game audios
+  bool playSounds = false; //turns on game audios
   double soundVolume = 1.0;
   double musicVolume = 1.0;
   List<String> floorNames = [
@@ -42,12 +43,13 @@ class PixelAdventure extends FlameGame
     'Floor-08',
     'BossFight',
   ];
-  int currentFloorIndex = 8; //Should initially set to be 0.
+  int currentFloorIndex = 3; //Should initially set to be 0.
 
   bool _isAlreadyLoaded = false;
 
   @override
   FutureOr<void> onLoad() async {
+    health = maxHealth;
     if (!_isAlreadyLoaded) {
       await images.loadAllImages();
 

@@ -15,7 +15,7 @@ void main() async {
   runApp(MaterialApp(
     themeMode: ThemeMode.dark,
     darkTheme: ThemeData.dark().copyWith(
-      textTheme: GoogleFonts.bungeeInlineTextTheme(),
+      textTheme: GoogleFonts.pressStart2pTextTheme(),
       scaffoldBackgroundColor: Colors.black,
     ),
     home: const MainMenu(),

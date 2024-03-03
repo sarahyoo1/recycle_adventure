@@ -6,6 +6,8 @@ import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:pixel_adventure/components/Boss/bomb.dart';
 import 'package:pixel_adventure/components/Boss/drones/drone_spawn_manager.dart';
+import 'package:pixel_adventure/components/HUD/boss_health_bar.dart';
+import 'package:pixel_adventure/components/HUD/hud.dart';
 import 'package:pixel_adventure/components/bullet.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
@@ -43,11 +45,11 @@ class Boss extends SpriteAnimationGroupComponent
   late final SpriteAnimation _attack4SpriteAnimation;
   late final SpriteAnimation _deadSpriteAnimation;
 
-  int lives = 1;
+  int lives = 100;
   bool dead = false;
   bool isHitOn = false;
   Vector2 velocity = Vector2.zero();
-  double directionX = -1;
+  double directionX = 0;
   double moveSpeed = 80;
 
   bool onPattern1 = false;
@@ -62,7 +64,6 @@ class Boss extends SpriteAnimationGroupComponent
   FutureOr<void> onLoad() {
     debugMode = false;
     priority = 3;
-
     player = game.player;
     player.verticalShootingOn = true;
 
@@ -134,8 +135,8 @@ class Boss extends SpriteAnimationGroupComponent
         });
 
         lives--;
+
         print('got hit');
-        print(lives);
 
         other.removeFromParent();
       }

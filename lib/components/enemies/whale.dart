@@ -18,7 +18,6 @@ enum State {
   attack,
   deadGround,
   deadHit,
-  swallow,
 }
 
 class Whale extends Enemy {
@@ -39,13 +38,13 @@ class Whale extends Enemy {
   late final SpriteAnimation _attackAnimation;
   late final SpriteAnimation _deadGroundAnimation;
   late final SpriteAnimation _deadHitAnimation;
-  late final SpriteAnimation _swallowAnimation;
 
   final int deadGroundLives = 4;
 
   bool deadGround = false;
+  bool isAttacking = false;
   RectangleHitbox? hitbox;
-  EnemyProjectileManager? _projectileManager;
+  late final EnemyProjectileManager _projectileManager;
 
   @override
   FutureOr<void> onLoad() {
@@ -66,14 +65,20 @@ class Whale extends Enemy {
         position.y + 18,
       ),
       limit: 1,
+      moveDirection: moveDirection.x,
     );
-    parent?.add(_projectileManager!);
+    parent?.add(_projectileManager);
 
     return super.onLoad();
   }
 
   @override
   void update(double dt) {
+    _projectileManager.position = Vector2(
+      position.x + 9,
+      position.y + 18,
+    );
+    _projectileManager.moveDirection = moveDirection.x;
     _checkLives();
     if (!deadGround) {
       _updateState();
@@ -114,7 +119,6 @@ class Whale extends Enemy {
     _attackAnimation = _spriteAnimation('Attack', 11);
     _deadGroundAnimation = _spriteAnimation('Dead Ground', 4);
     _deadHitAnimation = _spriteAnimation('Dead Hit', 6)..loop = false;
-    _swallowAnimation = _spriteAnimation('Swallow', 10)..loop = false;
 
     animations = {
       State.idle: _idleAnimation,
@@ -126,10 +130,9 @@ class Whale extends Enemy {
       State.attack: _attackAnimation,
       State.deadGround: _deadGroundAnimation,
       State.deadHit: _deadHitAnimation,
-      State.swallow: _swallowAnimation,
     };
 
-    current = State.idle;
+    current = State.attack;
   }
 
   SpriteAnimation _spriteAnimation(String state, int amount) {
@@ -144,11 +147,14 @@ class Whale extends Enemy {
   }
 
   void _updateState() {
-    current = (velocity.x != 0) ? State.run : State.idle;
+    current = (velocity.x != 0) ? State.run : State.attack;
 
-    if ((moveDirection.x > 0 && scale.x > 0) ||
-        (moveDirection.x < 0 && scale.x < 0)) {
+    if (velocity.x > 0 && scale.x > 0) {
       flipHorizontallyAroundCenter();
+      moveDirection.x = 1;
+    } else if (velocity.x < 0 && scale.x < 0) {
+      flipHorizontallyAroundCenter();
+      moveDirection.x = -1;
     }
   }
 
@@ -162,7 +168,7 @@ class Whale extends Enemy {
     if (lives <= deadGroundLives && lives > 0) {
       deadGround = true;
       current = State.deadHit;
-      _projectileManager!.removeFromParent();
+      _projectileManager.timer.stop();
     } else if (lives <= 0) {
       if (game.playSounds) {
         FlameAudio.play('enemyKilled.wav', volume: game.soundVolume);

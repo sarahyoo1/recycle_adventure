@@ -4,6 +4,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:pixel_adventure/components/bullet.dart';
+import 'package:pixel_adventure/components/enemies/projectile/projectile_manager.dart';
 import 'package:pixel_adventure/components/enemy.dart';
 import 'package:pixel_adventure/components/player.dart';
 
@@ -12,7 +13,6 @@ enum State {
   hit,
   run,
   jump,
-  attack,
   blowWick,
   fall,
   ground,
@@ -21,34 +21,48 @@ enum State {
 }
 
 class Cucumber extends Enemy {
+  late Timer _timer;
   Cucumber({
     super.position,
     super.size,
     super.offsetPositive,
     super.offsetNegative,
     super.lives,
-  });
+  }) {
+    _timer = Timer(1, onTick: _randomlyAttack, repeat: true);
+  }
 
   late final SpriteAnimation _idleAnimation;
   late final SpriteAnimation _runAnimation;
   late final SpriteAnimation _hitAnimation;
   late final SpriteAnimation _jumpAnimation;
-  late final SpriteAnimation _attackAnimation;
   late final SpriteAnimation _fallAnimation;
   late final SpriteAnimation _groundAnimation;
   late final SpriteAnimation _blowWickAnimation;
   late final SpriteAnimation _deadGroundAnimatiom;
   late final SpriteAnimation _deadHitAnimatiom;
+  late final EnemyProjectileManager _projectileManager;
 
   final int deadGroundLives = 4;
 
   bool hitboxActive = true;
   RectangleHitbox? hitbox;
   bool deadGround = false;
+  bool isAttacking = false;
 
   @override
   FutureOr<void> onLoad() {
     debugMode = true;
+    _projectileManager = EnemyProjectileManager(
+      position: Vector2(
+        position.x,
+        position.y + 20,
+      ),
+      limit: 0.5,
+      moveDirection: moveDirection.x,
+    );
+    parent?.add(_projectileManager);
+    _projectileManager.timer.stop();
 
     _loadAnimations();
     calculateRange();
@@ -60,18 +74,30 @@ class Cucumber extends Enemy {
     }
     add(hitbox!);
 
+    _timer.start();
     return super.onLoad();
   }
 
   @override
   void update(double dt) {
+    _projectileManager.position = Vector2(
+      position.x,
+      position.y + 20,
+    );
+    _projectileManager.moveDirection = moveDirection.x;
     checkLives();
     if (!deadGround) {
       _updateState();
       movement(dt);
+      _timer.update(dt);
     }
-
     super.update(dt);
+  }
+
+  @override
+  void onRemove() {
+    super.onRemove();
+    _timer.stop();
   }
 
   @override
@@ -84,6 +110,7 @@ class Cucumber extends Enemy {
         FlameAudio.play('damage.wav', volume: game.soundVolume);
       }
       if (deadGround) {
+        _timer.stop();
         current = State.deadHit;
         await animationTicker?.completed;
         current = State.deadGround;
@@ -108,8 +135,7 @@ class Cucumber extends Enemy {
     _fallAnimation = _spriteAnimation('Fall', 2);
     _groundAnimation = _spriteAnimation('Ground', 3)..loop = false;
     _hitAnimation = _spriteAnimation('Hit', 8)..loop = false;
-    _attackAnimation = _spriteAnimation('Attack', 11);
-    _blowWickAnimation = _spriteAnimation('Blow the Wick', 11);
+    _blowWickAnimation = _spriteAnimation('Blow the Wick', 11); //attack
     _deadGroundAnimatiom = _spriteAnimation('Dead Ground', 4);
     _deadHitAnimatiom = _spriteAnimation('Dead Hit', 6)..loop = false;
 
@@ -120,7 +146,6 @@ class Cucumber extends Enemy {
       State.fall: _fallAnimation,
       State.ground: _groundAnimation,
       State.hit: _hitAnimation,
-      State.attack: _attackAnimation,
       State.blowWick: _blowWickAnimation,
       State.deadGround: _deadGroundAnimatiom,
       State.deadHit: _deadHitAnimatiom,
@@ -141,11 +166,23 @@ class Cucumber extends Enemy {
   }
 
   void _updateState() {
-    current = (velocity.x != 0) ? State.run : State.idle;
+    if (!isAttacking) {
+      current = (velocity.x != 0) ? State.run : State.idle;
+    }
+    if (velocity.x == 0) {
+      //when it is not moving, starts shooting bullet.
+      _timer.resume();
+    } else {
+      _timer.stop();
+    }
+
     //Flips enemy depending on the player's direction.
-    if ((moveDirection.x > 0 && scale.x > 0) ||
-        (moveDirection.x < 0 && scale.x < 0)) {
+    if (velocity.x > 0 && scale.x > 0) {
       flipHorizontallyAroundCenter();
+      moveDirection.x = 1;
+    } else if (velocity.x < 0 && scale.x < 0) {
+      flipHorizontallyAroundCenter();
+      moveDirection.x = -1;
     }
   }
 
@@ -160,5 +197,18 @@ class Cucumber extends Enemy {
       }
       removeFromParent();
     }
+  }
+
+  void _randomlyAttack() {
+    isAttacking = true;
+    current = State.blowWick;
+    Future.delayed(const Duration(milliseconds: 500), () {
+      _projectileManager.timer.resume();
+    });
+    Future.delayed(const Duration(milliseconds: 1000), () {
+      _projectileManager.timer.stop();
+      isAttacking = false;
+      current = State.idle;
+    });
   }
 }

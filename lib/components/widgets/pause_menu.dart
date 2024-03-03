@@ -1,5 +1,6 @@
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pixel_adventure/components/screens/main_menu.dart';
 import 'package:pixel_adventure/components/widgets/pause_button.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
@@ -23,7 +24,7 @@ class PauseMenu extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 50.0),
             child: Text(
               'Paused',
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              style: GoogleFonts.bungeeInlineTextTheme().bodyLarge?.copyWith(
                 fontSize: 50.5,
                 shadows: [
                   const Shadow(

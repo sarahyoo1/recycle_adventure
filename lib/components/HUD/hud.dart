@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
-import 'package:flame/src/text/renderers/text_renderer.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:pixel_adventure/components/Boss/boss.dart';
+import 'package:pixel_adventure/components/HUD/boss_health_bar.dart';
 import 'package:pixel_adventure/components/HUD/heart.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
@@ -19,10 +21,20 @@ class Hud extends PositionComponent with HasGameRef<PixelAdventure> {
 
   late TextComponent _floorTextComponent;
   late TextComponent _numberOfItemsCollected;
-  final int maxHeartNum = 5;
+  late BossHealthBar bossHealthBar;
+  late final Boss boss;
+  final int maxBossLives = 100;
+  bool isBossFight = false;
 
   @override
   FutureOr<void> onLoad() {
+    boss = Boss();
+
+    if (game.floorNames[game.currentFloorIndex] == 'BossFight') {
+      isBossFight = true;
+      //_addBossHeartBar();
+    }
+
     _addFloorTextComponent();
     _addItemTextComponent();
     _addHeartHealthComponent();
@@ -32,10 +44,12 @@ class Hud extends PositionComponent with HasGameRef<PixelAdventure> {
   @override
   void update(double dt) {
     _updateTextComponents();
+
     if (game.itemsCollected == game.totalItemsNum) {
       _updateItemTextStyle();
       game.isOkToNextFloor = true;
     }
+
     super.update(dt);
   }
 
@@ -43,13 +57,13 @@ class Hud extends PositionComponent with HasGameRef<PixelAdventure> {
     _floorTextComponent = TextComponent(
       text: 'Floor ${game.currentFloorIndex + 1}',
       textRenderer: TextPaint(
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 16,
-        ),
+        style: GoogleFonts.pressStart2pTextTheme().labelSmall?.copyWith(
+              color: Colors.white,
+              fontSize: 12,
+            ),
       ),
       anchor: Anchor.center,
-      position: Vector2(600, 15),
+      position: Vector2(560, 15),
     );
     add(_floorTextComponent);
   }
@@ -59,10 +73,10 @@ class Hud extends PositionComponent with HasGameRef<PixelAdventure> {
       text:
           'Items Collected: ${game.currentFloorIndex + 1} / ${game.totalItemsNum}',
       textRenderer: TextPaint(
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 16,
-        ),
+        style: GoogleFonts.pressStart2pTextTheme().labelSmall?.copyWith(
+              color: Colors.white,
+              fontSize: 12,
+            ),
       ),
       anchor: Anchor.center,
       position: Vector2(320, 15),
@@ -71,7 +85,7 @@ class Hud extends PositionComponent with HasGameRef<PixelAdventure> {
   }
 
   void _addHeartHealthComponent() async {
-    for (int i = 1; i <= maxHeartNum; i++) {
+    for (int i = 1; i <= game.maxHealth; i++) {
       final positionX = 25 * i;
       await add(
         HeartHealthComponent(
@@ -84,17 +98,36 @@ class Hud extends PositionComponent with HasGameRef<PixelAdventure> {
   }
 
   void _updateTextComponents() {
-    _floorTextComponent.text = 'Floor ${game.currentFloorIndex + 1}';
-    _numberOfItemsCollected.text =
-        'Items Collected: ${game.itemsCollected} / ${game.totalItemsNum}';
+    if (isBossFight) {
+      _floorTextComponent.text = 'Boss Fight!';
+      _numberOfItemsCollected.text = '';
+    } else {
+      _floorTextComponent.text = 'Floor ${game.currentFloorIndex + 1}';
+      _numberOfItemsCollected.text =
+          'Items Collected: ${game.itemsCollected} / ${game.totalItemsNum}';
+    }
   }
 
   void _updateItemTextStyle() {
     _numberOfItemsCollected.textRenderer = TextPaint(
-      style: const TextStyle(
-        color: Colors.amber,
-        fontSize: 16,
-      ),
+      style: GoogleFonts.pressStart2pTextTheme().labelSmall?.copyWith(
+            color: Colors.yellow,
+            fontSize: 12,
+          ),
     );
+  }
+
+  void _addBossHeartBar() async {
+    for (int i = 1; i <= boss.lives; i++) {
+      final positionX = 1.9 * i;
+      await add(
+        BossHealthBar(
+          boss: boss,
+          bossMaxLives: maxBossLives,
+          size: Vector2(2, 16),
+          position: Vector2(100 + positionX.toDouble(), 15),
+        ),
+      );
+    }
   }
 }

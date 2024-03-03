@@ -3,38 +3,40 @@ import 'package:flame/components.dart';
 import 'package:pixel_adventure/components/enemies/projectile/projectile.dart';
 
 class EnemyProjectileManager extends Component {
-  late Timer _timer;
-  late Vector2 position;
-  late double limit;
+  late Timer timer;
+  Vector2 position;
+  double limit;
+  double moveDirection;
   EnemyProjectileManager({
     required this.position,
     required this.limit,
+    required this.moveDirection,
   }) : super() {
-    _timer = Timer(limit, onTick: _spawnProjectiles, repeat: true);
+    timer = Timer(limit, onTick: _spawnProjectiles, repeat: true);
   }
 
   @override
   void onMount() {
     super.onMount();
-    _timer.start();
+    timer.start();
   }
 
   @override
   void onRemove() {
     super.onRemove();
-    _timer.stop();
+    timer.stop();
   }
 
   @override
   void update(double dt) {
     super.update(dt);
-    _timer.update(dt);
+    timer.update(dt);
   }
 
   void _spawnProjectiles() {
     Projectile projectile = Projectile(
       position: position,
-      moveDirection: -1,
+      moveDirection: moveDirection,
       hitbox: RectangleHitbox(
         collisionType: CollisionType.passive,
         position: Vector2(2, 9),

@@ -1,7 +1,9 @@
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pixel_adventure/components/screens/game_play.dart';
+import 'package:pixel_adventure/components/screens/option_menu.dart';
 
 class MainMenu extends StatelessWidget {
   const MainMenu({super.key});
@@ -24,7 +26,8 @@ class MainMenu extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 50.0),
                 child: Text(
                   'Pixel Adventure',
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  style:
+                      GoogleFonts.bungeeInlineTextTheme().bodyLarge?.copyWith(
                     fontSize: 50.5,
                     shadows: [
                       const Shadow(
@@ -55,7 +58,13 @@ class MainMenu extends StatelessWidget {
               SizedBox(
                 width: MediaQuery.of(context).size.width / 5,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => const OptionMenu(),
+                      ),
+                    );
+                  },
                   child: const Text('Options'),
                 ),
               ),
