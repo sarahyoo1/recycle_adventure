@@ -89,8 +89,8 @@ class Saw extends SpriteAnimationComponent with HasGameRef<PixelAdventure> {
   }
 
   void collidedWithPlayer() {
-    if (game.playSounds) {
-      FlameAudio.play('enemyKilled.wav', volume: game.soundVolume);
+    if (game.isSoundEffectOn) {
+      FlameAudio.play('enemyKilled.wav', volume: game.soundEffectVolume);
     }
     game.health--;
     player.respawn();

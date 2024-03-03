@@ -21,5 +21,7 @@ void main() async {
     home: const MainMenu(),
   ));
 
-  FlameAudio.bgm.play('main-menu-music.mp3', volume: gameRef.musicVolume);
+  if (gameRef.isMusicOn) {
+    FlameAudio.bgm.play('main-menu-music.mp3', volume: gameRef.musicVolume);
+  }
 }

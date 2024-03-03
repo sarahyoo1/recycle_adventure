@@ -13,9 +13,7 @@ import 'package:pixel_adventure/components/enemies/chicken.dart';
 import 'package:pixel_adventure/components/collision_block.dart';
 import 'package:pixel_adventure/components/enemies/cucumber.dart';
 import 'package:pixel_adventure/components/enemies/slime.dart';
-import 'package:pixel_adventure/components/enemies/trunk.dart';
 import 'package:pixel_adventure/components/enemies/whale.dart';
-import 'package:pixel_adventure/components/fruit.dart';
 import 'package:pixel_adventure/components/item.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/components/traps/car_manager.dart';
@@ -45,9 +43,12 @@ class Floor extends World with HasGameRef<PixelAdventure> {
     _addCollisions();
     _addBackground();
     add(Hud());
-    _playBackgroundMusic();
     _spawningObjects();
     _updateTotalItemsNum();
+
+    if (game.isMusicOn) {
+      _playBackgroundMusic();
+    }
 
     return super.onLoad();
   }
@@ -106,14 +107,6 @@ class Floor extends World with HasGameRef<PixelAdventure> {
             player.position = Vector2(spawnPoint.x, spawnPoint.y);
             player.scale.x = 1; //makes player spawned facing to the right.
             add(player);
-            break;
-          case 'Fruit':
-            final fruit = Fruit(
-              position: Vector2(spawnPoint.x, spawnPoint.y),
-              size: Vector2(spawnPoint.width, spawnPoint.height),
-              fruit: spawnPoint.name,
-            );
-            add(fruit);
             break;
           case 'Item':
             final item = Item(
@@ -218,16 +211,6 @@ class Floor extends World with HasGameRef<PixelAdventure> {
               lives: spawnPoint.properties.getValue('lives'),
             );
             add(bat);
-            break;
-          case 'Trunk':
-            final trunk = Trunk(
-              position: Vector2(spawnPoint.x, spawnPoint.y),
-              size: Vector2(spawnPoint.width, spawnPoint.height),
-              offsetPositive: spawnPoint.properties.getValue('offsetPositive'),
-              offsetNegative: spawnPoint.properties.getValue('offsetNegative'),
-              lives: spawnPoint.properties.getValue('lives'),
-            );
-            add(trunk);
             break;
           case 'Cucumber':
             final cucumber = Cucumber(

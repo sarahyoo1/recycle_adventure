@@ -9,7 +9,6 @@ import 'package:pixel_adventure/components/checkpoint.dart';
 import 'package:pixel_adventure/components/collision_block.dart';
 import 'package:pixel_adventure/components/custom_hitbox.dart';
 import 'package:pixel_adventure/components/enemies/projectile/projectile.dart';
-import 'package:pixel_adventure/components/fruit.dart';
 import 'package:pixel_adventure/components/item.dart';
 import 'package:pixel_adventure/components/traps/car.dart';
 import 'package:pixel_adventure/components/traps/hammer.dart';
@@ -142,7 +141,6 @@ class Player extends SpriteAnimationGroupComponent
   void onCollisionStart(
       Set<Vector2> intersectionPoints, PositionComponent other) {
     if (!reachedCheckpoint) {
-      if (other is Fruit) other.collidedWithPlayer();
       if (other is Item) other.collidedWithPlayer();
       if (other is Saw) other.collidedWithPlayer();
       if (other is Hammer) other.collidedWithPlayer();
@@ -307,8 +305,8 @@ class Player extends SpriteAnimationGroupComponent
   }
 
   void _playerJump(double dt) {
-    if (game.playSounds) {
-      FlameAudio.play('jump.wav', volume: game.soundVolume);
+    if (game.isSoundEffectOn) {
+      FlameAudio.play('jump.wav', volume: game.soundEffectVolume);
     }
 
     velocity.y = -_jumpForce;
@@ -342,8 +340,8 @@ class Player extends SpriteAnimationGroupComponent
 
   void reachesCheckpoint() async {
     reachedCheckpoint = true;
-    if (game.playSounds) {
-      FlameAudio.play('checkpoint.wav', volume: game.soundVolume);
+    if (game.isSoundEffectOn) {
+      FlameAudio.play('checkpoint.wav', volume: game.soundEffectVolume);
     }
     if (scale.x > 0) {
       position -= Vector2.all(32);
@@ -409,8 +407,8 @@ class Player extends SpriteAnimationGroupComponent
 
   void _collidedWithProjectile() {
     //TODO: add hit2 animation
-    if (game.playSounds) {
-      FlameAudio.play('dead.wav', volume: game.soundVolume);
+    if (game.isSoundEffectOn) {
+      FlameAudio.play('dead.wav', volume: game.soundEffectVolume);
     }
     game.health--;
   }

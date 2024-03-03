@@ -44,15 +44,15 @@ class Item extends SpriteAnimationComponent
       await animationTicker?.completed;
 
       if (item == 'Heart') {
-        if (game.playSounds) {
-          FlameAudio.play('health-up.mp3', volume: game.soundVolume);
+        if (game.isSoundEffectOn) {
+          FlameAudio.play('health-up.mp3', volume: game.soundEffectVolume);
         }
         if (game.health < 5) {
           game.health++;
         }
       } else {
-        if (game.playSounds) {
-          FlameAudio.play('pickupItem.wav', volume: game.soundVolume);
+        if (game.isSoundEffectOn) {
+          FlameAudio.play('pickupItem.wav', volume: game.soundEffectVolume);
         }
         game.itemsCollected++;
       }

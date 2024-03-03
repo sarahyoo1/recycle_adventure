@@ -44,8 +44,8 @@ class DroneSpawnManager extends Component with HasGameRef<PixelAdventure> {
   }
 
   void _spawnDrone1() {
-    if (game.playSounds) {
-      FlameAudio.play('boss-drone-spawn.mp3', volume: game.soundVolume);
+    if (game.isSoundEffectOn) {
+      FlameAudio.play('boss-drone-spawn.mp3', volume: game.soundEffectVolume);
     }
     DroneOne drone1 = DroneOne(
       position: droneOnePosition,
@@ -55,8 +55,8 @@ class DroneSpawnManager extends Component with HasGameRef<PixelAdventure> {
   }
 
   void _spawnDrone2() {
-    if (game.playSounds) {
-      FlameAudio.play('boss-drone-spawn.mp3', volume: game.soundVolume);
+    if (game.isSoundEffectOn) {
+      FlameAudio.play('boss-drone-spawn.mp3', volume: game.soundEffectVolume);
     }
     DroneTwo drone2 = DroneTwo(
       position: droneTwoPosition,

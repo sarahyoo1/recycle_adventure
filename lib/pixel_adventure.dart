@@ -26,11 +26,11 @@ class PixelAdventure extends FlameGame
   int itemsCollected = 0;
   int totalItemsNum = 0;
   bool isOkToNextFloor = false;
-
   late JoystickComponent joystick;
   bool showControls = false;
-  bool playSounds = false; //turns on game audios
-  double soundVolume = 1.0;
+  bool isSoundEffectOn = true;
+  bool isMusicOn = true;
+  double soundEffectVolume = 1.0;
   double musicVolume = 1.0;
   List<String> floorNames = [
     'Floor-01',

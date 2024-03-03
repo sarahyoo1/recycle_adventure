@@ -55,8 +55,9 @@ class DroneOne extends SpriteAnimationGroupComponent
       Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollisionStart(intersectionPoints, other);
     if (other is Bullet) {
-      if (game.playSounds) {
-        FlameAudio.play('boss-drone-damaged.mp3', volume: game.soundVolume);
+      if (game.isSoundEffectOn) {
+        FlameAudio.play('boss-drone-damaged.mp3',
+            volume: game.soundEffectVolume);
       }
       lives--;
       other.removeFromParent();

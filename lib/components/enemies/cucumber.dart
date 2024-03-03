@@ -106,8 +106,8 @@ class Cucumber extends Enemy {
     super.onCollisionStart(intersectionPoints, other);
 
     if (other is Bullet) {
-      if (game.playSounds) {
-        FlameAudio.play('damage.wav', volume: game.soundVolume);
+      if (game.isSoundEffectOn) {
+        FlameAudio.play('damage.wav', volume: game.soundEffectVolume);
       }
       if (deadGround) {
         _timer.stop();
@@ -192,8 +192,8 @@ class Cucumber extends Enemy {
 
   void checkLives() {
     if (lives <= 0) {
-      if (game.playSounds) {
-        FlameAudio.play('enemyKilled.wav', volume: game.soundVolume);
+      if (game.isSoundEffectOn) {
+        FlameAudio.play('enemyKilled.wav', volume: game.soundEffectVolume);
       }
       removeFromParent();
     }

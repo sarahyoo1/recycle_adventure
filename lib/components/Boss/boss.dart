@@ -6,8 +6,6 @@ import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:pixel_adventure/components/Boss/bomb.dart';
 import 'package:pixel_adventure/components/Boss/drones/drone_spawn_manager.dart';
-import 'package:pixel_adventure/components/HUD/boss_health_bar.dart';
-import 'package:pixel_adventure/components/HUD/hud.dart';
 import 'package:pixel_adventure/components/bullet.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
@@ -125,8 +123,8 @@ class Boss extends SpriteAnimationGroupComponent
     super.onCollisionStart(intersectionPoints, other);
     if (isHitOn) {
       if (other is Bullet) {
-        if (game.playSounds) {
-          FlameAudio.play('boss-damaged.mp3', volume: game.soundVolume);
+        if (game.isSoundEffectOn) {
+          FlameAudio.play('boss-damaged.mp3', volume: game.soundEffectVolume);
         }
         current = State.hit;
 
@@ -199,8 +197,8 @@ class Boss extends SpriteAnimationGroupComponent
   void _checkLives() {
     if (lives <= 0) {
       if (lives == 0) {
-        if (game.playSounds) {
-          FlameAudio.play('boss-dead.mp3', volume: game.soundVolume);
+        if (game.isSoundEffectOn) {
+          FlameAudio.play('boss-dead.mp3', volume: game.soundEffectVolume);
           lives--;
         }
       }

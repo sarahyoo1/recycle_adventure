@@ -60,8 +60,8 @@ class Chicken extends Enemy {
       Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollisionStart(intersectionPoints, other);
     if (other is Bullet) {
-      if (game.playSounds) {
-        FlameAudio.play('damage.wav', volume: game.soundVolume);
+      if (game.isSoundEffectOn) {
+        FlameAudio.play('damage.wav', volume: game.soundEffectVolume);
       }
       current = State.hit;
       lives--;
@@ -109,8 +109,8 @@ class Chicken extends Enemy {
 
   void _collidedWithPlayer() async {
     if (player.velocity.y > 0 && player.y + player.height > position.y) {
-      if (game.playSounds) {
-        FlameAudio.play('enemyKilled.wav', volume: game.soundVolume);
+      if (game.isSoundEffectOn) {
+        FlameAudio.play('enemyKilled.wav', volume: game.soundEffectVolume);
       }
       gotStopmed = true;
       current = State.hit;
@@ -125,8 +125,8 @@ class Chicken extends Enemy {
 
   void checkLives() {
     if (lives <= 0) {
-      if (game.playSounds) {
-        FlameAudio.play('enemyKilled.wav', volume: game.soundVolume);
+      if (game.isSoundEffectOn) {
+        FlameAudio.play('enemyKilled.wav', volume: game.soundEffectVolume);
       }
       removeFromParent();
     }

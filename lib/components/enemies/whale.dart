@@ -92,8 +92,8 @@ class Whale extends Enemy {
       Set<Vector2> intersectionPoints, PositionComponent other) async {
     super.onCollisionStart(intersectionPoints, other);
     if (other is Bullet) {
-      if (game.playSounds) {
-        FlameAudio.play('damage.wav', volume: game.soundVolume);
+      if (game.isSoundEffectOn) {
+        FlameAudio.play('damage.wav', volume: game.soundEffectVolume);
       }
       if (deadGround) {
         current = State.deadHit;
@@ -170,8 +170,8 @@ class Whale extends Enemy {
       current = State.deadHit;
       _projectileManager.timer.stop();
     } else if (lives <= 0) {
-      if (game.playSounds) {
-        FlameAudio.play('enemyKilled.wav', volume: game.soundVolume);
+      if (game.isSoundEffectOn) {
+        FlameAudio.play('enemyKilled.wav', volume: game.soundEffectVolume);
       }
       removeFromParent();
     }
