@@ -408,7 +408,7 @@ class Player extends SpriteAnimationGroupComponent
   void _collidedWithProjectile() {
     //TODO: add hit2 animation
     if (game.isSoundEffectOn) {
-      FlameAudio.play('dead.wav', volume: game.soundEffectVolume);
+      FlameAudio.play('damage.wav', volume: game.soundEffectVolume);
     }
     game.health--;
   }

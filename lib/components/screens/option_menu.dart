@@ -1,11 +1,9 @@
-import 'package:flame/flame.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:pixel_adventure/components/screens/main_menu.dart';
+import 'package:pixel_adventure/main.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
-
-PixelAdventure gameRef = PixelAdventure();
 
 class OptionMenu extends StatefulWidget {
   const OptionMenu({super.key});

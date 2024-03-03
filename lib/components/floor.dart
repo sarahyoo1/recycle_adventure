@@ -47,7 +47,7 @@ class Floor extends World with HasGameRef<PixelAdventure> {
     _updateTotalItemsNum();
 
     if (game.isMusicOn) {
-      _playBackgroundMusic();
+      game.playBackgroundMusic(floorName);
     }
 
     return super.onLoad();
@@ -66,33 +66,6 @@ class Floor extends World with HasGameRef<PixelAdventure> {
     if (backgroundLayer != null) {
       backgroundName = backgroundLayer.properties.getValue('Background');
       addAll([Background(backgroundName: backgroundName)]);
-    }
-  }
-
-  void _playBackgroundMusic() {
-    switch (floorName) {
-      case 'Floor-1':
-        FlameAudio.bgm.play('tutorial-music.mp3', volume: game.musicVolume);
-        break;
-      case 'Floor-2':
-      case 'Floor-3':
-      case 'Floor-4':
-        FlameAudio.bgm.play('sewer-music.mp3', volume: game.musicVolume);
-        break;
-      case 'Floor-5':
-      case 'Floor-6':
-        FlameAudio.bgm.play('city-music.mp3', volume: game.musicVolume);
-        break;
-      case 'Floor-7':
-        FlameAudio.bgm
-            .play('a-short-break-music.mp3', volume: game.musicVolume);
-        break;
-      case 'Floor-8':
-        FlameAudio.bgm.play('factory-music.mp3', volume: game.musicVolume);
-        break;
-      case 'BoosFight':
-        FlameAudio.bgm.play('boss-fight-music.mp3', volume: game.musicVolume);
-        break;
     }
   }
 

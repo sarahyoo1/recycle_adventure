@@ -1,3 +1,4 @@
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:pixel_adventure/components/screens/main_menu.dart';
@@ -46,7 +47,10 @@ class GameOverMenu extends StatelessWidget {
                     builder: (context) => const MainMenu(),
                   ),
                 );
-                //FlameAudio
+                if (gameRef.isMusicOn) {
+                  FlameAudio.bgm
+                      .play('main-menu-music.mp3', volume: gameRef.musicVolume);
+                }
               },
               child: const Text('Exit'),
             ),

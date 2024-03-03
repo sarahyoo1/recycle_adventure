@@ -79,8 +79,11 @@ class PauseMenu extends StatelessWidget {
                     builder: (context) => const MainMenu(),
                   ),
                 );
-                //gameRef.reset();
                 gameRef.resumeEngine();
+                if (gameRef.isMusicOn) {
+                  FlameAudio.bgm
+                      .play('main-menu-music.mp3', volume: gameRef.musicVolume);
+                }
               },
               child: const Text('Exit'),
             ),

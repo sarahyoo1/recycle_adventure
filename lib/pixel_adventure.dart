@@ -4,6 +4,8 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
+import 'package:flame_audio/audio_pool.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/painting.dart';
 import 'package:pixel_adventure/components/HUD/jump_button.dart';
 import 'package:pixel_adventure/components/player.dart';
@@ -43,7 +45,7 @@ class PixelAdventure extends FlameGame
     'Floor-08',
     'BossFight',
   ];
-  int currentFloorIndex = 3; //Should initially set to be 0.
+  int currentFloorIndex = 0; //Should initially set to be 0.
 
   bool _isAlreadyLoaded = false;
 
@@ -52,7 +54,6 @@ class PixelAdventure extends FlameGame
     health = maxHealth;
     if (!_isAlreadyLoaded) {
       await images.loadAllImages();
-
       _loadFloor();
 
       if (showControls) {
@@ -148,5 +149,33 @@ class PixelAdventure extends FlameGame
   void reset() {
     currentFloorIndex = 0;
     health = 5;
+  }
+
+  void playBackgroundMusic(String floorName) {
+    if (isMusicOn) {
+      switch (floorName) {
+        case 'Floor-01':
+          FlameAudio.bgm.play('tutorial-music.mp3', volume: musicVolume);
+          break;
+        case 'Floor-02':
+        case 'Floor-03':
+        case 'Floor-04':
+          FlameAudio.bgm.play('sewer-music.mp3', volume: musicVolume);
+          break;
+        case 'Floor-05':
+        case 'Floor-06':
+          FlameAudio.bgm.play('city-music.mp3', volume: musicVolume);
+          break;
+        case 'Floor-07':
+          FlameAudio.bgm.play('a-short-break-music.mp3', volume: musicVolume);
+          break;
+        case 'Floor-08':
+          FlameAudio.bgm.play('factory-music.mp3', volume: musicVolume);
+          break;
+        case 'BoosFight':
+          FlameAudio.bgm.play('boss-fight-music.mp3', volume: musicVolume);
+          break;
+      }
+    }
   }
 }
