@@ -2,11 +2,11 @@ import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
-import 'package:pixel_adventure/components/Boss/drones/drone1.dart';
-import 'package:pixel_adventure/components/Boss/drones/drone2.dart';
-import 'package:pixel_adventure/pixel_adventure.dart';
+import 'package:recycle_adventure/components/Boss/drones/drone1.dart';
+import 'package:recycle_adventure/components/Boss/drones/drone2.dart';
+import 'package:recycle_adventure/recycle_adventure.dart';
 
-class DroneSpawnManager extends Component with HasGameRef<PixelAdventure> {
+class DroneSpawnManager extends Component with HasGameRef<RecycleAdventure> {
   late Timer timer;
   late Vector2 droneOnePosition;
   late Vector2 droneTwoPosition;

@@ -1,5 +1,5 @@
 import 'package:flame/components.dart';
-import 'package:pixel_adventure/components/traps/car.dart';
+import 'package:recycle_adventure/components/traps/car.dart';
 
 class CarSpawnManager extends Component {
   late Timer _timer;

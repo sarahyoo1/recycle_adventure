@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pixel_adventure/components/screens/game_play.dart';
-import 'package:pixel_adventure/components/screens/option_menu.dart';
-import 'package:pixel_adventure/main.dart';
+import 'package:recycle_adventure/components/screens/game_play.dart';
+import 'package:recycle_adventure/components/screens/option_menu.dart';
+import 'package:recycle_adventure/main.dart';
 
 class MainMenu extends StatelessWidget {
   const MainMenu({super.key});
@@ -25,7 +24,7 @@ class MainMenu extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 50.0),
                 child: Text(
-                  'Pixel Adventure',
+                  'Recycle Adventure',
                   style:
                       GoogleFonts.bungeeInlineTextTheme().bodyLarge?.copyWith(
                     fontSize: 50.5,

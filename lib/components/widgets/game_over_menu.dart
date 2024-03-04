@@ -1,12 +1,11 @@
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:pixel_adventure/components/screens/main_menu.dart';
-import 'package:pixel_adventure/pixel_adventure.dart';
+import 'package:recycle_adventure/components/screens/main_menu.dart';
+import 'package:recycle_adventure/recycle_adventure.dart';
 
 class GameOverMenu extends StatelessWidget {
   static const String ID = "GameOverMenu";
-  final PixelAdventure gameRef;
+  final RecycleAdventure gameRef;
   const GameOverMenu({
     super.key,
     required this.gameRef,

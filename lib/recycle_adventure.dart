@@ -4,15 +4,14 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
-import 'package:flame_audio/audio_pool.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/painting.dart';
-import 'package:pixel_adventure/components/Boss/boss.dart';
-import 'package:pixel_adventure/components/HUD/jump_button.dart';
-import 'package:pixel_adventure/components/player.dart';
-import 'package:pixel_adventure/components/floor.dart';
+import 'package:recycle_adventure/components/HUD/attack_button.dart';
+import 'package:recycle_adventure/components/HUD/jump_button.dart';
+import 'package:recycle_adventure/components/floor.dart';
+import 'package:recycle_adventure/components/player.dart';
 
-class PixelAdventure extends FlameGame
+class RecycleAdventure extends FlameGame
     with
         HasKeyboardHandlerComponents,
         DragCallbacks,
@@ -30,7 +29,7 @@ class PixelAdventure extends FlameGame
   int totalItemsNum = 0;
   bool isOkToNextFloor = false;
   late JoystickComponent joystick;
-  bool showControls = false;
+  bool showControls = true; //turns on and off joysticks and other buttons
   bool isSoundEffectOn = true;
   bool isMusicOn = true;
   double soundEffectVolume = 1.0;
@@ -46,7 +45,7 @@ class PixelAdventure extends FlameGame
     'Floor-08',
     'BossFight',
   ];
-  int currentFloorIndex = 8; //Should initially set to be 0.
+  int currentFloorIndex = 0; //Should initially set to be 0.
 
   bool _isAlreadyLoaded = false;
 
@@ -61,6 +60,7 @@ class PixelAdventure extends FlameGame
       if (showControls) {
         addJoystick();
         add(JumpButton());
+        add(AttackButton());
       }
       _isAlreadyLoaded = true;
     }

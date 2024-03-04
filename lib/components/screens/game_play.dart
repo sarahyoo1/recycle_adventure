@@ -1,12 +1,10 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:pixel_adventure/components/screens/option_menu.dart';
-import 'package:pixel_adventure/components/widgets/game_over_menu.dart';
-import 'package:pixel_adventure/components/widgets/pause_button.dart';
-import 'package:pixel_adventure/components/widgets/pause_menu.dart';
-import 'package:pixel_adventure/main.dart';
-import 'package:pixel_adventure/pixel_adventure.dart';
+import 'package:recycle_adventure/components/widgets/game_over_menu.dart';
+import 'package:recycle_adventure/components/widgets/pause_button.dart';
+import 'package:recycle_adventure/components/widgets/pause_menu.dart';
+import 'package:recycle_adventure/main.dart';
+import 'package:recycle_adventure/recycle_adventure.dart';
 
 class GamePlay extends StatelessWidget {
   const GamePlay({super.key});
@@ -20,15 +18,15 @@ class GamePlay extends StatelessWidget {
           game: gameRef,
           initialActiveOverlays: const [PauseButton.ID],
           overlayBuilderMap: {
-            PauseButton.ID: (BuildContext context, PixelAdventure gameRef) =>
+            PauseButton.ID: (BuildContext context, RecycleAdventure gameRef) =>
                 PauseButton(
                   gameRef: gameRef,
                 ),
-            PauseMenu.ID: (BuildContext context, PixelAdventure gameRef) =>
+            PauseMenu.ID: (BuildContext context, RecycleAdventure gameRef) =>
                 PauseMenu(
                   gameRef: gameRef,
                 ),
-            GameOverMenu.ID: (BuildContext context, PixelAdventure gameRef) =>
+            GameOverMenu.ID: (BuildContext context, RecycleAdventure gameRef) =>
                 GameOverMenu(
                   gameRef: gameRef,
                 ),

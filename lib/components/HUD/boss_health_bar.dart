@@ -1,15 +1,13 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:pixel_adventure/components/Boss/boss.dart';
-import 'package:pixel_adventure/pixel_adventure.dart';
+import 'package:recycle_adventure/components/Boss/boss.dart';
+import 'package:recycle_adventure/recycle_adventure.dart';
 
 enum State { available, unavailable }
 
 class BossHealthBar extends SpriteGroupComponent
-    with HasGameRef<PixelAdventure> {
+    with HasGameRef<RecycleAdventure> {
   final int barNumber;
   final Boss boss;
   BossHealthBar({

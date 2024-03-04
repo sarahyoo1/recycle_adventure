@@ -3,12 +3,10 @@ import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pixel_adventure/components/Boss/boss.dart';
-import 'package:pixel_adventure/components/HUD/boss_health_bar.dart';
-import 'package:pixel_adventure/components/HUD/heart.dart';
-import 'package:pixel_adventure/pixel_adventure.dart';
+import 'package:recycle_adventure/components/HUD/heart.dart';
+import 'package:recycle_adventure/recycle_adventure.dart';
 
-class Hud extends PositionComponent with HasGameRef<PixelAdventure> {
+class Hud extends PositionComponent with HasGameRef<RecycleAdventure> {
   Hud({
     super.position,
     super.size,

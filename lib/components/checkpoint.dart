@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:pixel_adventure/components/player.dart';
-import 'package:pixel_adventure/pixel_adventure.dart';
+import 'package:recycle_adventure/components/player.dart';
+import 'package:recycle_adventure/recycle_adventure.dart';
 
 enum State {
   idle,
@@ -12,7 +12,7 @@ enum State {
 }
 
 class Checkpoint extends SpriteAnimationGroupComponent
-    with HasGameRef<PixelAdventure>, CollisionCallbacks {
+    with HasGameRef<RecycleAdventure>, CollisionCallbacks {
   Checkpoint({
     super.position,
     super.size,

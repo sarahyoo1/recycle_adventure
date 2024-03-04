@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flame/components.dart';
-import 'package:pixel_adventure/components/item.dart';
+import 'package:recycle_adventure/components/item.dart';
 
 class ItemSpawnManager extends Component {
   late Timer _timer;

@@ -3,9 +3,9 @@ import 'dart:math';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:pixel_adventure/components/player.dart';
-import 'package:pixel_adventure/components/utils.dart';
-import 'package:pixel_adventure/pixel_adventure.dart';
+import 'package:recycle_adventure/components/player.dart';
+import 'package:recycle_adventure/components/utils.dart';
+import 'package:recycle_adventure/recycle_adventure.dart';
 
 enum Color {
   red,
@@ -15,7 +15,7 @@ enum Color {
 }
 
 class Car extends SpriteAnimationGroupComponent
-    with HasGameRef<PixelAdventure> {
+    with HasGameRef<RecycleAdventure> {
   int direction;
   bool isPlatform;
   Car({

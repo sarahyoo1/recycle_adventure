@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
-import 'package:pixel_adventure/components/bullet.dart';
-import 'package:pixel_adventure/pixel_adventure.dart';
+import 'package:recycle_adventure/components/bullet.dart';
+import 'package:recycle_adventure/recycle_adventure.dart';
 
 enum State {
   idle,
@@ -13,7 +13,7 @@ enum State {
 }
 
 class DroneOne extends SpriteAnimationGroupComponent
-    with HasGameRef<PixelAdventure>, CollisionCallbacks {
+    with HasGameRef<RecycleAdventure>, CollisionCallbacks {
   DroneOne({
     super.position,
     super.size,

@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
-import 'package:pixel_adventure/pixel_adventure.dart';
+import 'package:recycle_adventure/recycle_adventure.dart';
 
-class Background extends SpriteComponent with HasGameRef<PixelAdventure> {
+class Background extends SpriteComponent with HasGameRef<RecycleAdventure> {
   final String backgroundName;
   Background({
     super.position,

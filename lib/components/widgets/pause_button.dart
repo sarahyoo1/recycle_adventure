@@ -1,11 +1,11 @@
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
-import 'package:pixel_adventure/components/widgets/pause_menu.dart';
-import 'package:pixel_adventure/pixel_adventure.dart';
+import 'package:recycle_adventure/components/widgets/pause_menu.dart';
+import 'package:recycle_adventure/recycle_adventure.dart';
 
 class PauseButton extends StatelessWidget {
   static const String ID = 'PauseButton';
-  final PixelAdventure gameRef;
+  final RecycleAdventure gameRef;
   const PauseButton({
     super.key,
     required this.gameRef,

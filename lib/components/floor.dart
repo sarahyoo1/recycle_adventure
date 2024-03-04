@@ -1,31 +1,30 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
-import 'package:flame_audio/flame_audio.dart';
 import 'package:flame_tiled/flame_tiled.dart';
-import 'package:pixel_adventure/components/Boss/item_spawn_manager.dart';
-import 'package:pixel_adventure/components/HUD/boss_health_bar.dart';
-import 'package:pixel_adventure/components/HUD/hud.dart';
-import 'package:pixel_adventure/components/background.dart';
-import 'package:pixel_adventure/components/Boss/boss.dart';
-import 'package:pixel_adventure/components/checkpoint.dart';
-import 'package:pixel_adventure/components/enemies/bat.dart';
-import 'package:pixel_adventure/components/enemies/chicken.dart';
-import 'package:pixel_adventure/components/collision_block.dart';
-import 'package:pixel_adventure/components/enemies/cucumber.dart';
-import 'package:pixel_adventure/components/enemies/slime.dart';
-import 'package:pixel_adventure/components/enemies/whale.dart';
-import 'package:pixel_adventure/components/item.dart';
-import 'package:pixel_adventure/components/player.dart';
-import 'package:pixel_adventure/components/traps/car_manager.dart';
-import 'package:pixel_adventure/components/traps/hammer.dart';
-import 'package:pixel_adventure/components/traps/rock_head.dart';
-import 'package:pixel_adventure/components/traps/saw.dart';
-import 'package:pixel_adventure/components/traps/trampoline.dart';
-import 'package:pixel_adventure/components/traps/transporter.dart';
-import 'package:pixel_adventure/pixel_adventure.dart';
+import 'package:recycle_adventure/components/Boss/boss.dart';
+import 'package:recycle_adventure/components/Boss/item_spawn_manager.dart';
+import 'package:recycle_adventure/components/HUD/boss_health_bar.dart';
+import 'package:recycle_adventure/components/HUD/hud.dart';
+import 'package:recycle_adventure/components/background.dart';
+import 'package:recycle_adventure/components/checkpoint.dart';
+import 'package:recycle_adventure/components/collision_block.dart';
+import 'package:recycle_adventure/components/enemies/bat.dart';
+import 'package:recycle_adventure/components/enemies/chicken.dart';
+import 'package:recycle_adventure/components/enemies/cucumber.dart';
+import 'package:recycle_adventure/components/enemies/slime.dart';
+import 'package:recycle_adventure/components/enemies/whale.dart';
+import 'package:recycle_adventure/components/item.dart';
+import 'package:recycle_adventure/components/player.dart';
+import 'package:recycle_adventure/components/traps/car_manager.dart';
+import 'package:recycle_adventure/components/traps/hammer.dart';
+import 'package:recycle_adventure/components/traps/rock_head.dart';
+import 'package:recycle_adventure/components/traps/saw.dart';
+import 'package:recycle_adventure/components/traps/trampoline.dart';
+import 'package:recycle_adventure/components/traps/transporter.dart';
+import 'package:recycle_adventure/recycle_adventure.dart';
 
-class Floor extends World with HasGameRef<PixelAdventure> {
+class Floor extends World with HasGameRef<RecycleAdventure> {
   final String floorName;
   final Player player;
   Floor({

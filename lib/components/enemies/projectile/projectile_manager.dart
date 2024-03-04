@@ -1,6 +1,6 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:pixel_adventure/components/enemies/projectile/projectile.dart';
+import 'package:recycle_adventure/components/enemies/projectile/projectile.dart';
 
 class EnemyProjectileManager extends Component {
   late Timer timer;

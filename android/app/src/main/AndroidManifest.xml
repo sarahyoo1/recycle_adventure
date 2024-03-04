@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="pixel_adventure"
+        android:label="recycle_adventure"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

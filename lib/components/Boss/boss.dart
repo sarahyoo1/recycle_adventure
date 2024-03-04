@@ -4,12 +4,11 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
-import 'package:pixel_adventure/components/Boss/bomb.dart';
-import 'package:pixel_adventure/components/Boss/drones/drone_spawn_manager.dart';
-import 'package:pixel_adventure/components/HUD/boss_health_bar.dart';
-import 'package:pixel_adventure/components/bullet.dart';
-import 'package:pixel_adventure/components/player.dart';
-import 'package:pixel_adventure/pixel_adventure.dart';
+import 'package:recycle_adventure/components/Boss/bomb.dart';
+import 'package:recycle_adventure/components/Boss/drones/drone_spawn_manager.dart';
+import 'package:recycle_adventure/components/bullet.dart';
+import 'package:recycle_adventure/components/player.dart';
+import 'package:recycle_adventure/recycle_adventure.dart';
 
 enum State {
   idle,
@@ -24,7 +23,7 @@ enum State {
 }
 
 class Boss extends SpriteAnimationGroupComponent
-    with HasGameRef<PixelAdventure>, CollisionCallbacks {
+    with HasGameRef<RecycleAdventure>, CollisionCallbacks {
   late Timer _timer;
   Boss({
     super.position,

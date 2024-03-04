@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
-import 'package:pixel_adventure/components/player.dart';
-import 'package:pixel_adventure/pixel_adventure.dart';
+import 'package:recycle_adventure/components/player.dart';
+import 'package:recycle_adventure/recycle_adventure.dart';
 
 enum State {
   idle,
@@ -12,7 +12,7 @@ enum State {
 }
 
 class Bomb extends SpriteAnimationGroupComponent
-    with HasGameRef<PixelAdventure>, CollisionCallbacks {
+    with HasGameRef<RecycleAdventure>, CollisionCallbacks {
   Bomb({
     super.position,
     super.size,
@@ -99,7 +99,7 @@ class Bomb extends SpriteAnimationGroupComponent
 }
 
 //Bomb spawn manager class
-class BombSpawnManager extends Component with HasGameRef<PixelAdventure> {
+class BombSpawnManager extends Component with HasGameRef<RecycleAdventure> {
   late Timer timer;
   double limit;
   Vector2 droppingPosition;

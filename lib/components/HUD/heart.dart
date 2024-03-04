@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
-import 'package:pixel_adventure/pixel_adventure.dart';
+import 'package:recycle_adventure/recycle_adventure.dart';
 
 enum HeartState { available, unavailable }
 
 class HeartHealthComponent extends SpriteGroupComponent
-    with HasGameRef<PixelAdventure> {
+    with HasGameRef<RecycleAdventure> {
   final int heartNumber;
   HeartHealthComponent({
     required this.heartNumber,

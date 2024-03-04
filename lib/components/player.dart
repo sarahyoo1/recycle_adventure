@@ -4,19 +4,19 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/src/services/raw_keyboard.dart';
-import 'package:pixel_adventure/components/bullet.dart';
-import 'package:pixel_adventure/components/checkpoint.dart';
-import 'package:pixel_adventure/components/collision_block.dart';
-import 'package:pixel_adventure/components/custom_hitbox.dart';
-import 'package:pixel_adventure/components/enemies/projectile/projectile.dart';
-import 'package:pixel_adventure/components/item.dart';
-import 'package:pixel_adventure/components/traps/car.dart';
-import 'package:pixel_adventure/components/traps/hammer.dart';
-import 'package:pixel_adventure/components/traps/saw.dart';
-import 'package:pixel_adventure/components/traps/trampoline.dart';
-import 'package:pixel_adventure/components/utils.dart';
-import 'package:pixel_adventure/components/widgets/game_over_menu.dart';
-import 'package:pixel_adventure/pixel_adventure.dart';
+import 'package:recycle_adventure/components/bullet.dart';
+import 'package:recycle_adventure/components/checkpoint.dart';
+import 'package:recycle_adventure/components/collision_block.dart';
+import 'package:recycle_adventure/components/custom_hitbox.dart';
+import 'package:recycle_adventure/components/enemies/projectile/projectile.dart';
+import 'package:recycle_adventure/components/item.dart';
+import 'package:recycle_adventure/components/traps/car.dart';
+import 'package:recycle_adventure/components/traps/hammer.dart';
+import 'package:recycle_adventure/components/traps/saw.dart';
+import 'package:recycle_adventure/components/traps/trampoline.dart';
+import 'package:recycle_adventure/components/utils.dart';
+import 'package:recycle_adventure/components/widgets/game_over_menu.dart';
+import 'package:recycle_adventure/recycle_adventure.dart';
 
 enum PlayerState {
   idle,
@@ -31,7 +31,7 @@ enum PlayerState {
 }
 
 class Player extends SpriteAnimationGroupComponent
-    with HasGameRef<PixelAdventure>, KeyboardHandler, CollisionCallbacks {
+    with HasGameRef<RecycleAdventure>, KeyboardHandler, CollisionCallbacks {
   String character;
   Player({
     super.position,
