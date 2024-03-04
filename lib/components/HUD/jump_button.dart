@@ -6,19 +6,19 @@ import 'package:recycle_adventure/recycle_adventure.dart';
 
 class JumpButton extends SpriteComponent
     with HasGameRef<RecycleAdventure>, TapCallbacks {
-  JumpButton();
+  JumpButton({super.priority = 10});
 
-  final margin = 32;
+  final margin = Vector2(128, 32);
   final buttonSize = 64;
 
   @override
   FutureOr<void> onLoad() {
-    priority = 10;
     sprite = Sprite(game.images.fromCache('HUD/Jump Button.png'));
     position = Vector2(
-      game.size.x - margin - buttonSize,
-      game.size.y - margin - buttonSize,
+      game.size.x - margin.x - buttonSize,
+      game.size.y - margin.y - buttonSize,
     );
+
     return super.onLoad();
   }
 

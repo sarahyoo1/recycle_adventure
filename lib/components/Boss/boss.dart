@@ -58,6 +58,7 @@ class Boss extends SpriteAnimationGroupComponent
   late final BombSpawnManager bombSpawnManager;
   late final DroneSpawnManager droneSpawnManager;
   late final Player player;
+  late RectangleHitbox hitbox;
 
   @override
   FutureOr<void> onLoad() {
@@ -76,14 +77,18 @@ class Boss extends SpriteAnimationGroupComponent
     droneSpawnManager = DroneSpawnManager(
       droneOnePosition: Vector2(42, 64),
       droneTwoPosition: Vector2(42, 64),
-      limit: 1.3,
+      limit: 0.5,
     );
     add(droneSpawnManager);
     droneSpawnManager.timer.stop();
 
     _loadSpriteAnimations();
 
-    add(CircleHitbox());
+    hitbox = RectangleHitbox(
+      position: Vector2(5, 48),
+      size: Vector2(88, 10),
+    );
+    add(hitbox);
 
     _timer.start();
 
@@ -122,21 +127,20 @@ class Boss extends SpriteAnimationGroupComponent
   void onCollisionStart(
       Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollisionStart(intersectionPoints, other);
+    if (other is Player) {
+      game.health--;
+      player.respawn();
+    }
     if (isHitOn) {
       if (other is Bullet) {
         if (game.isSoundEffectOn) {
           FlameAudio.play('boss-damaged.mp3', volume: game.soundEffectVolume);
         }
         current = State.hit;
-
         Future.delayed(const Duration(milliseconds: 200), () {
           current = State.idle;
         });
-
         lives--;
-
-        print('got hit');
-
         other.removeFromParent();
       }
     }
@@ -218,46 +222,47 @@ class Boss extends SpriteAnimationGroupComponent
         case 0:
           onPattern1 = true;
           directionX = -1;
+          hitbox.size = Vector2(32, 78);
+          hitbox.position = Vector2(32, 0);
           _pattern1();
-          print("pattern 1 choosed");
           break;
         case 1:
           onPattern2 = true;
           _pattern2();
-          print("pattern 2 choosed");
           break;
         case 2:
           onPattern3 = true;
           directionX = 1;
           _pattern3();
-          print("pattern 3 choosed");
+          break;
       }
     }
   }
 
   void _pattern1() {
     if (directionX == -1) {
-      if (position.x >= 44) {
-        // Move left
-        current = State.attack3;
-        velocity.x = -1 * 80;
+      if (position.x >= -96) {
+        current = State.left;
+        velocity.x = -1 * 100;
       } else {
         // Change direction after a delay
         velocity.x = 0;
-        current = State.idle;
+        position = Vector2(-96, 208);
+        current = State.attack3;
         Future.delayed(const Duration(seconds: 1), () {
           directionX = 1;
         });
       }
-    } else if (directionX == 1) {
-      if (position.x < 512) {
+    }
+
+    if (directionX == 1) {
+      if (position.x < 432) {
         // Move right
-        current = State.attack4;
-        velocity.x = 1 * 80;
+        current = State.attack3;
+        velocity.x = 1 * 50;
       } else {
         // Stop and change direction after a delay
         velocity.x = 0;
-        current = State.idle;
         Future.delayed(const Duration(seconds: 1), () {
           directionX = -2;
         });
@@ -266,21 +271,37 @@ class Boss extends SpriteAnimationGroupComponent
 
     // Handle movement for directionX == -2
     if (directionX == -2) {
-      if (position.x > 272) {
+      if (position.x > -96) {
         // Move left
-        current = State.left;
-        velocity.x = -1 * 80;
+        current = State.attack4;
+        velocity.x = -1 * 170;
       } else {
         // Stop, print message, and set flag
-        current = State.idle;
         velocity.x = 0;
-        position.x = 272;
+        position = Vector2(-96, 64);
         Future.delayed(const Duration(seconds: 1), () {
+          directionX = 3;
+        });
+      }
+    }
+
+    if (directionX == 3) {
+      if (position.x < 272) {
+        current = State.right;
+        velocity.x = 1 * 120;
+      } else {
+        velocity.x = 0;
+        current = State.idle;
+
+        Future.delayed(const Duration(milliseconds: 500), () {
+          hitbox.position = Vector2(5, 48);
+          hitbox.size = Vector2(88, 10);
           onPattern1 = false;
           isHitOn = true;
         });
         Future.delayed(const Duration(seconds: 6), () {
           isHitOn = false;
+          onPattern1 = false;
         });
       }
     }

@@ -29,7 +29,7 @@ class RecycleAdventure extends FlameGame
   int totalItemsNum = 0;
   bool isOkToNextFloor = false;
   late JoystickComponent joystick;
-  bool showControls = true; //turns on and off joysticks and other buttons
+  bool showControls = false; //turns on and off joysticks and other buttons
   bool isSoundEffectOn = true;
   bool isMusicOn = true;
   double soundEffectVolume = 1.0;
@@ -45,7 +45,7 @@ class RecycleAdventure extends FlameGame
     'Floor-08',
     'BossFight',
   ];
-  int currentFloorIndex = 0; //Should initially set to be 0.
+  int currentFloorIndex = 8; //Should initially set to be 0.
 
   bool _isAlreadyLoaded = false;
 
@@ -78,7 +78,6 @@ class RecycleAdventure extends FlameGame
 
   void addJoystick() {
     joystick = JoystickComponent(
-      priority: 10,
       knob: SpriteComponent(
         sprite: Sprite(
           images.fromCache('HUD/Knob.png'),

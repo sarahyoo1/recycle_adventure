@@ -4,6 +4,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:recycle_adventure/components/bullet.dart';
+import 'package:recycle_adventure/components/player.dart';
 import 'package:recycle_adventure/recycle_adventure.dart';
 
 enum State {
@@ -24,10 +25,13 @@ class DroneOne extends SpriteAnimationGroupComponent
   late final SpriteAnimation _idleSpriteAnimation;
   late final SpriteAnimation _walkSpriteAnimation;
   late final SpriteAnimation _deadSpriteAnimation;
+  late final Player player;
 
   @override
   FutureOr<void> onLoad() {
     debugMode = false;
+    player = game.player;
+
     _loadSpriteAnimations();
     add(
       RectangleHitbox(
@@ -44,7 +48,7 @@ class DroneOne extends SpriteAnimationGroupComponent
     position.x += 50 * dt;
     position.y += 40 * dt;
 
-    if (position.x >= 623 || position.x <= -16) {
+    if (position.y >= game.size.y) {
       removeFromParent();
     }
     super.update(dt);
@@ -61,6 +65,9 @@ class DroneOne extends SpriteAnimationGroupComponent
       }
       lives--;
       other.removeFromParent();
+    }
+    if (other is Player) {
+      _collidedWithPlayer();
     }
   }
 
@@ -93,5 +100,10 @@ class DroneOne extends SpriteAnimationGroupComponent
     if (lives <= 0) {
       removeFromParent();
     }
+  }
+
+  void _collidedWithPlayer() {
+    game.health--;
+    player.respawn();
   }
 }
