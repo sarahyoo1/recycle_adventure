@@ -6,8 +6,6 @@ import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/painting.dart';
-import 'package:recycle_adventure/components/HUD/attack_button.dart';
-import 'package:recycle_adventure/components/HUD/jump_button.dart';
 import 'package:recycle_adventure/components/floor.dart';
 import 'package:recycle_adventure/components/player.dart';
 
@@ -28,8 +26,7 @@ class RecycleAdventure extends FlameGame
   int itemsCollected = 0;
   int totalItemsNum = 0;
   bool isOkToNextFloor = false;
-  late JoystickComponent joystick;
-  bool showControls = false; //turns on and off joysticks and other buttons
+  bool showControls = true; //turns on and off joysticks and other buttons
   bool isSoundEffectOn = true;
   bool isMusicOn = true;
   double soundEffectVolume = 1.0;
@@ -49,6 +46,10 @@ class RecycleAdventure extends FlameGame
 
   bool _isAlreadyLoaded = false;
 
+  late JoystickComponent joystick;
+  late HudButtonComponent jumpButton;
+  late HudButtonComponent attackButton;
+
   @override
   FutureOr<void> onLoad() async {
     health = maxHealth;
@@ -59,8 +60,8 @@ class RecycleAdventure extends FlameGame
 
       if (showControls) {
         addJoystick();
-        add(JumpButton());
-        add(AttackButton());
+        addJumpButton();
+        addAttackButton();
       }
       _isAlreadyLoaded = true;
     }
@@ -78,6 +79,7 @@ class RecycleAdventure extends FlameGame
 
   void addJoystick() {
     joystick = JoystickComponent(
+      priority: 10,
       knob: SpriteComponent(
         sprite: Sprite(
           images.fromCache('HUD/Knob.png'),
@@ -93,6 +95,46 @@ class RecycleAdventure extends FlameGame
     );
 
     add(joystick);
+  }
+
+  void addJumpButton() {
+    jumpButton = HudButtonComponent(
+      priority: 10,
+      onPressed: () {
+        player.hasJumped = true;
+      },
+      onReleased: () {
+        player.hasJumped = false;
+      },
+      button: SpriteComponent(
+        sprite: Sprite(
+          images.fromCache('HUD/Jump Button.png'),
+        ),
+        size: Vector2.all(64),
+      ),
+      margin: const EdgeInsets.only(right: 128, bottom: 32),
+    );
+    add(jumpButton);
+  }
+
+  void addAttackButton() {
+    attackButton = HudButtonComponent(
+      priority: 10,
+      onPressed: () {
+        player.hasShooted = true;
+      },
+      onReleased: () {
+        player.hasShooted = false;
+      },
+      button: SpriteComponent(
+        sprite: Sprite(
+          images.fromCache('HUD/Attack Button.png'),
+        ),
+        size: Vector2.all(64),
+      ),
+      margin: const EdgeInsets.only(right: 32, bottom: 64),
+    );
+    add(attackButton);
   }
 
   void updateJoystick() {
