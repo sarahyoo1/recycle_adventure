@@ -79,7 +79,7 @@ class Player extends SpriteAnimationGroupComponent
   @override
   FutureOr<void> onLoad() {
     _loadAllAnimations();
-    debugMode = true;
+    debugMode = false;
     player = game.player;
 
     startingPosition = Vector2(position.x, position.y);
@@ -364,8 +364,6 @@ class Player extends SpriteAnimationGroupComponent
   }
 
   void _shootBullet() {
-    //TODO: Player attack animation doesn't work
-
     Bullet bullet = Bullet(
       imagePath: 'Bullets/player_bullet.png',
       animationAmount: 4,
@@ -396,7 +394,6 @@ class Player extends SpriteAnimationGroupComponent
         current = PlayerState.dead;
         await animationTicker?.completed;
 
-        //Game Over
         gameRef.pauseEngine();
         gameRef.overlays.add(GameOverMenu.ID);
       } else {
@@ -406,7 +403,6 @@ class Player extends SpriteAnimationGroupComponent
   }
 
   void _collidedWithProjectile() {
-    //TODO: add hit2 animation
     if (game.isSoundEffectOn) {
       FlameAudio.play('damage.wav', volume: game.soundEffectVolume);
     }

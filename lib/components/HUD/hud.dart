@@ -21,18 +21,15 @@ class Hud extends PositionComponent with HasGameRef<PixelAdventure> {
 
   late TextComponent _floorTextComponent;
   late TextComponent _numberOfItemsCollected;
-  late BossHealthBar bossHealthBar;
-  late final Boss boss;
+  late TextComponent _bossHpBarLabel;
   final int maxBossLives = 100;
   bool isBossFight = false;
 
   @override
   FutureOr<void> onLoad() {
-    boss = Boss();
-
     if (game.floorNames[game.currentFloorIndex] == 'BossFight') {
       isBossFight = true;
-      //_addBossHeartBar();
+      _addBossHpBarLabel();
     }
 
     _addFloorTextComponent();
@@ -117,17 +114,18 @@ class Hud extends PositionComponent with HasGameRef<PixelAdventure> {
     );
   }
 
-  void _addBossHeartBar() async {
-    for (int i = 1; i <= boss.lives; i++) {
-      final positionX = 1.9 * i;
-      await add(
-        BossHealthBar(
-          boss: boss,
-          bossMaxLives: maxBossLives,
-          size: Vector2(2, 16),
-          position: Vector2(100 + positionX.toDouble(), 15),
-        ),
-      );
-    }
+  void _addBossHpBarLabel() {
+    _bossHpBarLabel = TextComponent(
+      text: 'HP: ',
+      textRenderer: TextPaint(
+        style: GoogleFonts.pressStart2pTextTheme().labelSmall?.copyWith(
+              color: Colors.white,
+              fontSize: 12,
+            ),
+      ),
+      anchor: Anchor.center,
+      position: Vector2(190, 20),
+    );
+    add(_bossHpBarLabel);
   }
 }

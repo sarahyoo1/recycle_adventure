@@ -6,6 +6,7 @@ import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:pixel_adventure/components/Boss/bomb.dart';
 import 'package:pixel_adventure/components/Boss/drones/drone_spawn_manager.dart';
+import 'package:pixel_adventure/components/HUD/boss_health_bar.dart';
 import 'package:pixel_adventure/components/bullet.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
@@ -43,7 +44,8 @@ class Boss extends SpriteAnimationGroupComponent
   late final SpriteAnimation _attack4SpriteAnimation;
   late final SpriteAnimation _deadSpriteAnimation;
 
-  int lives = 100;
+  final int maxLives = 120;
+  int lives = 120;
   bool dead = false;
   bool isHitOn = false;
   Vector2 velocity = Vector2.zero();

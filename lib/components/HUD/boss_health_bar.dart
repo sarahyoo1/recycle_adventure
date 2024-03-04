@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pixel_adventure/components/Boss/boss.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
@@ -8,13 +10,13 @@ enum State { available, unavailable }
 
 class BossHealthBar extends SpriteGroupComponent
     with HasGameRef<PixelAdventure> {
-  final int bossMaxLives;
+  final int barNumber;
   final Boss boss;
   BossHealthBar({
     super.position,
     super.size,
     super.priority,
-    required this.bossMaxLives,
+    required this.barNumber,
     required this.boss,
   });
 
@@ -26,7 +28,7 @@ class BossHealthBar extends SpriteGroupComponent
 
   @override
   void update(double dt) {
-    if (boss.lives < bossMaxLives) {
+    if (boss.lives < barNumber) {
       current = State.unavailable;
     } else {
       current = State.available;

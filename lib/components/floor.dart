@@ -4,6 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:pixel_adventure/components/Boss/item_spawn_manager.dart';
+import 'package:pixel_adventure/components/HUD/boss_health_bar.dart';
 import 'package:pixel_adventure/components/HUD/hud.dart';
 import 'package:pixel_adventure/components/background.dart';
 import 'package:pixel_adventure/components/Boss/boss.dart';
@@ -69,7 +70,7 @@ class Floor extends World with HasGameRef<PixelAdventure> {
     }
   }
 
-  void _spawningObjects() {
+  void _spawningObjects() async {
     //adding spawn points
     final spawnPointsLayer = floor.tileMap.getLayer<ObjectGroup>('Spawnpoints');
 
@@ -211,6 +212,18 @@ class Floor extends World with HasGameRef<PixelAdventure> {
               size: Vector2(spawnPoint.width, spawnPoint.height),
             );
             add(boss);
+            //adds boss health bar HUD
+            for (int i = 1; i <= boss.maxLives; i++) {
+              final positionX = 1.9 * i;
+              await add(
+                BossHealthBar(
+                  boss: boss,
+                  barNumber: i,
+                  position: Vector2(200 + positionX.toDouble(), 13),
+                  size: Vector2(2, 16),
+                ),
+              );
+            }
           default:
         }
       }

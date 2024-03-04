@@ -17,7 +17,7 @@ class Hammer extends SpriteAnimationComponent with HasGameRef<PixelAdventure> {
 
   @override
   FutureOr<void> onLoad() {
-    debugMode = false;
+    debugMode = true;
     player = game.player;
 
     animation = _spriteAnimation();
@@ -33,18 +33,17 @@ class Hammer extends SpriteAnimationComponent with HasGameRef<PixelAdventure> {
   @override
   void update(double dt) {
     super.update(dt);
-    //print(hitbox.size.y);
     if (hitboxDir == 1) {
-      if (hitbox.size.y <= 64) {
-        hitbox.size.y += 73.3 * dt;
+      if (hitbox.position.y <= 40) {
+        hitbox.position.y += 63.3 * dt;
       } else {
-        Future.delayed(const Duration(milliseconds: 100), () {
+        Future.delayed(const Duration(milliseconds: 400), () {
           hitboxDir = -1;
         });
       }
     } else {
-      if (hitbox.size.y >= 20) {
-        hitbox.size.y -= 55 * dt;
+      if (hitbox.position.y >= 10) {
+        hitbox.position.y -= 53.3 * dt;
       } else {
         hitboxDir = 1;
       }

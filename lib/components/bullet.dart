@@ -31,6 +31,7 @@ class Bullet extends SpriteAnimationComponent
   @override
   FutureOr<void> onLoad() {
     debugMode = false;
+    priority = 4;
     player = game.player;
 
     updateBulletDirection();

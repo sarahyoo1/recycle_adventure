@@ -93,7 +93,7 @@
   <object id="18" name="RockHead" type="RockHead" x="528" y="272" width="48" height="48">
    <properties>
     <property name="offsetHorizontal" type="int" value="29"/>
-    <property name="offsetVertical" type="int" value="15"/>
+    <property name="offsetVertical" type="int" value="14"/>
    </properties>
   </object>
   <object id="19" name="Plastic Bag" type="Item" x="0" y="288" width="32" height="32"/>

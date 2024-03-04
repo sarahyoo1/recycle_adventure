@@ -7,6 +7,7 @@ import 'package:flame/input.dart';
 import 'package:flame_audio/audio_pool.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/painting.dart';
+import 'package:pixel_adventure/components/Boss/boss.dart';
 import 'package:pixel_adventure/components/HUD/jump_button.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/components/floor.dart';
@@ -45,7 +46,7 @@ class PixelAdventure extends FlameGame
     'Floor-08',
     'BossFight',
   ];
-  int currentFloorIndex = 0; //Should initially set to be 0.
+  int currentFloorIndex = 8; //Should initially set to be 0.
 
   bool _isAlreadyLoaded = false;
 
@@ -54,6 +55,7 @@ class PixelAdventure extends FlameGame
     health = maxHealth;
     if (!_isAlreadyLoaded) {
       await images.loadAllImages();
+
       _loadFloor();
 
       if (showControls) {
@@ -172,7 +174,7 @@ class PixelAdventure extends FlameGame
         case 'Floor-08':
           FlameAudio.bgm.play('factory-music.mp3', volume: musicVolume);
           break;
-        case 'BoosFight':
+        case 'BossFight':
           FlameAudio.bgm.play('boss-fight-music.mp3', volume: musicVolume);
           break;
       }
