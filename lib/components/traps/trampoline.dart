@@ -93,8 +93,8 @@ class Trampoline extends SpriteAnimationGroupComponent
   }
 
   void _bouncePlayer(dt) {
-    if (game.isSoundEffectOn) {
-      FlameAudio.play('jump.wav', volume: game.soundEffectVolume);
+    if (game.playerData.isSoundEffectOn) {
+      FlameAudio.play('jump.wav', volume: game.playerData.soundEffectVolume);
     }
     player.velocity.y = -bounceHeight;
     player.position.y += player.velocity.y * dt;

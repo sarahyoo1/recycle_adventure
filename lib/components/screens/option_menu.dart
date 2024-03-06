@@ -1,6 +1,5 @@
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:recycle_adventure/components/screens/main_menu.dart';
 import 'package:recycle_adventure/main.dart';
 
@@ -43,13 +42,14 @@ class _OptionMenuState extends State<OptionMenu> {
                 children: [
                   const Text('Sound Effect Volume:'),
                   const SizedBox(width: 40),
-                  Text(gameRef.soundEffectVolume.toStringAsFixed(1)),
+                  Text(playerData.soundEffectVolume.toStringAsFixed(1)),
                   const SizedBox(width: 40),
                   ElevatedButton(
                     onPressed: () {
-                      if (gameRef.soundEffectVolume < 1) {
+                      if (playerData.soundEffectVolume < 1) {
                         setState(() {
-                          gameRef.soundEffectVolume += 0.1;
+                          playerData.soundEffectVolume += 0.1;
+                          playerData.save();
                         });
                       }
                     },
@@ -58,9 +58,10 @@ class _OptionMenuState extends State<OptionMenu> {
                   const SizedBox(width: 10),
                   ElevatedButton(
                     onPressed: () {
-                      if (gameRef.soundEffectVolume > 0.1) {
+                      if (playerData.soundEffectVolume > 0.1) {
                         setState(() {
-                          gameRef.soundEffectVolume -= 0.1;
+                          playerData.soundEffectVolume -= 0.1;
+                          playerData.save();
                         });
                       }
                     },
@@ -70,10 +71,12 @@ class _OptionMenuState extends State<OptionMenu> {
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        gameRef.isSoundEffectOn = !gameRef.isSoundEffectOn;
+                        playerData.isSoundEffectOn =
+                            !playerData.isSoundEffectOn;
+                        playerData.save();
                       });
                     },
-                    child: gameRef.isSoundEffectOn
+                    child: playerData.isSoundEffectOn
                         ? const Text('On')
                         : const Text('Off'),
                   )
@@ -88,15 +91,15 @@ class _OptionMenuState extends State<OptionMenu> {
                 children: [
                   const Text('Background Music Volume:'),
                   const SizedBox(width: 40),
-                  Text(gameRef.musicVolume.toStringAsFixed(1)),
+                  Text(playerData.musicVolume.toStringAsFixed(1)),
                   const SizedBox(width: 40),
                   ElevatedButton(
                     onPressed: () {
-                      if (gameRef.musicVolume < 1) {
+                      if (playerData.musicVolume < 1) {
                         setState(() {
-                          gameRef.musicVolume += 0.1;
+                          playerData.musicVolume += 0.1;
                           FlameAudio.bgm.audioPlayer
-                              .setVolume(gameRef.musicVolume);
+                              .setVolume(playerData.musicVolume);
                         });
                       }
                     },
@@ -105,11 +108,12 @@ class _OptionMenuState extends State<OptionMenu> {
                   const SizedBox(width: 10),
                   ElevatedButton(
                     onPressed: () {
-                      if (gameRef.musicVolume > 0.1) {
+                      if (playerData.musicVolume > 0.1) {
                         setState(() {
-                          gameRef.musicVolume -= 0.1;
+                          playerData.musicVolume -= 0.1;
+                          playerData.save();
                           FlameAudio.bgm.audioPlayer
-                              .setVolume(gameRef.musicVolume);
+                              .setVolume(playerData.musicVolume);
                         });
                       }
                     },
@@ -119,15 +123,15 @@ class _OptionMenuState extends State<OptionMenu> {
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        gameRef.isMusicOn = !gameRef.isMusicOn;
-                        if (gameRef.isMusicOn) {
+                        playerData.isMusicOn = !playerData.isMusicOn;
+                        if (playerData.isMusicOn) {
                           FlameAudio.bgm.resume();
                         } else {
                           FlameAudio.bgm.pause();
                         }
                       });
                     },
-                    child: gameRef.isMusicOn
+                    child: playerData.isMusicOn
                         ? const Text('On')
                         : const Text('Off'),
                   )

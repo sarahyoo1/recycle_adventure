@@ -89,10 +89,12 @@ class Saw extends SpriteAnimationComponent with HasGameRef<RecycleAdventure> {
   }
 
   void collidedWithPlayer() {
-    if (game.isSoundEffectOn) {
-      FlameAudio.play('enemyKilled.wav', volume: game.soundEffectVolume);
+    if (game.playerData.isSoundEffectOn) {
+      FlameAudio.play('enemyKilled.wav',
+          volume: game.playerData.soundEffectVolume);
     }
-    game.health--;
+    game.playerData.health--;
+    game.playerData.save();
     player.respawn();
   }
 }

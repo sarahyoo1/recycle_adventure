@@ -47,8 +47,8 @@ class MainMenu extends StatelessWidget {
                         builder: (context) => const GamePlay(),
                       ),
                     );
-                    gameRef.playBackgroundMusic(
-                        gameRef.floorNames[gameRef.currentFloorIndex]);
+                    gameRef.playBackgroundMusic(gameRef
+                        .floorNames[gameRef.playerData.currentFloorIndex]);
                   },
                   child: const Text('Play'),
                 ),

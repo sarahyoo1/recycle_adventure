@@ -25,7 +25,7 @@ class Hud extends PositionComponent with HasGameRef<RecycleAdventure> {
 
   @override
   FutureOr<void> onLoad() {
-    if (game.floorNames[game.currentFloorIndex] == 'BossFight') {
+    if (game.floorNames[game.playerData.currentFloorIndex] == 'BossFight') {
       isBossFight = true;
       _addBossHpBarLabel();
     }
@@ -40,9 +40,10 @@ class Hud extends PositionComponent with HasGameRef<RecycleAdventure> {
   void update(double dt) {
     _updateTextComponents();
 
-    if (game.itemsCollected == game.totalItemsNum) {
+    if (game.playerData.itemsCollected == game.playerData.totalItemsNum) {
       _updateItemTextStyle();
-      game.isOkToNextFloor = true;
+      game.playerData.isOkToNextFloor = true;
+      game.playerData.save();
     }
 
     super.update(dt);
@@ -50,7 +51,7 @@ class Hud extends PositionComponent with HasGameRef<RecycleAdventure> {
 
   void _addFloorTextComponent() {
     _floorTextComponent = TextComponent(
-      text: 'Floor ${game.currentFloorIndex + 1}',
+      text: 'Floor ${game.playerData.currentFloorIndex + 1}',
       textRenderer: TextPaint(
         style: GoogleFonts.pressStart2pTextTheme().labelSmall?.copyWith(
               color: Colors.white,
@@ -66,7 +67,7 @@ class Hud extends PositionComponent with HasGameRef<RecycleAdventure> {
   void _addItemTextComponent() {
     _numberOfItemsCollected = TextComponent(
       text:
-          'Items Collected: ${game.currentFloorIndex + 1} / ${game.totalItemsNum}',
+          'Items Collected: ${game.playerData.currentFloorIndex + 1} / ${game.playerData.totalItemsNum}',
       textRenderer: TextPaint(
         style: GoogleFonts.pressStart2pTextTheme().labelSmall?.copyWith(
               color: Colors.white,
@@ -97,9 +98,10 @@ class Hud extends PositionComponent with HasGameRef<RecycleAdventure> {
       _floorTextComponent.text = 'Boss Fight!';
       _numberOfItemsCollected.text = '';
     } else {
-      _floorTextComponent.text = 'Floor ${game.currentFloorIndex + 1}';
+      _floorTextComponent.text =
+          'Floor ${game.playerData.currentFloorIndex + 1}';
       _numberOfItemsCollected.text =
-          'Items Collected: ${game.itemsCollected} / ${game.totalItemsNum}';
+          'Items Collected: ${game.playerData.itemsCollected} / ${game.playerData.totalItemsNum}';
     }
   }
 

@@ -44,8 +44,9 @@ class DroneSpawnManager extends Component with HasGameRef<RecycleAdventure> {
   }
 
   void _spawnDrone1() {
-    if (game.isSoundEffectOn) {
-      FlameAudio.play('boss-drone-spawn.mp3', volume: game.soundEffectVolume);
+    if (game.playerData.isSoundEffectOn) {
+      FlameAudio.play('boss-drone-spawn.mp3',
+          volume: game.playerData.soundEffectVolume);
     }
     DroneOne drone1 = DroneOne(
       position: droneOnePosition,
@@ -55,8 +56,9 @@ class DroneSpawnManager extends Component with HasGameRef<RecycleAdventure> {
   }
 
   void _spawnDrone2() {
-    if (game.isSoundEffectOn) {
-      FlameAudio.play('boss-drone-spawn.mp3', volume: game.soundEffectVolume);
+    if (game.playerData.isSoundEffectOn) {
+      FlameAudio.play('boss-drone-spawn.mp3',
+          volume: game.playerData.soundEffectVolume);
     }
     DroneTwo drone2 = DroneTwo(
       position: droneTwoPosition,

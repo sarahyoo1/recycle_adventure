@@ -68,8 +68,9 @@ class Bat extends Enemy {
       Set<Vector2> intersectionPoints, PositionComponent other) async {
     super.onCollisionStart(intersectionPoints, other);
     if (other is Bullet) {
-      if (game.isSoundEffectOn) {
-        FlameAudio.play('damage.wav', volume: game.soundEffectVolume);
+      if (game.playerData.isSoundEffectOn) {
+        FlameAudio.play('damage.wav',
+            volume: game.playerData.soundEffectVolume);
       }
       current = State.hit;
       await animationTicker?.completed;
@@ -78,7 +79,8 @@ class Bat extends Enemy {
       other.removeFromParent();
     }
     if (other is Player) {
-      game.health--;
+      game.playerData.health--;
+      game.playerData.save();
       other.respawn();
     }
   }
@@ -149,8 +151,9 @@ class Bat extends Enemy {
 
   void collidedWithPlayer() async {
     if (player.velocity.y > 0 && player.y + player.height > position.y) {
-      if (game.isSoundEffectOn) {
-        FlameAudio.play('enemyKilled.wav', volume: game.soundEffectVolume);
+      if (game.playerData.isSoundEffectOn) {
+        FlameAudio.play('enemyKilled.wav',
+            volume: game.playerData.soundEffectVolume);
       }
       gotStomped = true;
       current = State.hit;

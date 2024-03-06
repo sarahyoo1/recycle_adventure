@@ -49,12 +49,13 @@ class Bomb extends SpriteAnimationGroupComponent
       Set<Vector2> intersectionPoints, PositionComponent other) async {
     super.onCollisionStart(intersectionPoints, other);
     if (other is Player) {
-      if (game.isSoundEffectOn) {
+      if (game.playerData.isSoundEffectOn) {
         FlameAudio.play('boss-bomb-explosion.wav',
-            volume: game.soundEffectVolume);
+            volume: game.playerData.soundEffectVolume);
       }
       hasBoomed = true;
-      game.health--;
+      game.playerData.health--;
+      game.playerData.save();
       velocity.y = 0;
       current = State.bomb;
       await animationTicker?.completed;
@@ -123,8 +124,9 @@ class BombSpawnManager extends Component with HasGameRef<RecycleAdventure> {
   }
 
   void _spawnBombs() {
-    if (game.isSoundEffectOn) {
-      FlameAudio.play('boss-bomb-spawn.mp3', volume: game.soundEffectVolume);
+    if (game.playerData.isSoundEffectOn) {
+      FlameAudio.play('boss-bomb-spawn.mp3',
+          volume: game.playerData.soundEffectVolume);
     }
     Bomb bomb = Bomb(position: droppingPosition);
     add(bomb);

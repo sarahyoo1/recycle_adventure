@@ -98,7 +98,7 @@ class Player extends SpriteAnimationGroupComponent
 
   @override
   void update(double dt) {
-    if (game.health <= 0) {
+    if (game.playerData.health <= 0) {
       dead = true;
       _dead();
     }
@@ -305,8 +305,8 @@ class Player extends SpriteAnimationGroupComponent
   }
 
   void _playerJump(double dt) {
-    if (game.isSoundEffectOn) {
-      FlameAudio.play('jump.wav', volume: game.soundEffectVolume);
+    if (game.playerData.isSoundEffectOn) {
+      FlameAudio.play('jump.wav', volume: game.playerData.soundEffectVolume);
     }
 
     velocity.y = -_jumpForce;
@@ -340,8 +340,9 @@ class Player extends SpriteAnimationGroupComponent
 
   void reachesCheckpoint() async {
     reachedCheckpoint = true;
-    if (game.isSoundEffectOn) {
-      FlameAudio.play('checkpoint.wav', volume: game.soundEffectVolume);
+    if (game.playerData.isSoundEffectOn) {
+      FlameAudio.play('checkpoint.wav',
+          volume: game.playerData.soundEffectVolume);
     }
     if (scale.x > 0) {
       position -= Vector2.all(32);
@@ -403,15 +404,17 @@ class Player extends SpriteAnimationGroupComponent
   }
 
   void _collidedWithProjectile() {
-    if (game.isSoundEffectOn) {
-      FlameAudio.play('damage.wav', volume: game.soundEffectVolume);
+    if (game.playerData.isSoundEffectOn) {
+      FlameAudio.play('damage.wav', volume: game.playerData.soundEffectVolume);
     }
-    game.health--;
+    game.playerData.health--;
+    game.playerData.save();
   }
 
   void _checkPlayerPosition() {
     if (position.y > game.size.y) {
-      game.health--;
+      game.playerData.health--;
+      game.playerData.save();
       respawn();
     }
   }

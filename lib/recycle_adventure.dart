@@ -8,6 +8,7 @@ import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/painting.dart';
 import 'package:recycle_adventure/components/floor.dart';
 import 'package:recycle_adventure/components/player.dart';
+import 'package:recycle_adventure/components/player_data.dart';
 
 class RecycleAdventure extends FlameGame
     with
@@ -20,17 +21,9 @@ class RecycleAdventure extends FlameGame
   Color backgroundColor() => const Color(0xFF211F30);
 
   late CameraComponent cam;
+  PlayerData playerData = PlayerData();
   Player player = Player(character: 'Hood');
-  final int maxHealth = 5;
-  late int health; //player health
-  int itemsCollected = 0;
-  int totalItemsNum = 0;
-  bool isOkToNextFloor = false;
-  bool showControls = true; //turns on and off joysticks and other buttons
-  bool isSoundEffectOn = true;
-  bool isMusicOn = true;
-  double soundEffectVolume = 1.0;
-  double musicVolume = 1.0;
+
   List<String> floorNames = [
     'Floor-01',
     'Floor-02',
@@ -42,8 +35,8 @@ class RecycleAdventure extends FlameGame
     'Floor-08',
     'BossFight',
   ];
-  int currentFloorIndex = 8; //Should initially set to be 0.
 
+  final int maxHealth = 5;
   bool _isAlreadyLoaded = false;
 
   late JoystickComponent joystick;
@@ -52,13 +45,12 @@ class RecycleAdventure extends FlameGame
 
   @override
   FutureOr<void> onLoad() async {
-    health = maxHealth;
     if (!_isAlreadyLoaded) {
       await images.loadAllImages();
 
       _loadFloor();
 
-      if (showControls) {
+      if (playerData.showControls) {
         addJoystick();
         addJumpButton();
         addAttackButton();
@@ -71,7 +63,7 @@ class RecycleAdventure extends FlameGame
 
   @override
   void update(double dt) {
-    if (showControls) {
+    if (playerData.showControls) {
       updateJoystick();
     }
     super.update(dt);
@@ -158,12 +150,14 @@ class RecycleAdventure extends FlameGame
   void loadNextFloor() {
     removeWhere((component) => component is Floor);
 
-    if (currentFloorIndex < floorNames.length - 1) {
-      currentFloorIndex++;
+    if (playerData.currentFloorIndex < floorNames.length - 1) {
+      playerData.currentFloorIndex++;
+      playerData.save();
       _loadFloor();
     } else {
       //if there is no more floors
-      currentFloorIndex = 0;
+      playerData.currentFloorIndex = 0;
+      playerData.save();
       _loadFloor();
     }
   }
@@ -174,7 +168,7 @@ class RecycleAdventure extends FlameGame
       () {
         Floor world = Floor(
           player: player,
-          floorName: floorNames[currentFloorIndex],
+          floorName: floorNames[playerData.currentFloorIndex],
         );
 
         cam = CameraComponent.withFixedResolution(
@@ -190,33 +184,40 @@ class RecycleAdventure extends FlameGame
   }
 
   void reset() {
-    currentFloorIndex = 0;
-    health = 5;
+    //TODO:
+    playerData.currentFloorIndex = 0;
+    playerData.health = 5;
+    playerData.save();
   }
 
   void playBackgroundMusic(String floorName) {
-    if (isMusicOn) {
+    if (playerData.isMusicOn) {
       switch (floorName) {
         case 'Floor-01':
-          FlameAudio.bgm.play('tutorial-music.mp3', volume: musicVolume);
+          FlameAudio.bgm
+              .play('tutorial-music.mp3', volume: playerData.musicVolume);
           break;
         case 'Floor-02':
         case 'Floor-03':
         case 'Floor-04':
-          FlameAudio.bgm.play('sewer-music.mp3', volume: musicVolume);
+          FlameAudio.bgm
+              .play('sewer-music.mp3', volume: playerData.musicVolume);
           break;
         case 'Floor-05':
         case 'Floor-06':
-          FlameAudio.bgm.play('city-music.mp3', volume: musicVolume);
+          FlameAudio.bgm.play('city-music.mp3', volume: playerData.musicVolume);
           break;
         case 'Floor-07':
-          FlameAudio.bgm.play('a-short-break-music.mp3', volume: musicVolume);
+          FlameAudio.bgm
+              .play('a-short-break-music.mp3', volume: playerData.musicVolume);
           break;
         case 'Floor-08':
-          FlameAudio.bgm.play('factory-music.mp3', volume: musicVolume);
+          FlameAudio.bgm
+              .play('factory-music.mp3', volume: playerData.musicVolume);
           break;
         case 'BossFight':
-          FlameAudio.bgm.play('boss-fight-music.mp3', volume: musicVolume);
+          FlameAudio.bgm
+              .play('boss-fight-music.mp3', volume: playerData.musicVolume);
           break;
       }
     }

@@ -60,9 +60,9 @@ class DroneTwo extends SpriteAnimationGroupComponent
       Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollisionStart(intersectionPoints, other);
     if (other is Bullet) {
-      if (game.isSoundEffectOn) {
+      if (game.playerData.isSoundEffectOn) {
         FlameAudio.play('boss-drone-damaged.mp3',
-            volume: game.soundEffectVolume);
+            volume: game.playerData.soundEffectVolume);
       }
       lives--;
       other.removeFromParent();
@@ -104,7 +104,8 @@ class DroneTwo extends SpriteAnimationGroupComponent
   }
 
   void _collidedWithPlayer() {
-    game.health--;
+    game.playerData.health--;
+    game.playerData.save();
     player.respawn();
   }
 }

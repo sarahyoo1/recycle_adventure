@@ -108,7 +108,8 @@ class Car extends SpriteAnimationGroupComponent
   }
 
   void collidedWithPlayer() {
-    game.health--;
+    game.playerData.health--;
+    game.playerData.save();
     player.respawn();
   }
 

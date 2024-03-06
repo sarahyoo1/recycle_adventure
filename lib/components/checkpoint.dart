@@ -42,7 +42,7 @@ class Checkpoint extends SpriteAnimationGroupComponent
   }
 
   void collidedWithPlayer() async {
-    if (game.isOkToNextFloor) {
+    if (game.playerData.isOkToNextFloor) {
       player.reachesCheckpoint();
       current = State.flagOut;
       await animationTicker?.completed;

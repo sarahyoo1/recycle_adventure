@@ -128,13 +128,15 @@ class Boss extends SpriteAnimationGroupComponent
       Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollisionStart(intersectionPoints, other);
     if (other is Player) {
-      game.health--;
+      game.playerData.health--;
+      game.playerData.save();
       player.respawn();
     }
     if (isHitOn) {
       if (other is Bullet) {
-        if (game.isSoundEffectOn) {
-          FlameAudio.play('boss-damaged.mp3', volume: game.soundEffectVolume);
+        if (game.playerData.isSoundEffectOn) {
+          FlameAudio.play('boss-damaged.mp3',
+              volume: game.playerData.soundEffectVolume);
         }
         current = State.hit;
         Future.delayed(const Duration(milliseconds: 200), () {
@@ -202,8 +204,9 @@ class Boss extends SpriteAnimationGroupComponent
   void _checkLives() {
     if (lives <= 0) {
       if (lives == 0) {
-        if (game.isSoundEffectOn) {
-          FlameAudio.play('boss-dead.mp3', volume: game.soundEffectVolume);
+        if (game.playerData.isSoundEffectOn) {
+          FlameAudio.play('boss-dead.mp3',
+              volume: game.playerData.soundEffectVolume);
           lives--;
         }
       }

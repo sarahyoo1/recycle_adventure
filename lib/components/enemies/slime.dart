@@ -66,14 +66,16 @@ class Slime extends Enemy {
     if (other is Bullet) {
       current = State.hit;
       if (lives > 0) {
-        if (game.isSoundEffectOn) {
-          FlameAudio.play('damage.wav', volume: game.soundEffectVolume);
+        if (game.playerData.isSoundEffectOn) {
+          FlameAudio.play('damage.wav',
+              volume: game.playerData.soundEffectVolume);
         }
         lives--;
         other.removeFromParent();
       } else {
-        if (game.isSoundEffectOn) {
-          FlameAudio.play('enemyKilled.wav', volume: game.soundEffectVolume);
+        if (game.playerData.isSoundEffectOn) {
+          FlameAudio.play('enemyKilled.wav',
+              volume: game.playerData.soundEffectVolume);
         }
         dead = true;
         onDead();
@@ -134,8 +136,9 @@ class Slime extends Enemy {
 
   void _collidedWithPlayer() async {
     if (player.velocity.y > 0 && player.y + player.height > position.y) {
-      if (game.isSoundEffectOn) {
-        FlameAudio.play('enemyKilled.wav', volume: game.soundEffectVolume);
+      if (game.playerData.isSoundEffectOn) {
+        FlameAudio.play('enemyKilled.wav',
+            volume: game.playerData.soundEffectVolume);
       }
       dead = true;
       current = State.hit;
@@ -143,7 +146,8 @@ class Slime extends Enemy {
       await animationTicker?.completed;
       onDead();
     } else {
-      game.health--;
+      game.playerData.health--;
+      game.playerData.save();
       player.respawn();
     }
   }

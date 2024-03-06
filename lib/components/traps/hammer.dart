@@ -63,7 +63,8 @@ class Hammer extends SpriteAnimationComponent
   }
 
   void collidedWithPlayer() {
-    game.health--;
+    game.playerData.health--;
+    game.playerData.save();
     player.respawn();
   }
 }

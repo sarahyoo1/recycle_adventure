@@ -43,10 +43,11 @@ class Floor extends World with HasGameRef<RecycleAdventure> {
     _addCollisions();
     _addBackground();
     add(Hud());
+
     _spawningObjects();
     _updateTotalItemsNum();
 
-    if (game.isMusicOn) {
+    if (game.playerData.isMusicOn) {
       game.playBackgroundMusic(floorName);
     }
 
@@ -57,7 +58,8 @@ class Floor extends World with HasGameRef<RecycleAdventure> {
     final backgroundLayer = floor.tileMap.getLayer<TileLayer>('Background');
     if (backgroundLayer != null) {
       totalItemsNum = backgroundLayer.properties.getValue('totalItemsNum');
-      game.totalItemsNum = totalItemsNum;
+      game.playerData.totalItemsNum = totalItemsNum;
+      game.playerData.save();
     }
   }
 
