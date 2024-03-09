@@ -64,6 +64,7 @@ class RecycleAdventure extends FlameGame
         addJumpButton();
         addAttackButton();
       }
+
       _isAlreadyLoaded = true;
     }
 
@@ -92,7 +93,7 @@ class RecycleAdventure extends FlameGame
           images.fromCache('HUD/Joystick.png'),
         ),
       ),
-      margin: const EdgeInsets.only(left: 32, bottom: 32),
+      margin: const EdgeInsets.only(left: 64, bottom: 32),
     );
 
     add(joystick);
@@ -113,7 +114,7 @@ class RecycleAdventure extends FlameGame
         ),
         size: Vector2.all(64),
       ),
-      margin: const EdgeInsets.only(right: 128, bottom: 32),
+      margin: const EdgeInsets.only(right: 64, bottom: 32),
     );
     add(jumpButton);
   }
@@ -133,7 +134,7 @@ class RecycleAdventure extends FlameGame
         ),
         size: Vector2.all(64),
       ),
-      margin: const EdgeInsets.only(right: 32, bottom: 64),
+      margin: const EdgeInsets.only(right: 32, bottom: 96),
     );
     add(attackButton);
   }
@@ -190,6 +191,7 @@ class RecycleAdventure extends FlameGame
     );
   }
 
+  //TODO
   void reset() {
     currentFloorIndex = 0;
     health = 5;

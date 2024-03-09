@@ -45,8 +45,7 @@ class DroneOne extends SpriteAnimationGroupComponent
   @override
   void update(double dt) {
     _checkLives();
-    position.x += 50 * dt;
-    position.y += 40 * dt;
+    position.y += 100 * dt;
 
     if (position.y >= game.size.y) {
       removeFromParent();

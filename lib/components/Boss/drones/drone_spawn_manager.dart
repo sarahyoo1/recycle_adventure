@@ -28,8 +28,8 @@ class DroneSpawnManager extends Component with HasGameRef<RecycleAdventure> {
   }
 
   Vector2 _randomPosition() {
-    double rd = Random().nextDouble() * 500;
-    return Vector2(rd, -32);
+    double rd = Random().nextDouble() * 400;
+    return Vector2(rd, 40);
   }
 
   void _spawnRandomDrone() {

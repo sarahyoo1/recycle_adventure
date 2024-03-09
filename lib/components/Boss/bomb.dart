@@ -21,12 +21,13 @@ class Bomb extends SpriteAnimationGroupComponent
   late final SpriteAnimation _idleSpriteAnimation;
   late final SpriteAnimation _bombSpriteAnimation;
 
-  double fallingSpeed = 80;
+  double fallingSpeed = 100;
   bool hasBoomed = false;
   Vector2 velocity = Vector2.zero();
 
   @override
   FutureOr<void> onLoad() {
+    priority = 10;
     _loadSpriteAnimations();
     add(RectangleHitbox(size: Vector2.all(10)));
     return super.onLoad();

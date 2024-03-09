@@ -71,6 +71,7 @@ class _GoogleWalletMenuState extends State<GoogleWalletMenu> {
                 width: MediaQuery.of(context).size.width / 5,
                 child: ElevatedButton(
                   onPressed: () {
+                    gameRef.currentFloorIndex = 0;
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (context) => const MainMenu(),
@@ -123,7 +124,7 @@ final String _passId = const Uuid().v4();
 const String _passClass = 'recycleadventurebossbadge';
 const String _issuerId = '3388000000022319389';
 const String _issuerEmail = 'gaeunyoo3626@gmail.com';
-const String _issuerName = 'Sarah Yoo';
+const String _issuerName = '(Player Name)';
 
 final String _examplePass = """
     {
@@ -140,7 +141,7 @@ final String _examplePass = """
             "hexBackgroundColor": "#97D60E",
             "logo": {
               "sourceUri": {
-                "uri": "https://storage.googleapis.com/wallet-lab-tools-codelab-artifacts-public/pass_google_logo.jpg"
+                "uri": "https://i.postimg.cc/zD0nVMTx/f5796f52-30c6-4eed-865e-0f58c6e11e56.png"
               }
             },
             "cardTitle": {
@@ -167,7 +168,7 @@ final String _examplePass = """
             },
             "heroImage": {
               "sourceUri": {
-                "uri": "https://storage.googleapis.com/wallet-lab-tools-codelab-artifacts-public/pass_google_logo.jpg"
+                "uri": "https://i.postimg.cc/zD0nVMTx/f5796f52-30c6-4eed-865e-0f58c6e11e56.png"
               }
             },
             "textModulesData": [

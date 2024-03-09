@@ -40,6 +40,7 @@ class GameOverMenu extends StatelessWidget {
             width: MediaQuery.of(context).size.width / 5,
             child: ElevatedButton(
               onPressed: () {
+                gameRef.currentFloorIndex = 0; //TODO: How to reload game?
                 gameRef.overlays.remove(GameOverMenu.ID);
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
@@ -55,18 +56,18 @@ class GameOverMenu extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 10),
+          // const SizedBox(height: 10),
 
-          SizedBox(
-            width: MediaQuery.of(context).size.width / 5,
-            child: ElevatedButton(
-              onPressed: () {
-                gameRef.overlays.remove(GameOverMenu.ID);
-                gameRef.resumeEngine();
-              },
-              child: const Text('Revive to Continue'),
-            ),
-          ),
+          // SizedBox(
+          //   width: MediaQuery.of(context).size.width / 5,
+          //   child: ElevatedButton(
+          //     onPressed: () {
+          //       gameRef.overlays.remove(GameOverMenu.ID);
+          //       gameRef.resumeEngine();
+          //     },
+          //     child: const Text('Revive to Continue'),
+          //   ),
+          // ),
         ],
       ),
     );

@@ -121,7 +121,6 @@ class Player extends SpriteAnimationGroupComponent
 
   @override
   bool onKeyEvent(KeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
-    final pressedKeys = keysPressed;
     //initially sets direction to be none.
     horizontalMovement = 0;
 
@@ -135,15 +134,9 @@ class Player extends SpriteAnimationGroupComponent
 
     hasJumped = keysPressed.contains(LogicalKeyboardKey.space);
 
-    hasShooted = pressedKeys.contains(LogicalKeyboardKey.keyQ) &&
-        !event.synthesized &&
-        !pressedKeys.contains(LogicalKeyboardKey.keyQ);
+    hasShooted =
+        keysPressed.contains(LogicalKeyboardKey.keyQ) && !event.synthesized;
 
-    if (event is KeyDownEvent) {
-      pressedKeys.add(event.logicalKey);
-    } else if (event is KeyUpEvent) {
-      pressedKeys.remove(event.logicalKey);
-    }
     return super.onKeyEvent(event, keysPressed);
   }
 

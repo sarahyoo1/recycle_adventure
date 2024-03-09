@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import 'package:recycle_adventure/components/Boss/bomb.dart';
 import 'package:recycle_adventure/components/Boss/boss.dart';
+import 'package:recycle_adventure/components/Boss/drones/drone_spawn_manager.dart';
 import 'package:recycle_adventure/components/Boss/item_spawn_manager.dart';
 import 'package:recycle_adventure/components/HUD/boss_health_bar.dart';
 import 'package:recycle_adventure/components/HUD/hud.dart';
@@ -206,11 +208,28 @@ class Floor extends World with HasGameRef<RecycleAdventure> {
             add(whale);
             break;
           case 'Boss':
+            //timer setting
+            BombSpawnManager bombSpawnManager = BombSpawnManager(
+              limit: 0.5,
+              droppingPosition: Vector2.zero(),
+            );
+            add(bombSpawnManager);
+            bombSpawnManager.timer.stop();
+            DroneSpawnManager droneSpawnManager = DroneSpawnManager(
+              limit: 0.5,
+            );
+            add(droneSpawnManager);
+            droneSpawnManager.timer.stop();
+
+            //add boss
             final boss = Boss(
               position: Vector2(spawnPoint.x, spawnPoint.y + 17),
               size: Vector2(spawnPoint.width, spawnPoint.height),
+              bombSpawnManager: bombSpawnManager,
+              droneSpawnManager: droneSpawnManager,
             );
             add(boss);
+
             //adds boss health bar HUD
             for (int i = 1; i <= boss.maxLives; i++) {
               final positionX = 1.9 * i;

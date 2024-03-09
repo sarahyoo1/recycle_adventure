@@ -25,7 +25,7 @@ class Item extends SpriteAnimationComponent
   FutureOr<void> onLoad() {
     debugMode = false;
 
-    _loadAnimation(); //must come before adding hitbox since it decalres hitbox setting.
+    _loadAnimation();
 
     add(RectangleHitbox(
       position: Vector2(hitbox.offsetX, hitbox.offsetY),
