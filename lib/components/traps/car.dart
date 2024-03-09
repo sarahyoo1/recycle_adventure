@@ -38,7 +38,7 @@ class Car extends SpriteAnimationGroupComponent
   @override
   FutureOr<void> onLoad() {
     super.onLoad();
-    debugMode = true;
+    debugMode = false;
     player = game.player;
 
     _loadSpriteAnimations();

@@ -8,7 +8,7 @@ class OptionMenu extends StatefulWidget {
   const OptionMenu({super.key});
 
   @override
-  _OptionMenuState createState() => _OptionMenuState();
+  State<OptionMenu> createState() => _OptionMenuState();
 }
 
 class _OptionMenuState extends State<OptionMenu> {

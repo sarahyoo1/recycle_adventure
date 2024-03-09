@@ -104,7 +104,6 @@ class RockHead extends SpriteAnimationGroupComponent
   }
 
   void _movement(dt) async {
-    //print(528 - offsetHorizontal * tileSize);
     if (directionY == 0) {
       //on horizontal movement
       if (directionX == -1) {

@@ -8,12 +8,8 @@ import 'package:recycle_adventure/recycle_adventure.dart';
 
 class DroneSpawnManager extends Component with HasGameRef<RecycleAdventure> {
   late Timer timer;
-  late Vector2 droneOnePosition;
-  late Vector2 droneTwoPosition;
   late double limit;
   DroneSpawnManager({
-    required this.droneOnePosition,
-    required this.droneTwoPosition,
     required this.limit,
   }) : super() {
     timer = Timer(limit, onTick: _spawnRandomDrone, repeat: true);
@@ -31,8 +27,13 @@ class DroneSpawnManager extends Component with HasGameRef<RecycleAdventure> {
     timer.update(dt);
   }
 
+  Vector2 _randomPosition() {
+    double rd = Random().nextDouble() * 500;
+    return Vector2(rd, -32);
+  }
+
   void _spawnRandomDrone() {
-    int rd = Random().nextInt(3);
+    int rd = Random().nextInt(2);
     switch (rd) {
       case 0:
         _spawnDrone1();
@@ -48,7 +49,7 @@ class DroneSpawnManager extends Component with HasGameRef<RecycleAdventure> {
       FlameAudio.play('boss-drone-spawn.mp3', volume: game.soundEffectVolume);
     }
     DroneOne drone1 = DroneOne(
-      position: droneOnePosition,
+      position: _randomPosition(),
     );
 
     add(drone1);
@@ -59,7 +60,7 @@ class DroneSpawnManager extends Component with HasGameRef<RecycleAdventure> {
       FlameAudio.play('boss-drone-spawn.mp3', volume: game.soundEffectVolume);
     }
     DroneTwo drone2 = DroneTwo(
-      position: droneTwoPosition,
+      position: _randomPosition(),
     );
 
     add(drone2);

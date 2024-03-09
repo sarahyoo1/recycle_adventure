@@ -75,8 +75,6 @@ class Boss extends SpriteAnimationGroupComponent
     bombSpawnManager.timer.stop();
 
     droneSpawnManager = DroneSpawnManager(
-      droneOnePosition: Vector2(42, 64),
-      droneTwoPosition: Vector2(42, 64),
       limit: 0.5,
     );
     add(droneSpawnManager);
@@ -110,7 +108,9 @@ class Boss extends SpriteAnimationGroupComponent
       if (onPattern1) {
         _pattern1();
       }
-
+      if (onPattern2) {
+        _pattern2();
+      }
       if (onPattern3) {
         _pattern3();
       }
@@ -216,7 +216,7 @@ class Boss extends SpriteAnimationGroupComponent
 
   void _randomlyChoosePattern() {
     if (!onPattern1 && !onPattern2 && !onPattern3 && !isHitOn) {
-      int rd = Random().nextInt(3);
+      int rd = Random().nextInt(1);
 
       switch (rd) {
         case 0:
@@ -225,15 +225,19 @@ class Boss extends SpriteAnimationGroupComponent
           hitbox.size = Vector2(32, 78);
           hitbox.position = Vector2(32, 0);
           _pattern1();
+          //print('pattern 1');
           break;
         case 1:
           onPattern2 = true;
+          directionX = 1;
           _pattern2();
+          //print('pattern 2');
           break;
         case 2:
           onPattern3 = true;
           directionX = 1;
           _pattern3();
+          // print('pattern 3');
           break;
       }
     }
@@ -296,10 +300,9 @@ class Boss extends SpriteAnimationGroupComponent
         Future.delayed(const Duration(milliseconds: 500), () {
           hitbox.position = Vector2(5, 48);
           hitbox.size = Vector2(88, 10);
-          onPattern1 = false;
           isHitOn = true;
         });
-        Future.delayed(const Duration(seconds: 6), () {
+        Future.delayed(const Duration(seconds: 4), () {
           isHitOn = false;
           onPattern1 = false;
         });
@@ -309,14 +312,52 @@ class Boss extends SpriteAnimationGroupComponent
 
   void _pattern2() {
     current = State.attack1;
-    droneSpawnManager.timer.resume();
+    if (!droneSpawnManager.timer.isRunning()) {
+      droneSpawnManager.timer.resume();
+    }
+
+    if (directionX == 1) {
+      if (position.x < 512) {
+        velocity.x = 1 * 80;
+      } else {
+        velocity.x = 0;
+        directionX = -1;
+      }
+    } else if (directionX == -1) {
+      if (position.x > 44) {
+        velocity.x = -1 * 80;
+      } else {
+        directionX = 1;
+      }
+    }
 
     //spawns drones for 10 seconds.
     Future.delayed(const Duration(seconds: 10), () {
       droneSpawnManager.timer.stop();
-      current = State.idle;
-      onPattern2 = false;
+      directionX = 2;
     });
+
+    if (directionX == 2) {
+      if (position.x > 272) {
+        current = State.left;
+        velocity.x = -1 * 80;
+      } else if (position.x < 272) {
+        current = State.right;
+        velocity.x = 1 * 80;
+      } else {
+        position.x = 272;
+        velocity.x = 0;
+        current = State.idle;
+
+        Future.delayed(const Duration(milliseconds: 500), () {
+          onPattern2 = false;
+          isHitOn = true;
+        });
+        Future.delayed(const Duration(seconds: 4), () {
+          isHitOn = false;
+        });
+      }
+    }
   }
 
   void _pattern3() {
@@ -370,12 +411,12 @@ class Boss extends SpriteAnimationGroupComponent
         velocity.x = 0;
         position.x = 272;
 
-        Future.delayed(const Duration(seconds: 1), () {
+        Future.delayed(const Duration(seconds: 500), () {
           onPattern3 = false;
           isHitOn = true;
         });
 
-        Future.delayed(const Duration(seconds: 6), () {
+        Future.delayed(const Duration(seconds: 4), () {
           isHitOn = false;
         });
       }

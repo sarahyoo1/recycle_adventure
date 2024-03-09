@@ -18,7 +18,7 @@ class Hammer extends SpriteAnimationComponent
 
   @override
   FutureOr<void> onLoad() {
-    debugMode = true;
+    debugMode = false;
     player = game.player;
 
     animation = _spriteAnimation();

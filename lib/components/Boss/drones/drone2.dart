@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
@@ -26,11 +27,13 @@ class DroneTwo extends SpriteAnimationGroupComponent
   late final SpriteAnimation _walkSpriteAnimation;
   late final SpriteAnimation _deadSpriteAnimation;
   late final Player player;
+  late final Vector2 velocity;
 
   @override
   FutureOr<void> onLoad() {
     debugMode = false;
     player = game.player;
+    velocity = _randomMovement();
 
     _loadSpriteAnimations();
     add(
@@ -46,8 +49,8 @@ class DroneTwo extends SpriteAnimationGroupComponent
   void update(double dt) {
     _checkLives();
 
-    position.x -= 50 * dt;
-    position.y += 40 * dt;
+    position.x -= velocity.x * dt;
+    position.y += velocity.y * dt;
 
     if (position.y >= game.size.y) {
       removeFromParent();
@@ -95,6 +98,12 @@ class DroneTwo extends SpriteAnimationGroupComponent
     };
 
     current = State.idle;
+  }
+
+  Vector2 _randomMovement() {
+    double rdX = Random().nextDouble() * 80 + 1;
+    double rdY = Random().nextDouble() * 50 + 1;
+    return Vector2(rdX, rdY);
   }
 
   void _checkLives() {

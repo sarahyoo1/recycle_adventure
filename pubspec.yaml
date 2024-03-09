@@ -28,7 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  google_fonts: ^6.0.0 #Must Use 6.1.0 or lower version. 6.2.0 will cause an error.
+  google_fonts: 6.1.0 #Must Use 6.1.0 or lower version. 6.2.0 will cause an error.
   flutter:
     sdk: flutter
 
@@ -39,6 +39,10 @@ dependencies:
   flame: ^1.15.0
   flame_tiled: ^1.18.3
   flame_audio: ^2.1.8
+  uuid: ^4.3.3
+  add_to_google_wallet: ^0.0.3
+
+  
 
 dev_dependencies:
   flutter_test:

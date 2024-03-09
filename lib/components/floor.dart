@@ -223,7 +223,6 @@ class Floor extends World with HasGameRef<RecycleAdventure> {
                 ),
               );
             }
-          default:
         }
       }
     }
