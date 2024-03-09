@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:recycle_adventure/components/widgets/game_over_menu.dart';
 import 'package:recycle_adventure/components/widgets/pause_button.dart';
 import 'package:recycle_adventure/components/widgets/pause_menu.dart';
+import 'package:recycle_adventure/components/widgets/to_ending_button.dart';
 import 'package:recycle_adventure/main.dart';
 import 'package:recycle_adventure/recycle_adventure.dart';
 
@@ -30,6 +31,11 @@ class GamePlay extends StatelessWidget {
                 GameOverMenu(
                   gameRef: gameRef,
                 ),
+            ToEndingButton.ID:
+                (BuildContext context, RecycleAdventure gameRef) =>
+                    ToEndingButton(
+                      gameRef: gameRef,
+                    ),
           },
         ),
       ),

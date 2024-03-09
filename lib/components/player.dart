@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/services/raw_keyboard.dart';
 import 'package:recycle_adventure/components/bullet.dart';
 import 'package:recycle_adventure/components/checkpoint.dart';
@@ -118,7 +120,8 @@ class Player extends SpriteAnimationGroupComponent
   }
 
   @override
-  bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
+  bool onKeyEvent(KeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
+    final pressedKeys = keysPressed;
     //initially sets direction to be none.
     horizontalMovement = 0;
 
@@ -132,8 +135,15 @@ class Player extends SpriteAnimationGroupComponent
 
     hasJumped = keysPressed.contains(LogicalKeyboardKey.space);
 
-    hasShooted = keysPressed.contains(LogicalKeyboardKey.keyQ) && !event.repeat;
+    hasShooted = pressedKeys.contains(LogicalKeyboardKey.keyQ) &&
+        !event.synthesized &&
+        !pressedKeys.contains(LogicalKeyboardKey.keyQ);
 
+    if (event is KeyDownEvent) {
+      pressedKeys.add(event.logicalKey);
+    } else if (event is KeyUpEvent) {
+      pressedKeys.remove(event.logicalKey);
+    }
     return super.onKeyEvent(event, keysPressed);
   }
 

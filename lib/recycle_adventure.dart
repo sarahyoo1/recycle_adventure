@@ -23,6 +23,7 @@ class RecycleAdventure extends FlameGame
   Player player = Player(character: 'Hood');
   final int maxHealth = 5;
   late int health; //player health
+  int numberCleared = 0;
   int itemsCollected = 0;
   int totalItemsNum = 0;
   bool isOkToNextFloor = false;

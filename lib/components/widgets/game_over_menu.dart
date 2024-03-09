@@ -57,7 +57,6 @@ class GameOverMenu extends StatelessWidget {
 
           const SizedBox(height: 10),
 
-          //TODO: Revive Button - google wallet api?
           SizedBox(
             width: MediaQuery.of(context).size.width / 5,
             child: ElevatedButton(
