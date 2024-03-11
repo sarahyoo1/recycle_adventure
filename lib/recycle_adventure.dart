@@ -44,7 +44,7 @@ class RecycleAdventure extends FlameGame
     'Floor-08',
     'BossFight',
   ];
-  int currentFloorIndex = 5; //Should initially set to be 0.
+  int currentFloorIndex = 0; //Should initially set to be 0.
 
   bool _isAlreadyLoaded = false;
 
