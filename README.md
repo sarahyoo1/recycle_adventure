@@ -1,6 +1,6 @@
 # pixel_adventure
 
-A cute pixel 2D game using Flutter.
+2024 Google Global Gaming Challenge
 
 ## Getting Started
 
