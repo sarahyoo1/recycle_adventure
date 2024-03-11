@@ -53,21 +53,6 @@ class PauseMenu extends StatelessWidget {
 
           const SizedBox(height: 10),
 
-          //Restart Button
-          // SizedBox(
-          //   width: MediaQuery.of(context).size.width / 5,
-          //   child: ElevatedButton(
-          //     onPressed: () {
-          //       gameRef.overlays.remove(PauseMenu.ID);
-          //       gameRef.overlays.add(PauseButton.ID);
-          //       gameRef.reset();
-          //       gameRef.resumeEngine();
-          //     },
-          //     child: const Text('Restart'),
-          //   ),
-          // ),
-          // const SizedBox(height: 10),
-
           //Exit Button
           SizedBox(
             width: MediaQuery.of(context).size.width / 5,

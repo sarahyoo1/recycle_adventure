@@ -4,12 +4,10 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
-import 'package:flutter/material.dart';
 import 'package:recycle_adventure/components/Boss/bomb.dart';
 import 'package:recycle_adventure/components/Boss/drones/drone_spawn_manager.dart';
 import 'package:recycle_adventure/components/bullet.dart';
 import 'package:recycle_adventure/components/player.dart';
-import 'package:recycle_adventure/components/screens/google_wallet_menu.dart';
 import 'package:recycle_adventure/components/widgets/to_ending_button.dart';
 import 'package:recycle_adventure/recycle_adventure.dart';
 

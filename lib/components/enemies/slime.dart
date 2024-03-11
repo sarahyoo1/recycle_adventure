@@ -35,7 +35,7 @@ class Slime extends Enemy {
 
   @override
   FutureOr<void> onLoad() {
-    debugMode = true;
+    debugMode = false;
 
     //add rectangle hitbox.
 

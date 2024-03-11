@@ -60,7 +60,6 @@ class Car extends SpriteAnimationGroupComponent
     super.update(dt);
     if (!player.gotHit && !player.dead) {
       _checkVerticalCollisions(dt);
-      _checkHorizomtalCollisions(dt);
     }
     movement(dt);
   }
@@ -87,7 +86,7 @@ class Car extends SpriteAnimationGroupComponent
       SpriteAnimationData.sequenced(
         amount: 4,
         stepTime: 0.05,
-        textureSize: Vector2(48, 21),
+        textureSize: Vector2(48, 18),
       ),
     );
   }
@@ -137,41 +136,19 @@ class Car extends SpriteAnimationGroupComponent
 
   void _checkVerticalCollisions(dt) {
     if (checkCollision(player, this)) {
-      player.position.x += velocity.x * dt;
-
       if (player.velocity.y > 0) {
         player.velocity.y = 0;
         player.position.y = position.y -
             player.hitboxSetting.height -
             player.hitboxSetting.offsetY;
         player.isOnGround = true;
+        player.position.x += velocity.x * dt;
       }
 
       if (player.velocity.y < 0) {
         player.isOnGround = false;
         player.velocity.y = 0;
         player.position.y = position.y + height - player.hitboxSetting.offsetY;
-      }
-    }
-  }
-
-  void _checkHorizomtalCollisions(dt) {
-    if (checkCollision(player, this)) {
-      //when going right
-      if (player.velocity.x > 0 && player.position.x < position.x) {
-        player.velocity.x = 0;
-        player.x = position.x -
-            player.hitboxSetting.offsetX -
-            player.hitboxSetting.width +
-            12;
-      }
-      //when going left
-      if (player.velocity.x < 0 && player.position.x > position.x) {
-        player.velocity.x = 0;
-        player.position.x = position.x +
-            width +
-            player.hitboxSetting.width +
-            player.hitboxSetting.offsetX;
       }
     }
   }

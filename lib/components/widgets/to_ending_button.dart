@@ -23,7 +23,6 @@ class ToEndingButton extends StatelessWidget {
                 builder: (context) => const GoogleWalletMenu(),
               ),
             );
-            gameRef.resumeEngine();
             if (gameRef.isMusicOn) {
               FlameAudio.bgm
                   .play('ending-music.mp3', volume: gameRef.musicVolume);

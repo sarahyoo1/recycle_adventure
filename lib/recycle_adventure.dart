@@ -26,8 +26,9 @@ class RecycleAdventure extends FlameGame
   int numberCleared = 0;
   int itemsCollected = 0;
   int totalItemsNum = 0;
+  bool isGameOver = false;
   bool isOkToNextFloor = false;
-  bool showControls = true; //turns on and off joysticks and other buttons
+  bool showControls = false; //turns on and off joysticks and other buttons
   bool isSoundEffectOn = true;
   bool isMusicOn = true;
   double soundEffectVolume = 1.0;
@@ -43,7 +44,7 @@ class RecycleAdventure extends FlameGame
     'Floor-08',
     'BossFight',
   ];
-  int currentFloorIndex = 8; //Should initially set to be 0.
+  int currentFloorIndex = 5; //Should initially set to be 0.
 
   bool _isAlreadyLoaded = false;
 
@@ -57,7 +58,7 @@ class RecycleAdventure extends FlameGame
     if (!_isAlreadyLoaded) {
       await images.loadAllImages();
 
-      _loadFloor();
+      loadFloor();
 
       if (showControls) {
         addJoystick();
@@ -75,6 +76,9 @@ class RecycleAdventure extends FlameGame
   void update(double dt) {
     if (showControls) {
       updateJoystick();
+    }
+    if (isGameOver) {
+      reset();
     }
     super.update(dt);
   }
@@ -162,15 +166,15 @@ class RecycleAdventure extends FlameGame
 
     if (currentFloorIndex < floorNames.length - 1) {
       currentFloorIndex++;
-      _loadFloor();
+      loadFloor();
     } else {
       //if there is no more floors
       currentFloorIndex = 0;
-      _loadFloor();
+      loadFloor();
     }
   }
 
-  void _loadFloor() {
+  void loadFloor() {
     Future.delayed(
       const Duration(milliseconds: 1000),
       () {
@@ -195,6 +199,11 @@ class RecycleAdventure extends FlameGame
   void reset() {
     currentFloorIndex = 0;
     health = 5;
+    isGameOver = false;
+    numberCleared = 0;
+    itemsCollected = 0;
+    totalItemsNum = 0;
+    isOkToNextFloor = false;
   }
 
   void playBackgroundMusic(String floorName) {

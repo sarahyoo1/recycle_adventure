@@ -48,7 +48,7 @@ class Whale extends Enemy {
 
   @override
   FutureOr<void> onLoad() {
-    debugMode = true;
+    debugMode = false;
 
     _loadAnimations();
     calculateRange();

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:flame_audio/flame_audio.dart';
 import 'package:recycle_adventure/components/player.dart';
 import 'package:recycle_adventure/recycle_adventure.dart';
 
@@ -93,9 +92,6 @@ class Trampoline extends SpriteAnimationGroupComponent
   }
 
   void _bouncePlayer(dt) {
-    if (game.isSoundEffectOn) {
-      FlameAudio.play('jump.wav', volume: game.soundEffectVolume);
-    }
     player.velocity.y = -bounceHeight;
     player.position.y += player.velocity.y * dt;
     player.hasJumped = true;

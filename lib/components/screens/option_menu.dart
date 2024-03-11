@@ -1,6 +1,5 @@
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:recycle_adventure/components/screens/main_menu.dart';
 import 'package:recycle_adventure/main.dart';
 

@@ -10,7 +10,7 @@
  <layer id="1" name="Background" width="40" height="23">
   <properties>
    <property name="Background" value="sewer2"/>
-   <property name="totalItemsNum" type="int" value="6"/>
+   <property name="totalItemsNum" type="int" value="5"/>
   </properties>
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -67,7 +67,7 @@
  </layer>
  <objectgroup id="2" name="Spawnpoints">
   <object id="1" name="Player" type="Player" x="48" y="272" width="34" height="32.6667"/>
-  <object id="56" name="Saw" type="Saw" x="576" y="208" width="32" height="32">
+  <object id="56" name="Saw" type="Saw" x="576" y="176" width="32" height="32">
    <properties>
     <property name="initial direction" type="int" value="-1"/>
     <property name="isVertical" type="bool" value="false"/>

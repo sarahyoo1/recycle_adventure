@@ -27,7 +27,7 @@ class Projectile extends SpriteAnimationComponent
 
   @override
   FutureOr<void> onLoad() {
-    debugMode = true;
+    debugMode = false;
     add(hitbox);
 
     animation = SpriteAnimation.fromFrameData(

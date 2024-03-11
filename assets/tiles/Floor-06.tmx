@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="57">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="63">
  <tileset firstgid="1" source="city_tileset.tsx"/>
  <tileset firstgid="841" source="Pixel Adventure.tsx"/>
  <tileset firstgid="1083" source="industrial_objectset(32x32).tsx"/>
@@ -7,7 +7,7 @@
  <layer id="1" name="Background" width="40" height="23">
   <properties>
    <property name="Background" value="city1"/>
-   <property name="totalItemsNum" type="int" value="8"/>
+   <property name="totalItemsNum" type="int" value="9"/>
   </properties>
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -20,7 +20,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,858,859,860,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,858,859,860,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,381,382,383,384,385,386,387,316,317,382,383,384,385,386,387,316,317,382,383,384,385,386,387,316,317,382,383,384,385,386,387,317,318,317,320,
@@ -49,7 +49,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1543,1543,0,0,0,0,0,0,
-0,0,0,0,0,1145,0,0,0,0,1156,0,0,1543,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1543,1543,1543,1543,1543,1543,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,1543,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1543,1543,1543,1543,1543,1543,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -70,8 +70,6 @@
   <object id="5" x="640" y="0" width="16" height="368"/>
   <object id="9" type="Platform" x="16" y="32" width="48" height="16"/>
   <object id="10" type="Platform" x="496" y="32" width="48" height="16"/>
-  <object id="11" type="Platform" x="592" y="160" width="48" height="16"/>
-  <object id="12" type="Platform" x="96" y="160" width="48" height="16"/>
  </objectgroup>
  <objectgroup id="4" name="Spawnpoints">
   <object id="31" name="Checkpoint" type="Checkpoint" x="576" y="256" width="64" height="64"/>
@@ -97,20 +95,15 @@
     <property name="offsetPositive" type="float" value="3"/>
    </properties>
   </object>
-  <object id="37" name="Heart" type="Item" x="96" y="176" width="32" height="32"/>
+  <object id="37" name="Heart" type="Item" x="112" y="176" width="32" height="32"/>
   <object id="38" name="Heart" type="Item" x="608" y="176" width="32" height="32"/>
   <object id="39" name="Heart" type="Item" x="16" y="48" width="32" height="32"/>
   <object id="40" name="Plastic Bag" type="Item" x="160" y="48" width="32" height="32"/>
   <object id="41" name="Plastic Bottle" type="Item" x="320" y="176" width="32" height="32"/>
   <object id="43" name="glass-green soda bottle" type="Item" x="320" y="48" width="32" height="32"/>
-  <object id="44" name="metal-tuna can" type="Item" x="432" y="176" width="32" height="32"/>
+  <object id="44" name="metal-tuna can" type="Item" x="416" y="176" width="32" height="32"/>
   <object id="45" name="metal-red soda can" type="Item" x="240" y="48" width="32" height="32"/>
-  <object id="46" name="plastic-milk jug" type="Item" x="240" y="176" width="32" height="32"/>
-  <object id="47" name="CarSpawnManager" type="CarSpawnManager" x="144" y="160" width="112" height="48">
-   <properties>
-    <property name="direction" type="int" value="1"/>
-   </properties>
-  </object>
+  <object id="46" name="plastic-milk jug" type="Item" x="224" y="176" width="32" height="32"/>
   <object id="48" name="CarSpawnManager" type="CarSpawnManager" x="384" y="32" width="112" height="48">
    <properties>
     <property name="direction" type="int" value="-1"/>
@@ -129,5 +122,29 @@
   <object id="54" name="Plastic Bag" type="Item" x="160" y="48" width="32" height="32"/>
   <object id="55" name="Plastic Bag" type="Item" x="320" y="288" width="32" height="32"/>
   <object id="56" name="Plastic Bottle" type="Item" x="96" y="288" width="32" height="32"/>
+  <object id="60" name="Saw" type="Saw" x="176" y="112" width="32" height="32">
+   <properties>
+    <property name="initial direction" type="int" value="1"/>
+    <property name="isVertical" type="bool" value="true"/>
+    <property name="offsetNegative" type="float" value="0"/>
+    <property name="offsetPositive" type="float" value="4"/>
+   </properties>
+  </object>
+  <object id="61" name="Saw" type="Saw" x="272" y="176" width="32" height="32">
+   <properties>
+    <property name="initial direction" type="int" value="1"/>
+    <property name="isVertical" type="bool" value="true"/>
+    <property name="offsetNegative" type="float" value="4"/>
+    <property name="offsetPositive" type="float" value="0"/>
+   </properties>
+  </object>
+  <object id="62" name="Saw" type="Saw" x="368" y="112" width="32" height="32">
+   <properties>
+    <property name="initial direction" type="int" value="1"/>
+    <property name="isVertical" type="bool" value="true"/>
+    <property name="offsetNegative" type="float" value="0"/>
+    <property name="offsetPositive" type="float" value="4"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

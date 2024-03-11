@@ -31,25 +31,6 @@ class Hammer extends SpriteAnimationComponent
     return super.onLoad();
   }
 
-  @override
-  void update(double dt) {
-    super.update(dt);
-    if (hitboxDir == 1) {
-      if (hitbox.position.y <= 40) {
-        hitbox.position.y += 63.3 * dt;
-      } else {
-        Future.delayed(const Duration(milliseconds: 400), () {
-          hitboxDir = -1;
-        });
-      }
-    } else {
-      if (hitbox.position.y >= 10) {
-        hitbox.position.y -= 53.3 * dt;
-      } else {
-        hitboxDir = 1;
-      }
-    }
-  }
 
   SpriteAnimation _spriteAnimation() {
     return SpriteAnimation.fromFrameData(

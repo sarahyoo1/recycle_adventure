@@ -40,6 +40,8 @@ class Floor extends World with HasGameRef<RecycleAdventure> {
 
   @override
   FutureOr<void> onLoad() async {
+    game.itemsCollected = 0;
+
     floor = await TiledComponent.load('$floorName.tmx', Vector2.all(16));
     add(floor);
     _addCollisions();

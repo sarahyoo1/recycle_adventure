@@ -1,7 +1,6 @@
 import 'package:add_to_google_wallet/widgets/add_to_google_wallet_button.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:recycle_adventure/components/screens/main_menu.dart';
 import 'package:recycle_adventure/main.dart';
 import 'package:uuid/uuid.dart';
@@ -45,7 +44,6 @@ class _GoogleWalletMenuState extends State<GoogleWalletMenu> {
 
               const SizedBox(height: 50),
 
-              //bUTTON
               AddToGoogleWalletButton(
                 pass: _examplePass,
                 onError: (Object error) => _onError(context, error),
@@ -71,7 +69,8 @@ class _GoogleWalletMenuState extends State<GoogleWalletMenu> {
                 width: MediaQuery.of(context).size.width / 5,
                 child: ElevatedButton(
                   onPressed: () {
-                    gameRef.currentFloorIndex = 0;
+                    gameRef.reset(); //TODO:
+
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (context) => const MainMenu(),

@@ -3,9 +3,7 @@ import 'dart:async';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/services/raw_keyboard.dart';
 import 'package:recycle_adventure/components/bullet.dart';
 import 'package:recycle_adventure/components/checkpoint.dart';
 import 'package:recycle_adventure/components/collision_block.dart';
@@ -231,13 +229,8 @@ class Player extends SpriteAnimationGroupComponent
       bulletHorizontalDirection = 1;
     }
 
-    //checks if moving, set player's state to be running.
     if (velocity.x > 0 || velocity.x < 0) current = PlayerState.running;
-
-    //if jumping, set state to be jumping.
     if (velocity.y < 0) current = PlayerState.jumping;
-
-    //If falling, set state to be falling.
     if (velocity.y > _gravity) current = PlayerState.falling;
   }
 

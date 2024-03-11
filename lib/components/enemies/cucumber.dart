@@ -52,7 +52,7 @@ class Cucumber extends Enemy {
 
   @override
   FutureOr<void> onLoad() {
-    debugMode = true;
+    debugMode = false;
     _projectileManager = EnemyProjectileManager(
       position: Vector2(
         position.x,

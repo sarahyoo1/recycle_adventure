@@ -131,7 +131,7 @@
   </object>
   <object id="50" name="Trampoline" type="Trampoline" x="544" y="256" width="32" height="32">
    <properties>
-    <property name="offsetVertical" type="int" value="13"/>
+    <property name="offsetVertical" type="int" value="10"/>
    </properties>
   </object>
   <object id="51" name="Whale" type="Whale" x="400" y="240" width="48" height="48">
