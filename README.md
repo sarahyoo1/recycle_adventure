@@ -1,4 +1,4 @@
-# pixel_adventure
+# recycle_adventure
 
 2024 Google Global Gaming Challenge
 
