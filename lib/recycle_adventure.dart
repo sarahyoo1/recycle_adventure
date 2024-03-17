@@ -28,7 +28,7 @@ class RecycleAdventure extends FlameGame
   int totalItemsNum = 0;
   bool isGameOver = false;
   bool isOkToNextFloor = false;
-  bool showControls = false; //turns on and off joysticks and other buttons
+  bool showControls = true; //turns on and off joysticks and other buttons
   bool isSoundEffectOn = true;
   bool isMusicOn = true;
   double soundEffectVolume = 1.0;
@@ -58,6 +58,13 @@ class RecycleAdventure extends FlameGame
     if (!_isAlreadyLoaded) {
       await images.loadAllImages();
 
+      camera = CameraComponent.withFixedResolution(
+        width: 640,
+        height: 340,
+      );
+
+      camera.viewfinder.anchor = Anchor.topLeft;
+
       loadFloor();
 
       if (showControls) {
@@ -85,27 +92,25 @@ class RecycleAdventure extends FlameGame
 
   void addJoystick() {
     joystick = JoystickComponent(
-      priority: 10,
       knob: SpriteComponent(
         sprite: Sprite(
           images.fromCache('HUD/Knob.png'),
         ),
       ),
-      knobRadius: 64,
+      knobRadius: 32,
       background: SpriteComponent(
         sprite: Sprite(
           images.fromCache('HUD/Joystick.png'),
         ),
       ),
-      margin: const EdgeInsets.only(left: 64, bottom: 32),
+      margin: const EdgeInsets.only(left: 32, bottom: 32),
     );
 
-    add(joystick);
+    camera.viewport.add(joystick);
   }
 
   void addJumpButton() {
     jumpButton = HudButtonComponent(
-      priority: 10,
       onPressed: () {
         player.hasJumped = true;
       },
@@ -116,16 +121,15 @@ class RecycleAdventure extends FlameGame
         sprite: Sprite(
           images.fromCache('HUD/Jump Button.png'),
         ),
-        size: Vector2.all(64),
+        size: Vector2.all(32),
       ),
       margin: const EdgeInsets.only(right: 64, bottom: 32),
     );
-    add(jumpButton);
+    camera.viewport.add(jumpButton);
   }
 
   void addAttackButton() {
     attackButton = HudButtonComponent(
-      priority: 10,
       onPressed: () {
         player.hasShooted = true;
       },
@@ -136,11 +140,11 @@ class RecycleAdventure extends FlameGame
         sprite: Sprite(
           images.fromCache('HUD/Attack Button.png'),
         ),
-        size: Vector2.all(64),
+        size: Vector2.all(32),
       ),
-      margin: const EdgeInsets.only(right: 32, bottom: 96),
+      margin: const EdgeInsets.only(right: 32, bottom: 64),
     );
-    add(attackButton);
+    camera.viewport.add(attackButton);
   }
 
   void updateJoystick() {
@@ -178,19 +182,10 @@ class RecycleAdventure extends FlameGame
     Future.delayed(
       const Duration(milliseconds: 1000),
       () {
-        Floor world = Floor(
+        world = Floor(
           player: player,
           floorName: floorNames[currentFloorIndex],
         );
-
-        cam = CameraComponent.withFixedResolution(
-          world: world,
-          width: 640,
-          height: 340,
-        );
-        cam.viewfinder.anchor = Anchor.topLeft;
-
-        addAll([cam, world]);
       },
     );
   }
