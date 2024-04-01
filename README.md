@@ -3,14 +3,13 @@
 2024 Google Global Gaming Challenge
 
 ## Getting Started
+type 'flutter pub get .' in the console to install all dependencies.
 
-This project is a starting point for a Flutter application.
+## How to Enable or Disable HUD controllers
+- set 'showControlls' to be true to enable joystics and other HUD buttons.
+- set 'showControlls' to be false to disable and use keyboards for movement.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Keyboard Controllers
+- Use 'Q' key to attack.
+- Use 'w', 'a', 's', 'd' keys for movements.
+- Use 'space' to jump.
