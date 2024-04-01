@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
@@ -55,6 +56,12 @@ class RecycleAdventure extends FlameGame
   @override
   FutureOr<void> onLoad() async {
     health = maxHealth;
+    if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
+      showControls = false;
+    } else {
+      showControls = true;
+    }
+
     if (!_isAlreadyLoaded) {
       await images.loadAllImages();
 
@@ -190,7 +197,7 @@ class RecycleAdventure extends FlameGame
     );
   }
 
-  //TODO
+  //TODO: reset game
   void reset() {
     currentFloorIndex = 0;
     health = 5;

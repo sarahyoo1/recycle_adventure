@@ -216,18 +216,15 @@ class Boss extends SpriteAnimationGroupComponent
           hitbox.size = Vector2(32, 78);
           hitbox.position = Vector2(32, 0);
           _pattern1();
-          print('pattern 1');
           break;
         case 1:
           onPattern2 = true;
           _pattern2();
-          print('pattern 2');
           break;
         case 2:
           onPattern3 = true;
           directionX = 1;
           _pattern3();
-          print('pattern 3');
           break;
       }
     }
