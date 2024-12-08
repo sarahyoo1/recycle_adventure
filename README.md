@@ -1,6 +1,6 @@
 # recycle_adventure
 2024 Google Global Gaming Challenge
-[![Watch to click!](https://github.com/user-attachments/assets/b65bdb9f-937f-4da4-8696-875662642bad)](https://www.youtube.com/watch?v=0Hp133u1XHI&t=3s)
+[![Watch to click!](https://github.com/user-attachments/assets/b67c6e57-08e7-4e79-a44c-7a7346a6c0cd)](https://www.youtube.com/watch?v=0Hp133u1XHI&t=3s)
 
 ## Getting Started
 type 'flutter pub get .' in the console to install all dependencies.
@@ -13,3 +13,4 @@ type 'flutter pub get .' in the console to install all dependencies.
 - Use 'Q' key to attack.
 - Use 'w', 'a', 's', 'd' keys for movements.
 - Use 'space' to jump.
+
